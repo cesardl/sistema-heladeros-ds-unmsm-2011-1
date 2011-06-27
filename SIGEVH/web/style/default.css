@@ -1,0 +1,45 @@
+/* 
+    Document   : default
+    Created on : 10/02/2011, 05:01:54 PM
+    Author     : cesardl
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+body {
+    padding: 10px;
+    font-size: 12px;
+}
+
+.tdCasilla {
+    border-style: hidden;
+    cursor: pointer;
+}
+
+.tdLabel {
+    font-weight: bold;
+    text-align: right;
+    width: 120px;
+}
+
+.error {
+    background-color: #C0402A;
+    padding: 10px;
+    text-align: center;
+    border-style: solid;
+    border-color: #FFFFFF;
+}
+
+.textError {
+    color: #FFFFFF;
+    font-weight: bold;
+}
