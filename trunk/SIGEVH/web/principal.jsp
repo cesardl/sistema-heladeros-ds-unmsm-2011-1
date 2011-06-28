@@ -11,8 +11,8 @@
 <f:view>
     <html>
         <head>
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-            <title>JSP Page</title>
+            <title>Heladeros Lamborgini</title>
+            <link type="text/css" href="style/default.css" rel="stylesheet" media="screen"/>
         </head>
         <body>
             <jsp:include page="menu.jsp"/>

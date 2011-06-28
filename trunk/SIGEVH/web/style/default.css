@@ -20,15 +20,15 @@ body {
     font-size: 12px;
 }
 
-.tdCasilla {
-    border-style: hidden;
-    cursor: pointer;
+.title-label {
+    font-size: 14px;
+    font-weight: bold;
 }
 
-.tdLabel {
+.td-label {
     font-weight: bold;
     text-align: right;
-    width: 120px;
+    width: 5%;
 }
 
 .error {
@@ -39,7 +39,7 @@ body {
     border-color: #FFFFFF;
 }
 
-.textError {
+.text-error {
     color: #FFFFFF;
     font-weight: bold;
 }

@@ -31,7 +31,7 @@
                     </h:panelGroup>
                 </f:facet>
 
-                <rich:menuItem submitMode="ajax" value="Heladeros" />
+                <rich:menuItem submitMode="ajax" value="Heladeros" action="TO_HELADEROS" />
 
                 <rich:menuItem submitMode="ajax" value="Usuarios" />
             </rich:dropDownMenu>
