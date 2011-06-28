@@ -12,6 +12,7 @@
     <html>
         <head>
             <title>Heladeros Lamborgini</title>
+            <link type="text/css" href="style/default.css" rel="stylesheet" media="screen"/>
         </head>
         <body>
             <rich:panel header="Ingreso al Sistema" style="width: 50%;">
