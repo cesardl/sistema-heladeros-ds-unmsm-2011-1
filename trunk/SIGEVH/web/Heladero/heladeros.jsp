@@ -17,7 +17,8 @@
     <html>
         <head>
             <title>Heladeros</title>
-            <link type="text/css" href="style/default.css" rel="stylesheet" media="screen"/>
+            <link type="text/css" href="style/default.css" rel="stylesheet" media="screen">
+
         </head>
         <body>
             <jsp:include page="../menu.jsp"/>
@@ -55,37 +56,41 @@
                     </tr>
                     <tr>
                         <td colspan="3" align="center">
-                            <rich:dataTable
-                                onRowMouseOver="this.style.backgroundColor='#F1F1F1'"
-                                onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'"
-                                width="90%" rows="10"
-                                value="#{managerUsuario.listaUsuarios}" var="user">
+                            <a4j:form id="form-heladeros">
+                                <rich:dataTable
+                                    onRowMouseOver="this.style.backgroundColor='#F1F1F1'"
+                                    onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'"
+                                    width="90%" rows="10"
+                                    value="#{managerUsuario.listaUsuarios}" var="user">
 
-                                <rich:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Usuario" />
-                                    </f:facet>
-                                    <h:outputText value="#{user.usuario}"/>
-                                </rich:column>
+                                    <rich:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Usuario" />
+                                        </f:facet>
+                                        <h:outputText value="#{user.usuario}"/>
+                                    </rich:column>
 
-                                <rich:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Contrase&ntilde;a" escape="false" />
-                                    </f:facet>
-                                    <h:outputText value="#{user.contrasenha}"/>
-                                </rich:column>
+                                    <rich:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Contrase&ntilde;a" escape="false" />
+                                        </f:facet>
+                                        <h:outputText value="#{user.contrasenha}"/>
+                                    </rich:column>
 
-                                <rich:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Asignar" />
-                                    </f:facet>
-                                    <a4j:commandButton value="asignar" />
-                                </rich:column>
-                            </rich:dataTable>
+                                    <rich:column style="text-align: center;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Asignar" />
+                                        </f:facet>
+                                        <a4j:commandButton value="Asignar" 
+                                                           oncomplete="#{rich:component('mp')}.show()" />
+                                    </rich:column>
+                                </rich:dataTable>
+                            </a4j:form>
                         </td>
                     </tr>
                 </table>
             </rich:panel>
         </body>
     </html>
+    <jsp:include page="asignar_helados.jsp" />
 </f:view>

@@ -12,7 +12,7 @@
     <html>
         <head>
             <title>Heladeros Lamborgini</title>
-            <link type="text/css" href="style/default.css" rel="stylesheet" media="screen"/>
+            <link type="text/css" href="style/default.css" rel="stylesheet" media="screen">
         </head>
         <body>
             <jsp:include page="menu.jsp"/>
