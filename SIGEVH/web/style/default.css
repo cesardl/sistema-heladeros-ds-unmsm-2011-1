@@ -25,6 +25,11 @@ body {
     font-weight: bold;
 }
 
+.tr-separator {
+    height: 15px;
+    vertical-align: top;
+}
+
 .td-label {
     font-weight: bold;
     text-align: right;

@@ -3,9 +3,11 @@
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
         <Node id="menu.jsp" x="150" y="300" zoom="true"/>
+        <Node id="Heladero/heladeros.jsp" x="900" y="150" zoom="true"/>
         <Node id="index.jsp" x="151" y="150" zoom="true"/>
         <Node id="principal.jsp" x="400" y="150" zoom="true"/>
         <Node id="Heladero/formulario_heladeros.jsp" x="650" y="150" zoom="true"/>
+        <Node id="*" x="400" y="300" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>

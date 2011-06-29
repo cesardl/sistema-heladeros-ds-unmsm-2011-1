@@ -9,7 +9,7 @@
     <managed-bean>
         <managed-bean-name>managerUsuario</managed-bean-name>
         <managed-bean-class>pe.lamborgini.controller.ManagerUsuario</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
+        <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
 
     <navigation-rule>
@@ -28,7 +28,7 @@
         <from-view-id>*</from-view-id>
         <navigation-case>
             <from-outcome>TO_HELADEROS</from-outcome>
-            <to-view-id>/heladeros.jsp</to-view-id>
+            <to-view-id>/Heladero/heladeros.jsp</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>
