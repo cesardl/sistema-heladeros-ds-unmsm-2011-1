@@ -65,7 +65,8 @@
                     <td class="td-label">Cantidad</td>
                     <td><h:inputText value="#{managerHeladero.cantidad}"/></td>
                     <td><a4j:commandButton image="../images/edit_add.png" reRender="formAsignacion"
-                                       actionListener="#{managerHeladero.addHelado}" /></td>
+                                       actionListener="#{managerHeladero.addHelado}" 
+                                       oncomplete="#{managerHeladero.oncomplete}" /></td>
                 </tr>
                 <tr class="tr-separator">
                     <td colspan="3">

@@ -139,20 +139,25 @@ public class ManagerHeladero {
     }
 
     public void addHelado(ActionEvent event) {
-        System.out.println("helado " + sug_id_helado + " - " + sug_helado);
-        DetalleHelado dh = new DetalleHelado();
-        dh.setCantDevuelta(0);
-        dh.setCantEntregada(cantidad);
-        dh.setCantVendida(0);
+        this.setOncomplete("");
+        if (cantidad == 0) {
+            this.setOncomplete("javascript:alert('Ingrese un valor distinto a cero (0).')");
+        } else {
+            System.out.println("helado " + sug_id_helado + " - " + sug_helado);
+            DetalleHelado dh = new DetalleHelado();
+            dh.setCantDevuelta(0);
+            dh.setCantEntregada(cantidad);
+            dh.setCantVendida(0);
 
-        Helado helado = new Helado();
-        helado.setIdHelado(sug_id_helado);
-        helado.setNombreHelado(sug_helado);
-        dh.setHelado(helado);
+            Helado helado = new Helado();
+            helado.setIdHelado(sug_id_helado);
+            helado.setNombreHelado(sug_helado);
+            dh.setHelado(helado);
 
-        listaDetalleHelados.add(dh);
-        updatePositions();
-        cleanFormularioAsignacion();
+            listaDetalleHelados.add(dh);
+            updatePositions();
+            cleanFormularioAsignacion();
+        }
     }
 
     public void removeHelado(ActionEvent event) {
