@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29/06/2011 07:47:22 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class catalog="heladeros" name="pe.lamborgini.domain.mapping.HeladosEntregadoRecibido" table="helados_entregado_recibido">
+    <meta attribute="sync-DAO">false</meta>
+    <id name="idHeladosEntregadoRecibido" type="java.lang.Integer">
+      <column name="id_helados_entregado_recibido"/>
+      <generator class="identity"/>
+    </id>
+    <many-to-one class="pe.lamborgini.domain.mapping.Heladero" fetch="select" name="heladero">
+      <column name="id_heladero" not-null="true"/>
+    </many-to-one>
+    <property name="fecha" type="date">
+      <column length="10" name="fecha" not-null="true"/>
+    </property>
+    <property name="total" type="double">
+      <column name="total" not-null="true" precision="22" scale="0"/>
+    </property>
+    <set inverse="true" name="detalleHelados" cascade="all">
+      <key>
+        <column name="id_helados_entregado_recibido" not-null="true"/>
+      </key>
+      <one-to-many class="pe.lamborgini.domain.mapping.DetalleHelado"/>
+    </set>
+  </class>
+</hibernate-mapping>

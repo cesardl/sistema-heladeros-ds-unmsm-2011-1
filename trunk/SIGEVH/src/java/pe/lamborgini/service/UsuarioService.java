@@ -4,7 +4,8 @@
  */
 package pe.lamborgini.service;
 
-import pe.lamborgini.domain.Usuario;
+import pe.lamborgini.dao.UsuarioDAO;
+import pe.lamborgini.domain.mapping.Usuario;
 
 /**
  *
@@ -12,9 +13,10 @@ import pe.lamborgini.domain.Usuario;
  */
 public class UsuarioService {
 
-    public static boolean validarUsuario(Usuario usuario) {
-        if (usuario.getUsuario().equals("admin")
-                && usuario.getContrasenha().equals("admin")) {
+    public static boolean validarUsuario(String nombre_usuario, String contrasenha) {
+        UsuarioDAO dao = new UsuarioDAO();
+        Usuario usuario = dao.getUsuario(nombre_usuario, contrasenha);
+        if (usuario != null) {
             return true;
         } else {
             return false;

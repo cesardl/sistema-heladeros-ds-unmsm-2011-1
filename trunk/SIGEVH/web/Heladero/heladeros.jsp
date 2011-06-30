@@ -18,77 +18,90 @@
         <head>
             <title>Heladeros</title>
             <link type="text/css" href="style/default.css" rel="stylesheet" media="screen">
-
         </head>
         <body>
             <jsp:include page="../menu.jsp"/>
             <rich:panel>
-                <table width="100%">
-                    <tr>
-                        <td colspan="2">
-                            <h:outputText value="Mantenimiento de heladeros"
-                                          styleClass="title-label" />
-                        </td>
-                        <td align="right">
-                            <h:panelGrid columns="2">
-                                <a4j:commandButton value="Buscar" />
-                                <a4j:commandButton value="Nuevo" />
-                            </h:panelGrid>
-                        </td>
-                    </tr>
-                    <tr class="tr-separator">
-                        <td colspan="3">
-                            <rich:separator width="100%" height="3px" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="td-label">Nombre</td>
-                        <td><h:inputText /></td>
-                    </tr>
-                    <tr>
-                        <td class="td-label">Apellido</td>
-                        <td><h:inputText /></td>
-                    </tr>
-                    <tr class="tr-separator">
-                        <td colspan="3">
-                            <rich:separator width="100%" height="3px" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" align="center">
-                            <a4j:form id="form-heladeros">
-                                <rich:dataTable
-                                    onRowMouseOver="this.style.backgroundColor='#F1F1F1'"
-                                    onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'"
-                                    width="90%" rows="10"
-                                    value="#{managerUsuario.listaUsuarios}" var="user">
+                <a4j:form id="formHeladeros">
+                    <table width="100%">
+                        <tr>
+                            <td colspan="2">
+                                <h:outputText value="Mantenimiento de heladeros"
+                                              styleClass="title-label" />
+                            </td>
+                            <td align="right">
+                                <h:panelGrid columns="2">
+                                    <a4j:commandButton value="Buscar" reRender="scrollerHeladeros, tableHeladeros" 
+                                                       actionListener="#{managerHeladero.buscarHeladero}"/>
+                                    <a4j:commandButton value="Nuevo" />
+                                </h:panelGrid>
+                            </td>
+                        </tr>
+                        <tr class="tr-separator">
+                            <td colspan="3">
+                                <rich:separator width="100%" height="3px" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-label">Nombre</td>
+                            <td><h:inputText value="#{managerHeladero.nombre}"/></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="td-label">Apellido</td>
+                            <td><h:inputText value="#{managerHeladero.apellido}" /></td>
+                            <td></td>
+                        </tr>
+                        <tr class="tr-separator">
+                            <td colspan="3">
+                                <rich:separator width="100%" height="3px" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" align="center">
+                                <rich:datascroller id="scrollerHeladeros" align="right" for="tableHeladeros" 
+                                                   maxPages="10" style="width : 75%;"/>
+                                <rich:spacer height="3px"/>
+                                <rich:dataTable id="tableHeladeros" width="75%" rows="10"
+                                                onRowMouseOver="this.style.backgroundColor='#F1F1F1'"
+                                                onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'"
+                                                value="#{managerHeladero.listaHeladeros}" var="heladero">
 
-                                    <rich:column>
+                                    <f:param id="p_id_heladero" value="#{heladero.idHeladero}" />
+                                    <rich:column style="text-align: center;">
                                         <f:facet name="header">
-                                            <h:outputText value="Usuario" />
+                                            <h:outputText value="Nro" />
                                         </f:facet>
-                                        <h:outputText value="#{user.usuario}"/>
+                                        <h:outputText value="#{heladero.idHeladero}"/>
                                     </rich:column>
 
                                     <rich:column>
                                         <f:facet name="header">
-                                            <h:outputText value="Contrase&ntilde;a" escape="false" />
+                                            <h:outputText value="Nombre y apellido" />
                                         </f:facet>
-                                        <h:outputText value="#{user.contrasenha}"/>
+                                        <h:outputText value="#{heladero.nombres} #{heladero.apellidos}"/>
+                                    </rich:column>
+
+                                    <rich:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Concesionario" />
+                                        </f:facet>
+                                        <h:outputText value="#{heladero.concesionario.nombreConces}"/>
                                     </rich:column>
 
                                     <rich:column style="text-align: center;">
                                         <f:facet name="header">
                                             <h:outputText value="Asignar" />
                                         </f:facet>
-                                        <a4j:commandButton value="Asignar" 
-                                                           oncomplete="#{rich:component('mp')}.show()" />
+                                        <a4j:commandButton value="Asignar" reRender="mp_asignar_helados"
+                                                           actionListener="#{managerHeladero.asignarHelado}"
+                                                           oncomplete="#{rich:component('mp_asignar_helados')}.show()" />
                                     </rich:column>
                                 </rich:dataTable>
-                            </a4j:form>
-                        </td>
-                    </tr>
-                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </a4j:form>
             </rich:panel>
         </body>
     </html>

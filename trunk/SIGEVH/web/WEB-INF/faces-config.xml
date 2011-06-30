@@ -11,6 +11,11 @@
         <managed-bean-class>pe.lamborgini.controller.ManagerUsuario</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>managerHeladero</managed-bean-name>
+        <managed-bean-class>pe.lamborgini.controller.ManagerHeladero</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 
     <navigation-rule>
         <from-view-id>/index.jsp</from-view-id>

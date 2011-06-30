@@ -19,12 +19,12 @@
                 <h:form>
                     <table>
                         <tr>
-                            <td>Usuario</td>
-                            <td><h:inputText value="#{managerUsuario.usuario.usuario}" /></td>
+                            <td class="td-label">Usuario</td>
+                            <td><h:inputText value="#{managerUsuario.nombre_usuario}" /></td>
                         </tr>
                         <tr>
-                            <td>Contrase&ntilde;a</td>
-                            <td><h:inputSecret value="#{managerUsuario.usuario.contrasenha}" /></td>
+                            <td class="td-label">Contrase&ntilde;a</td>
+                            <td><h:inputSecret value="#{managerUsuario.contrasenha}" /></td>
                         </tr>
                         <tr>
                             <td colspan="2">
