@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: heladeros
 Target Host: localhost
 Target Database: heladeros
-Date: 30/06/2011 04:33:16 a.m.
+Date: 30/06/2011 15:01:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -67,7 +67,7 @@ CREATE TABLE `detalle_helado` (
   CONSTRAINT `fk_detalle_helado_helado1` FOREIGN KEY (`id_helado`) REFERENCES `helado` (`id_helado`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_detalle_helado_helados_entregado_recibido1` FOREIGN KEY (`id_helados_entregado_recibido`) REFERENCES `helados_entregado_recibido` (`id_helados_entregado_recibido`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_detalle_helado_pago_helado1` FOREIGN KEY (`id_pago_helado`) REFERENCES `pago_helado` (`idpago_helado`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for factura
@@ -119,7 +119,7 @@ CREATE TABLE `helados_entregado_recibido` (
   PRIMARY KEY  (`id_helados_entregado_recibido`),
   KEY `fk_helado_entregado_recibido_heladero1` (`id_heladero`),
   CONSTRAINT `fk_helado_entregado_recibido_heladero1` FOREIGN KEY (`id_heladero`) REFERENCES `heladero` (`id_heladero`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for pago_helado
@@ -169,6 +169,8 @@ CREATE TABLE `usuario` (
 -- Records 
 -- ----------------------------
 INSERT INTO `concesionario` VALUES ('1', 'Adex', 'Ate-Vitarte', 'Luis Hanampa'), ('2', 'GYH', 'Comas', 'Edgar Cordova'), ('3', 'Frigolac', 'Callao', 'Mariana Rivero'), ('4', 'PyT', 'Barranco', 'Javier Lorenao'), ('5', 'FerD', 'Jesus Maria', 'Delia Martinez');
+INSERT INTO `detalle_helado` VALUES ('1', '13', '1', null, '30', '0', '0'), ('2', '8', '1', null, '10', '0', '0'), ('3', '11', '1', null, '12', '0', '0');
 INSERT INTO `heladero` VALUES ('1', '1', 'Mario', 'Ramirez Coronado'), ('2', '1', 'Jose David', 'Torres Cordova'), ('3', '1', 'Mariana', 'Quispe Delgado'), ('4', '1', 'Lady Diana', 'Saavedra Luque'), ('5', '1', 'Francisco ', 'Gonzales Diaz'), ('6', '2', 'Daniela', 'Zapata Cruz'), ('7', '2', 'Juan Esteban', 'Gamarra Desposorio'), ('8', '2', 'Miguel ', 'Zarate Abanto'), ('9', '3', 'Flor de Maria', 'Izquierdo Morales'), ('10', '3', 'Ana Cristina', 'Vadillo Montes'), ('11', '3', 'Luis Enrique', 'Bustamante Montoya'), ('12', '4', 'Cesar ', 'Salinas Romero'), ('13', '4', 'Yasmin Liset', 'Carranza Lopez'), ('14', '4', 'Eduardo ', 'Atoche Zapata'), ('15', '4', 'Ulises ', 'Elguera Gallo'), ('16', '5', 'Felipe Otoniel', 'Coronel Pedreros'), ('17', '5', 'Denisse ', 'Infantes Morales'), ('18', '5', 'Miguel ', 'Luyo Pineda'), ('19', '5', 'Denisse Katherine', 'Palomino Astupuma'), ('20', '5', 'Juan Luis', 'Hurtado Medina');
 INSERT INTO `helado` VALUES ('1', 'Carnevale fresa', '2.5'), ('2', 'Oasu', '1.5'), ('3', 'Copa viva vainilla', '3.5'), ('4', 'Piccolo fresa', '1'), ('5', 'Frutarello limon', '1'), ('6', 'DPelicula', '4'), ('7', 'Lamborgini Light', '3.5'), ('8', 'Tartufo', '2'), ('9', 'Tartufo Clasico', '1.5'), ('10', 'Tartuffo Pecatto', '2'), ('11', 'Bombones Choconum', '3'), ('12', 'Sandwich vainilla pequeño', '1'), ('13', 'Sandwich choconieve grande ', '2'), ('14', 'Sandiwch vainilla grande', '2'), ('15', 'Carnavale chocolate', '2.5'), ('16', 'Vip mora', '1'), ('17', 'Vip mango ', '1'), ('18', 'Copa viva lucuma - vainilla', '3.5'), ('19', 'Copa viva mermelada fresa', '3.5'), ('20', 'Piccolo chica', '1'), ('21', 'Piccolo manzana', '1'), ('22', 'Frutarello guanabana', '1'), ('23', 'Frutarello coco', '1'), ('24', 'Pionono vainilla', '4.5'), ('25', 'Pionono lucuma', '4.5'), ('26', 'Casino chocolate', '1.5'), ('27', 'Casino lucuma', '1.5');
+INSERT INTO `helados_entregado_recibido` VALUES ('1', '2', '2011-06-30', '52');
 INSERT INTO `usuario` VALUES ('1', '1', 'LHanampa', 'luis', 'Gerente'), ('2', '2', 'ECordova', 'edgar', 'Jefe de Ventas'), ('3', '3', 'MRivero', 'mariana', 'Asistente'), ('4', '4', 'JLorenao', 'javier', 'Gerente'), ('5', '5', 'DMartinez', 'delia', 'Contador'), ('6', '1', 'admin', 'admin', 'Administrador');
