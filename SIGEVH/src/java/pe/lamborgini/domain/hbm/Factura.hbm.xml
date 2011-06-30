@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29/06/2011 07:47:22 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class catalog="heladeros" name="pe.lamborgini.domain.mapping.Factura" table="factura">
+    <meta attribute="sync-DAO">false</meta>
+    <id name="idFactura" type="java.lang.Integer">
+      <column name="id_factura"/>
+      <generator class="identity"/>
+    </id>
+    <property name="numeroFactura" type="int">
+      <column name="numero_factura" not-null="true"/>
+    </property>
+    <property name="fecha" type="date">
+      <column length="10" name="fecha" not-null="true"/>
+    </property>
+    <property name="descripcion" type="string">
+      <column length="45" name="descripcion" not-null="true"/>
+    </property>
+    <property name="pago" type="double">
+      <column name="pago" not-null="true" precision="22" scale="0"/>
+    </property>
+    <set inverse="true" name="pagoHelados">
+      <key>
+        <column name="id_factura" not-null="true"/>
+      </key>
+      <one-to-many class="pe.lamborgini.domain.mapping.PagoHelado"/>
+    </set>
+  </class>
+</hibernate-mapping>
