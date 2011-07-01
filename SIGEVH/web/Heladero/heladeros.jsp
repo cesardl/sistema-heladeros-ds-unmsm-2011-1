@@ -22,7 +22,7 @@
         <body>
             <jsp:include page="../menu.jsp"/>
             <rich:panel>
-                <a4j:form id="formHeladeros">
+                <h:form id="formHeladeros">
                     <table width="100%">
                         <tr>
                             <td colspan="2">
@@ -94,16 +94,24 @@
                                             <h:outputText value="Asignar" />
                                         </f:facet>
                                         <a4j:commandButton value="Asignar" reRender="mp_asignar_helados"
-                                                           actionListener="#{managerHeladero.asignarHelado}"
+                                                           actionListener="#{managerAsignacion.asignarHelado}"
                                                            oncomplete="#{rich:component('mp_asignar_helados')}.show()" />
+                                    </rich:column>
+
+                                    <rich:column style="text-align: center;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Pagas" />
+                                        </f:facet>
+                                        <a4j:commandButton value="Pagar" />
                                     </rich:column>
                                 </rich:dataTable>
                             </td>
                         </tr>
                     </table>
-                </a4j:form>
+                </h:form>
             </rich:panel>
         </body>
     </html>
     <jsp:include page="asignar_helados.jsp" />
+    <jsp:include page="pagar_heladero.jsp" />
 </f:view>

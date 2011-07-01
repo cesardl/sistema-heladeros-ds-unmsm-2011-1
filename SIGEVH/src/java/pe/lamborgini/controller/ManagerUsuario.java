@@ -4,9 +4,6 @@
  */
 package pe.lamborgini.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import pe.lamborgini.domain.mapping.Usuario;
 import pe.lamborgini.service.UsuarioService;
 
 /**
@@ -38,7 +35,6 @@ public class ManagerUsuario {
     }
 
     public String ingresar() {
-        System.out.println("Bienvenido " + nombre_usuario);
         if (UsuarioService.validarUsuario(nombre_usuario, contrasenha)) {
             return "SUCCESS";
         } else {

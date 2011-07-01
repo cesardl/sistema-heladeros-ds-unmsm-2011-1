@@ -19,11 +19,11 @@ import pe.lamborgini.util.AppUtil;
  */
 public class HeladosEntregadoRecibidoService {
 
-    public static void guardarHeladosEntregadoRecibido(List<DetalleHelado> listaDetalleHelados, String id_heladero) {
+    public static void guardarHeladosEntregadoRecibido(List<DetalleHelado> listaDetalleHelados, String p_id_heladero) {
         HeladosEntregadoRecibido her = new HeladosEntregadoRecibido();
 
         her.setFecha(new Date());
-        her.setHeladero(new Heladero(AppUtil.aInteger(id_heladero)));
+        her.setHeladero(new Heladero(AppUtil.aInteger(p_id_heladero)));
 
         double total = 0;
 
@@ -36,7 +36,7 @@ public class HeladosEntregadoRecibidoService {
         her.setTotal(total);
 
         System.out.println("total : " + total + "-" + listaDetalleHelados.size());
-
-        new HeladosEntregadoRecibidoDAO().insertHeladosEntregadoRecibido(her);
+        HeladosEntregadoRecibidoDAO dao = new HeladosEntregadoRecibidoDAO();
+        dao.insertHeladosEntregadoRecibido(her);
     }
 }
