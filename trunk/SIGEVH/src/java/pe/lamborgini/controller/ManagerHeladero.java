@@ -4,20 +4,17 @@
  */
 package pe.lamborgini.controller;
 
-import pe.lamborgini.service.HeladosEntregadoRecibidoService;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
 import pe.lamborgini.domain.mapping.DetalleHelado;
 import pe.lamborgini.domain.mapping.Heladero;
 import pe.lamborgini.domain.mapping.Helado;
-import pe.lamborgini.domain.mapping.HeladosEntregadoRecibido;
 import pe.lamborgini.service.HeladeroService;
 import pe.lamborgini.service.HeladoService;
+import pe.lamborgini.service.HeladosEntregadoRecibidoService;
 import pe.lamborgini.util.AppUtil;
 
 /**
@@ -196,24 +193,7 @@ public class ManagerHeladero {
         if (listaDetalleHelados.isEmpty()) {
             this.setOncomplete("javascript:alert('Debe de ingresar algun helado.')");
         } else {
-            HeladosEntregadoRecibido her = new HeladosEntregadoRecibido();
-
-            her.setFecha(new Date());
-            her.setHeladero(new Heladero(AppUtil.aInteger(p_id_heladero)));
-
-            double total = 0;
-
-            for (int i = 0; i < listaDetalleHelados.size(); i++) {
-                DetalleHelado dh = listaDetalleHelados.get(i);
-                dh.setHeladosEntregadoRecibido(her);
-                total = total + dh.getCantEntregada();
-            }
-            her.setDetalleHelados(new HashSet<DetalleHelado>(listaDetalleHelados));
-            her.setTotal(total);
-
-            System.out.println("total : " + total + "-" + listaDetalleHelados.size());
-            HeladosEntregadoRecibidoService.guardarHeladosEntregadoRecibido(her);
-
+            HeladosEntregadoRecibidoService.guardarHeladosEntregadoRecibido(listaDetalleHelados, p_id_heladero);
             cleanFormularioPrincipal();
             this.setOncomplete("Richfaces.hideModalPanel('mp_asignar_helados')");
         }
