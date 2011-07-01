@@ -9,7 +9,7 @@
         <property name="hibernate.connection.password">root</property>
     
         <property name="hibernate.current_session_context_class">thread</property>
-        <property name="hibernate.max_fetch_depth">3</property> 
+        <property name="hibernate.max_fetch_depth">2</property> 
         <property name="hibernate.show_sql">true</property>
     
         <mapping resource="pe/lamborgini/domain/hbm/HeladosEntregadoRecibido.hbm.xml"/>
