@@ -19,6 +19,14 @@ import pe.lamborgini.util.AppUtil;
  */
 public class HeladosEntregadoRecibidoService {
 
+    public static HeladosEntregadoRecibido existeAsignacionParaHeladero(String p_id_heladero) {
+        HeladosEntregadoRecibido her =
+                new HeladosEntregadoRecibidoDAO().getHeladosEntregadoRecibido(
+                AppUtil.aInteger(p_id_heladero));
+
+        return her;
+    }
+
     public static void guardarHeladosEntregadoRecibido(List<DetalleHelado> listaDetalleHelados, String p_id_heladero) {
         HeladosEntregadoRecibido her = new HeladosEntregadoRecibido();
 

@@ -27,9 +27,10 @@ public class HeladoDAO {
         try {
             tx = session.beginTransaction();
             Query query = session.createSQLQuery("SELECT id_helado, nombre_helado FROM helado "
-                    + "WHERE nombre_helado LIKE '%" + nombre + "%'").
+                    + "WHERE nombre_helado LIKE :n_helado").
                     addScalar("id_helado", Hibernate.INTEGER).
-                    addScalar("nombre_helado", Hibernate.STRING);
+                    addScalar("nombre_helado", Hibernate.STRING).
+                    setString("n_helado", "%" + nombre + "%");
 
             List l = query.list();
             helados = new ArrayList<Helado>();
@@ -39,7 +40,6 @@ public class HeladoDAO {
                 Helado h = new Helado();
                 h.setIdHelado(AppUtil.aInteger(objs[0].toString()));
                 h.setNombreHelado(objs[1].toString());
-                System.out.println(h.getIdHelado() + " " + h.getNombreHelado());
                 helados.add(h);
             }
             tx.commit();

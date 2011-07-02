@@ -6,15 +6,14 @@ package pe.lamborgini.controller.modal;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.el.ExpressionFactory;
 import javax.faces.component.UIParameter;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.ActionEvent;
-import org.apache.el.ExpressionFactoryImpl;
 import pe.lamborgini.controller.ManagerHeladero;
 import pe.lamborgini.domain.mapping.DetalleHelado;
 import pe.lamborgini.domain.mapping.Helado;
+import pe.lamborgini.domain.mapping.HeladosEntregadoRecibido;
 import pe.lamborgini.service.HeladoService;
 import pe.lamborgini.service.HeladosEntregadoRecibidoService;
 import pe.lamborgini.util.AppUtil;
@@ -84,14 +83,21 @@ public class ManagerAsignacion {
     }
 
     public void asignarHelado(ActionEvent event) {
+        this.setOncomplete("");
         p_id_heladero = ((UIParameter) event.getComponent().findComponent("p_id_heladero")).getValue().toString();
         listaDetalleHelados = new ArrayList<DetalleHelado>(0);
         System.out.println("ASIGNAR al heladero " + p_id_heladero);
+
+        HeladosEntregadoRecibido her = HeladosEntregadoRecibidoService.existeAsignacionParaHeladero(p_id_heladero);
+        if (her != null) {
+            this.setOncomplete("javascript:alert('Ya presenta asignaciones para el de hoy.');");
+        } else {
+            this.setOncomplete("Richfaces.showModalPanel('mp_asignar_helados');");
+        }
     }
 
     public List<Helado> autocomplete(Object suggest) throws Exception {
         String pref = (String) suggest;
-        System.out.println("autocomplete " + pref);
         List<Helado> helados = HeladoService.obtenerHeladoPorNombre(pref);
 
         return helados;
@@ -100,7 +106,7 @@ public class ManagerAsignacion {
     public void addHelado(ActionEvent event) {
         this.setOncomplete("");
         if (cantidad == 0) {
-            this.setOncomplete("javascript:alert('Ingrese un valor distinto a cero (0).')");
+            this.setOncomplete("javascript:alert('Ingrese un valor distinto a cero (0).');");
         } else {
             System.out.println("helado " + sug_id_helado + " - " + sug_helado);
             DetalleHelado dh = new DetalleHelado();

@@ -77,9 +77,9 @@
 
                                     <rich:column>
                                         <f:facet name="header">
-                                            <h:outputText value="Nombre y apellido" />
+                                            <h:outputText value="Apellido y nombre" />
                                         </f:facet>
-                                        <h:outputText value="#{heladero.nombres} #{heladero.apellidos}"/>
+                                        <h:outputText value="#{heladero.apellidos} #{heladero.nombres}"/>
                                     </rich:column>
 
                                     <rich:column>
@@ -95,14 +95,16 @@
                                         </f:facet>
                                         <a4j:commandButton value="Asignar" reRender="mp_asignar_helados"
                                                            actionListener="#{managerAsignacion.asignarHelado}"
-                                                           oncomplete="#{rich:component('mp_asignar_helados')}.show()" />
+                                                           oncomplete="#{managerAsignacion.oncomplete}" />
                                     </rich:column>
 
                                     <rich:column style="text-align: center;">
                                         <f:facet name="header">
                                             <h:outputText value="Pagas" />
                                         </f:facet>
-                                        <a4j:commandButton value="Pagar" />
+                                        <a4j:commandButton value="Pagar" reRender="mp_pagar_heladero"
+                                                           actionListener="#{managerPago.pagarHeladero}"
+                                                           oncomplete="#{managerPago.oncomplete}" />
                                     </rich:column>
                                 </rich:dataTable>
                             </td>

@@ -10,8 +10,8 @@
 <%@taglib prefix="a4j" uri="http://richfaces.org/a4j"%>
 
 <f:subview id="pagar_heladero">
-    <rich:modalPanel  id="mp_pagar_heladero" minHeight="200" minWidth="450" 
-                      height="200" width="500">
+    <rich:modalPanel id="mp_pagar_heladero" width="500"
+                     autosized="true">
         <f:facet name="header">
             <h:outputText value="Pago de los heladeros" />
         </f:facet>
