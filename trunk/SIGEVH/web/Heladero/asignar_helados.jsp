@@ -16,8 +16,8 @@
             iNombreHelado.innerHTML=sgcomponent.getSelectedItems().pluck('nombreHelado');
         }
     </script>
-    <rich:modalPanel  id="mp_asignar_helados" minHeight="200" minWidth="450" 
-                      height="200" width="500">
+    <rich:modalPanel id="mp_asignar_helados" width="500"
+                     autosized="true">
         <f:facet name="header">
             <h:outputText value="Asignacion de Helados" />
         </f:facet>
@@ -58,7 +58,7 @@
                             </h:column>
                         </rich:suggestionbox>
                         <h:inputHidden id="iIdHelado" value="#{managerAsignacion.sug_id_helado}" />
-                        <h:outputText id="iHelado" style="font-weight: bold;" />
+                        <h:outputText id="iHelado" style="font-weight: bold; font-style: italic;" />
                     </td>
                 </tr>
                 <tr>
