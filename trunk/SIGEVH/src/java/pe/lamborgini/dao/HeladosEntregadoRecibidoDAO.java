@@ -20,15 +20,21 @@ public class HeladosEntregadoRecibidoDAO {
 
     public HeladosEntregadoRecibido getHeladosEntregadoRecibido(int id_heladero) {
         Session session = AppUtil.getSessionFactory().openSession();
+        Transaction tx = null;
         HeladosEntregadoRecibido her = null;
         try {
+            tx = session.beginTransaction();
             Criteria c = session.createCriteria(HeladosEntregadoRecibido.class).
                     add(Restrictions.eq("heladero.idHeladero", id_heladero)).
                     add(Restrictions.eq("fecha", new Date()));
 
             her = (HeladosEntregadoRecibido) c.uniqueResult();
+            tx.commit();
         } catch (Exception e) {
             System.err.println("ERROR: HeladosEntregadoRecibidoDAO.getHeladosEntregadoRecibido " + e);
+            if (tx != null) {
+                tx.rollback();
+            }
         } finally {
             session.close();
         }

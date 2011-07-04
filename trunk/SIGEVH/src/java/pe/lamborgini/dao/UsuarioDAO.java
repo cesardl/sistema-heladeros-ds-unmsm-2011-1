@@ -25,7 +25,6 @@ public class UsuarioDAO {
                     Restrictions.eq("contrasenha", contrasenha)));
 
             usuario = (Usuario) c.uniqueResult();
-            System.out.println("DAO " + usuario);
         } catch (Exception e) {
             System.err.println("Error: UsuarioDAO.getUsuario " + e);
         } finally {

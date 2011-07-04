@@ -8,13 +8,13 @@
             <column name="idpago_helado"/>
             <generator class="identity"/>
         </id>
-        <many-to-one class="pe.lamborgini.domain.mapping.Factura" fetch="select" name="factura">
+        <many-to-one class="pe.lamborgini.domain.mapping.Factura" fetch="select" name="factura" cascade="all">
             <column name="id_factura" not-null="true"/>
         </many-to-one>
         <many-to-one class="pe.lamborgini.domain.mapping.Concepto" fetch="select" name="concepto">
             <column name="id_concepto" not-null="true"/>
         </many-to-one>
-        <property name="cantPagada" type="int">
+        <property name="cantPagada" type="double">
             <column name="cant_pagada" not-null="true"/>
         </property>
         <set inverse="true" name="detalleHelados">

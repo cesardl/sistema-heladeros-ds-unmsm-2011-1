@@ -12,7 +12,9 @@ public class DetalleHelado implements java.io.Serializable {
     private PagoHelado pagoHelado;
     private HeladosEntregadoRecibido heladosEntregadoRecibido;
     private int cantEntregada;
+    private int cantPendiente;
     private int cantDevuelta;
+    private String strCantDevuelta;
     private int cantVendida;
 
     public DetalleHelado() {
@@ -75,12 +77,28 @@ public class DetalleHelado implements java.io.Serializable {
         this.cantEntregada = cantEntregada;
     }
 
+    public int getCantPendiente() {
+        return cantPendiente;
+    }
+
+    public void setCantPendiente(int cantPendiente) {
+        this.cantPendiente = cantPendiente;
+    }
+
     public int getCantDevuelta() {
         return this.cantDevuelta;
     }
 
     public void setCantDevuelta(int cantDevuelta) {
         this.cantDevuelta = cantDevuelta;
+    }
+
+    public String getStrCantDevuelta() {
+        return strCantDevuelta;
+    }
+
+    public void setStrCantDevuelta(String strCantDevuelta) {
+        this.strCantDevuelta = strCantDevuelta;
     }
 
     public int getCantVendida() {

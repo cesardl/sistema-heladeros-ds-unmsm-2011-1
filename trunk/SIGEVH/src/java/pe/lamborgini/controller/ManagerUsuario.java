@@ -43,6 +43,7 @@ public class ManagerUsuario {
     }
 
     public String salir() {
+        UsuarioService.cerrarSesion();
         return "TO_INDEX";
     }
 }

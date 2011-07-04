@@ -42,6 +42,10 @@
     <navigation-rule>
         <from-view-id>*</from-view-id>
         <navigation-case>
+            <from-outcome>TO_INDEX</from-outcome>
+            <to-view-id>/index.jsp</to-view-id>
+        </navigation-case>
+        <navigation-case>
             <from-outcome>TO_HELADEROS</from-outcome>
             <to-view-id>/Heladero/heladeros.jsp</to-view-id>
         </navigation-case>

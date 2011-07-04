@@ -26,8 +26,8 @@
                             onclick="#{rich:component('mp_asignar_helados')}.hide()" />
         </f:facet>
         <a4j:form id="formAsignacion">
-            <table>
-                <tr align="right">
+            <table style="width: 100%;">
+                <tr style="text-align: right;">
                     <td colspan="3">
                         <a4j:commandButton value="Guardar" 
                                            actionListener="#{managerAsignacion.guardarAsignaciones}"
@@ -39,6 +39,14 @@
                     <td colspan="3">
                         <rich:separator width="100%" height="3px" />
                     </td>
+                </tr>
+                <tr>
+                    <td class="td-label">Consecionario</td>
+                    <td><h:outputText value="#{managerAsignacion.nombre_consecionario}" /></td>
+                </tr>
+                <tr>
+                    <td class="td-label">Heladero</td>
+                    <td><h:outputText value="#{managerAsignacion.nombres_heladero}"/></td>
                 </tr>
                 <tr>
                     <td class="td-label">Helado</td>
@@ -75,6 +83,9 @@
                 </tr>
                 <tr>
                     <td colspan="3" align="center">
+                        <rich:datascroller id="scrollerHelados" align="right" for="tableHelados" 
+                                           maxPages="10" style="width : 75%;"/>
+                        <rich:spacer height="3px"/>
                         <rich:dataTable id="tableHelados" width="75%" rows="10"
                                         onRowMouseOver="this.style.backgroundColor='#F1F1F1'"
                                         onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'"
@@ -93,6 +104,13 @@
                                     <h:outputText value="Helado" />
                                 </f:facet>
                                 <h:outputText value="#{dh.helado.nombreHelado}"/>
+                            </rich:column>
+
+                            <rich:column style="text-align: center;">
+                                <f:facet name="header">
+                                    <h:outputText value="Pendientes" />
+                                </f:facet>
+                                <h:outputText value="#{dh.cantPendiente}"/>
                             </rich:column>
 
                             <rich:column style="text-align: center;">

@@ -32,7 +32,8 @@
                             <td align="right">
                                 <h:panelGrid columns="2">
                                     <a4j:commandButton value="Buscar" reRender="scrollerHeladeros, tableHeladeros" 
-                                                       actionListener="#{managerHeladero.buscarHeladero}"/>
+                                                       actionListener="#{managerHeladero.buscarHeladero}"
+                                                       oncomplete="#{managerHeladero.oncomplete}"/>
                                     <a4j:commandButton value="Nuevo" />
                                 </h:panelGrid>
                             </td>
@@ -60,14 +61,16 @@
                         <tr>
                             <td colspan="3" align="center">
                                 <rich:datascroller id="scrollerHeladeros" align="right" for="tableHeladeros" 
-                                                   maxPages="10" style="width : 75%;"/>
+                                                   maxPages="10" style="width : 90%;"/>
                                 <rich:spacer height="3px"/>
-                                <rich:dataTable id="tableHeladeros" width="75%" rows="10"
+                                <rich:dataTable id="tableHeladeros" width="90%" rows="10"
                                                 onRowMouseOver="this.style.backgroundColor='#F1F1F1'"
                                                 onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'"
                                                 value="#{managerHeladero.listaHeladeros}" var="heladero">
 
                                     <f:param id="p_id_heladero" value="#{heladero.idHeladero}" />
+                                    <f:param id="p_nombres_heladero" value="#{heladero.apellidos} #{heladero.nombres}" />
+                                    <f:param id="p_nombre_consecionario" value="#{heladero.concesionario.nombreConces}" />
                                     <rich:column style="text-align: center;">
                                         <f:facet name="header">
                                             <h:outputText value="Nro" />
