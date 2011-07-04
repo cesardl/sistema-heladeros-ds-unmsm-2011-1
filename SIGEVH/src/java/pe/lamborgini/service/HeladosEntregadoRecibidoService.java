@@ -6,6 +6,7 @@ package pe.lamborgini.service;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import pe.lamborgini.dao.HeladosEntregadoRecibidoDAO;
 import pe.lamborgini.domain.mapping.DetalleHelado;
@@ -27,6 +28,19 @@ public class HeladosEntregadoRecibidoService {
         return her;
     }
 
+    public static boolean existePagoParaHeladero(HeladosEntregadoRecibido her) {
+        boolean tiene_pago = false;
+        Iterator<DetalleHelado> it = her.getDetalleHelados().iterator();
+        while (it.hasNext()) {
+            DetalleHelado dh = it.next();
+            if (dh.getPagoHelado() != null) {
+                tiene_pago = true;
+                break;
+            }
+        }
+        return tiene_pago;
+    }
+
     public static void guardarHeladosEntregadoRecibido(List<DetalleHelado> listaDetalleHelados, String p_id_heladero) {
         HeladosEntregadoRecibido her = new HeladosEntregadoRecibido();
 
@@ -37,13 +51,13 @@ public class HeladosEntregadoRecibidoService {
 
         for (int i = 0; i < listaDetalleHelados.size(); i++) {
             DetalleHelado dh = listaDetalleHelados.get(i);
+            dh.setCantEntregada(dh.getCantPendiente() + dh.getCantEntregada());
             dh.setHeladosEntregadoRecibido(her);
             total = total + dh.getCantEntregada();
         }
         her.setDetalleHelados(new HashSet<DetalleHelado>(listaDetalleHelados));
         her.setTotal(total);
 
-        System.out.println("total : " + total + "-" + listaDetalleHelados.size());
         HeladosEntregadoRecibidoDAO dao = new HeladosEntregadoRecibidoDAO();
         dao.insertHeladosEntregadoRecibido(her);
     }

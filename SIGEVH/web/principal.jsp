@@ -16,8 +16,8 @@
         </head>
         <body>
             <jsp:include page="menu.jsp"/>
-            <rich:panel>
-                <h1>Hello World!</h1>
+            <rich:panel style="text-align: center;">
+                <img src="images/lamborgini.jpg" alt="lamborgini">
             </rich:panel>
         </body>
     </html>

@@ -43,7 +43,8 @@
                     </h:panelGroup>
                 </f:facet>
 
-                <rich:menuItem submitMode="ajax" value="Salir" />
+                <rich:menuItem submitMode="ajax" value="Salir" 
+                               action="#{managerUsuario.salir}"/>
             </rich:dropDownMenu>
         </rich:toolBar>
     </h:form>

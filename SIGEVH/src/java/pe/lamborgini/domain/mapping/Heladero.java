@@ -84,4 +84,9 @@ public class Heladero implements java.io.Serializable {
     public void setHeladosEntregadoRecibidos(Set<HeladosEntregadoRecibido> heladosEntregadoRecibidos) {
         this.heladosEntregadoRecibidos = heladosEntregadoRecibidos;
     }
+
+    @Override
+    public String toString() {
+        return apellidos + " " + nombres;
+    }
 }

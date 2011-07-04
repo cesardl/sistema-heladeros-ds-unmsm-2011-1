@@ -60,9 +60,9 @@ public class ManagerHeladero {
     }
 
     public void buscarHeladero(ActionEvent event) {
-        System.out.println("event!" + nombre + " " + apellido);
+        this.setOncomplete("");
         if (nombre.trim().length() == 0 && apellido.trim().length() == 0) {
-            System.out.println("ingrese campo para realizar la busqueda");
+            this.setOncomplete("javascript:alert('Ingrese campo para realizar la busqueda.')");
         } else {
             Collection<Heladero> c = HeladeroService.obtenerHeladeros(nombre, apellido);
             listaHeladeros = new ArrayList<Heladero>(c);
