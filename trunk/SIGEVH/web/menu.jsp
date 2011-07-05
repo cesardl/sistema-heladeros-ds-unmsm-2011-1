@@ -10,6 +10,15 @@
 <%@taglib prefix="a4j" uri="http://richfaces.org/a4j"%>
 
 <f:subview id="menu">
+    <div style="font-weight: bold; font-size: 13px;">
+        <%@page import="pe.lamborgini.domain.mapping.Usuario" %>        
+        <%
+            Usuario u = (Usuario) session.getAttribute("usuario");
+            out.println("Bienvenido " + u.getNombreUsuario() + " - "
+                    + "Concesionario " + u.getConcesionario().getNombreConces());
+        %>
+    </div>
+    <rich:separator width="100%" height="3px" />
     <h:form>
         <rich:toolBar>
             <rich:dropDownMenu>

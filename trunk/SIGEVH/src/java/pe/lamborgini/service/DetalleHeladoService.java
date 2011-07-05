@@ -35,7 +35,7 @@ public class DetalleHeladoService {
             DetalleHelado dh = listaDetalleHelados.get(i);
             int cd = AppUtil.aInteger(dh.getStrCantDevuelta());
             int ce = dh.getCantEntregada();
-            if (cd > ce || cd == AppUtil.ERROR || cd == 0) {
+            if (cd > ce || cd == AppUtil.ERROR) {
                 return false;
             } else {
                 dh.setCantDevuelta(cd);

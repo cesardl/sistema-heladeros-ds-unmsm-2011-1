@@ -17,11 +17,12 @@ import pe.lamborgini.util.AppUtil;
  */
 public class HeladeroDAO {
 
-    public List<Heladero> getListaHeladeros(String nombre, String apellido) {
+    public List<Heladero> getListaHeladeros(String nombre, String apellido, int id_usuario) {
         Session session = AppUtil.getSessionFactory().openSession();
         List<Heladero> heladeros = null;
         try {
-            Criteria c = session.createCriteria(Heladero.class);
+            Criteria c = session.createCriteria(Heladero.class).
+                    add(Restrictions.eq("concesionario.idConcesionario", id_usuario));
             if (nombre.trim().length() != 0) {
                 c.add(Restrictions.like("nombres", "%" + nombre + "%"));
             }
