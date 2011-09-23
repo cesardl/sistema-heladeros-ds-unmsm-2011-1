@@ -42,7 +42,7 @@
 
                 <rich:menuItem submitMode="ajax" value="Heladeros" action="TO_HELADEROS" />
 
-                <rich:menuItem submitMode="ajax" value="Usuarios" />
+                <rich:menuItem submitMode="ajax" value="Usuarios" action="TO_USUARIOS" />
             </rich:dropDownMenu>
 
             <rich:dropDownMenu>

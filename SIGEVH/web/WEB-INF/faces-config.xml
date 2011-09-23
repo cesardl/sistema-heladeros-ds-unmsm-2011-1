@@ -49,5 +49,9 @@
             <from-outcome>TO_HELADEROS</from-outcome>
             <to-view-id>/Heladero/heladeros.jsp</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>TO_USUARIOS</from-outcome>
+            <to-view-id>/Usuario/usuarios.jsp</to-view-id>
+        </navigation-case>
     </navigation-rule>
 </faces-config>
