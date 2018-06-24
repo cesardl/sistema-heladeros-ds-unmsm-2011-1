@@ -4,35 +4,29 @@
  */
 package pe.lamborgini.service;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import pe.lamborgini.dao.HeladosEntregadoRecibidoDAO;
 import pe.lamborgini.domain.mapping.DetalleHelado;
 import pe.lamborgini.domain.mapping.Heladero;
 import pe.lamborgini.domain.mapping.HeladosEntregadoRecibido;
 import pe.lamborgini.util.AppUtil;
 
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+
 /**
- *
  * @author Cesardl
  */
 public class HeladosEntregadoRecibidoService {
 
     public static HeladosEntregadoRecibido existeAsignacionParaHeladero(String p_id_heladero) {
-        HeladosEntregadoRecibido her =
-                new HeladosEntregadoRecibidoDAO().getHeladosEntregadoRecibido(
+        return new HeladosEntregadoRecibidoDAO().getHeladosEntregadoRecibido(
                 AppUtil.aInteger(p_id_heladero));
-
-        return her;
     }
 
     public static boolean existePagoParaHeladero(HeladosEntregadoRecibido her) {
         boolean tiene_pago = false;
-        Iterator<DetalleHelado> it = her.getDetalleHelados().iterator();
-        while (it.hasNext()) {
-            DetalleHelado dh = it.next();
+        for (DetalleHelado dh : her.getDetalleHelados()) {
             if (dh.getPagoHelado() != null) {
                 tiene_pago = true;
                 break;
@@ -49,13 +43,12 @@ public class HeladosEntregadoRecibidoService {
 
         double total = 0;
 
-        for (int i = 0; i < listaDetalleHelados.size(); i++) {
-            DetalleHelado dh = listaDetalleHelados.get(i);
+        for (DetalleHelado dh : listaDetalleHelados) {
             dh.setCantEntregada(dh.getCantPendiente() + dh.getCantEntregada());
             dh.setHeladosEntregadoRecibido(her);
             total = total + dh.getCantEntregada();
         }
-        her.setDetalleHelados(new HashSet<DetalleHelado>(listaDetalleHelados));
+        her.setDetalleHelados(new HashSet<>(listaDetalleHelados));
         her.setTotal(total);
 
         HeladosEntregadoRecibidoDAO dao = new HeladosEntregadoRecibidoDAO();

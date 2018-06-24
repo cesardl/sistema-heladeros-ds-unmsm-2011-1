@@ -9,9 +9,10 @@ import java.util.Set;
  */
 public class Concepto implements java.io.Serializable {
 
+    private static final long serialVersionUID = -1596668618166585590L;
     private Integer idConcepto;
     private String detalleConcepto;
-    private Set<PagoHelado> pagoHelados = new HashSet<PagoHelado>(0);
+    private Set<PagoHelado> pagoHelados = new HashSet<>(0);
 
     public Concepto() {
     }

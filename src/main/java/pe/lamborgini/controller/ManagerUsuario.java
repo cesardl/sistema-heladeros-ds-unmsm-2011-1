@@ -4,16 +4,16 @@
  */
 package pe.lamborgini.controller;
 
-import java.util.Collection;
-import java.util.List;
-import javax.faces.model.SelectItem;
 import pe.lamborgini.domain.mapping.Concesionario;
 import pe.lamborgini.domain.mapping.Usuario;
 import pe.lamborgini.service.ConcesionarioService;
 import pe.lamborgini.service.UsuarioService;
 
+import javax.faces.model.SelectItem;
+import java.util.Collection;
+import java.util.List;
+
 /**
- *
  * @author Cesardl
  */
 public class ManagerUsuario {

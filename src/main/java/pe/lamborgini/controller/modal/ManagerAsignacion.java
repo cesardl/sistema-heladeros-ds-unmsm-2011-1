@@ -4,10 +4,6 @@
  */
 package pe.lamborgini.controller.modal;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.faces.component.UIParameter;
-import javax.faces.event.ActionEvent;
 import pe.lamborgini.controller.ManagerHeladero;
 import pe.lamborgini.domain.mapping.DetalleHelado;
 import pe.lamborgini.domain.mapping.Helado;
@@ -17,8 +13,12 @@ import pe.lamborgini.service.HeladoService;
 import pe.lamborgini.service.HeladosEntregadoRecibidoService;
 import pe.lamborgini.util.AppUtil;
 
+import javax.faces.component.UIParameter;
+import javax.faces.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- *
  * @author Cesardl
  */
 public class ManagerAsignacion {
@@ -115,9 +115,8 @@ public class ManagerAsignacion {
 
     public List<Helado> autocomplete(Object suggest) throws Exception {
         String pref = (String) suggest;
-        List<Helado> helados = HeladoService.obtenerHeladoPorNombre(pref);
 
-        return helados;
+        return HeladoService.obtenerHeladoPorNombre(pref);
     }
 
     public void addHelado(ActionEvent event) {

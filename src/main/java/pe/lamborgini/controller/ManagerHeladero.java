@@ -4,15 +4,15 @@
  */
 package pe.lamborgini.controller;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import javax.faces.event.ActionEvent;
 import pe.lamborgini.domain.mapping.Heladero;
 import pe.lamborgini.service.HeladeroService;
 
+import javax.faces.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 /**
- *
  * @author Cesardl
  */
 public class ManagerHeladero {
@@ -24,7 +24,7 @@ public class ManagerHeladero {
     //Para el modal
 
     public ManagerHeladero() {
-        listaHeladeros = new ArrayList<Heladero>(0);
+        listaHeladeros = new ArrayList<>(0);
     }
 
     public String getNombre() {
@@ -65,13 +65,13 @@ public class ManagerHeladero {
             this.setOncomplete("javascript:alert('Ingrese campo para realizar la busqueda.')");
         } else {
             Collection<Heladero> c = HeladeroService.obtenerHeladeros(nombre, apellido);
-            listaHeladeros = new ArrayList<Heladero>(c);
+            listaHeladeros = new ArrayList<>(c);
         }
     }
 
     public void cleanFormularioPrincipal() {
         this.nombre = "";
         this.apellido = "";
-        this.listaHeladeros = new ArrayList<Heladero>(0);
+        this.listaHeladeros = new ArrayList<>(0);
     }
 }

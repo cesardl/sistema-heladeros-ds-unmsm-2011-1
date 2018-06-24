@@ -169,7 +169,13 @@
                 <configuration>
                     <path>/SIGEVH</path>
                     <port>8080</port>
+                    <jarScanAllDirectories>true</jarScanAllDirectories>
+                    <tomcatLoggingFile>${project.basedir}/tomcat/conf/logging.properties</tomcatLoggingFile>
                 </configuration>
+                <!--
+                ,\
+richfaces-impl-3.3.3.Final.jar,richfaces-api-3.3.3.Final.jar
+                -->
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>

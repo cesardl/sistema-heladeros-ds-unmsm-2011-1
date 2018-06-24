@@ -9,12 +9,13 @@ import java.util.Set;
  */
 public class Concesionario implements java.io.Serializable {
 
+    private static final long serialVersionUID = -1874907810652432154L;
     private Integer idConcesionario;
     private String nombreConces;
     private String distrito;
     private String propietario;
-    private Set<Usuario> usuarios = new HashSet<Usuario>(0);
-    private Set<Heladero> heladeros = new HashSet<Heladero>(0);
+    private Set<Usuario> usuarios = new HashSet<>(0);
+    private Set<Heladero> heladeros = new HashSet<>(0);
 
     public Concesionario() {
     }

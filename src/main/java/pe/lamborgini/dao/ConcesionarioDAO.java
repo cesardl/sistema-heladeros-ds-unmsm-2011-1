@@ -5,6 +5,7 @@
 package pe.lamborgini.dao;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +29,7 @@ public class ConcesionarioDAO {
             Criteria c = session.createCriteria(Concesionario.class);
 
             concesionarios = new ArrayList<Concesionario>(c.list());
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             LOG.error("ConcesionarioDAO.getConcesionarios", e);
             concesionarios = null;
         } finally {

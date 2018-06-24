@@ -6,6 +6,7 @@ target/
 .project
 
 # NetBeans
+build/
 nbproject/
 nb-configuration.xml
 nbactions.xml
@@ -13,4 +14,3 @@ nbactions.xml
 # IntelliJ IDEA
 .idea/
 *.iml
-/SIGEVH/build/

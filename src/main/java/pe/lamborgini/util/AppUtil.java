@@ -23,9 +23,8 @@ import java.util.Date;
  */
 public class AppUtil {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AppUtil.class);
-
     public static final int ERROR = -1;
+    private static final Logger LOG = LoggerFactory.getLogger(AppUtil.class);
     private static final SessionFactory sessionFactory;
 
     static {

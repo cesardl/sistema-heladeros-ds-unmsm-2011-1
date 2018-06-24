@@ -5,6 +5,7 @@
 package pe.lamborgini.dao;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -34,7 +35,7 @@ public class HeladeroDAO {
                 c.add(Restrictions.like("apellidos", "%" + apellido + "%"));
             }
             heladeros = c.list();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             LOG.error("HeladeroDAO.getListaHeladeros", e);
         } finally {
             session.close();

@@ -5,8 +5,7 @@
     Description: Purpose of the stylesheet follows.
 */
 
-/* 
-   TODO customize this sample style
+/*
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
 
@@ -39,8 +38,7 @@ body {
     background-color: #C0402A;
     padding: 10px;
     text-align: center;
-    border-style: solid;
-    border-color: #FFFFFF;
+    border: solid #FFFFFF;
 }
 
 .text-error {
