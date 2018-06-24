@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29/06/2011 07:47:22 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class catalog="heladeros" name="pe.lamborgini.domain.mapping.StockHelado" table="stock_helado">
+        <meta attribute="sync-DAO">false</meta>
+        <id name="idStockHelado" type="java.lang.Integer">
+            <column name="id_stock_helado"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="pe.lamborgini.domain.mapping.Helado" fetch="select" name="helado">
+            <column name="id_helado" not-null="true"/>
+        </many-to-one>
+        <property name="cantidad" type="int">
+            <column name="cantidad" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29/06/2011 07:47:22 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class catalog="heladeros" name="pe.lamborgini.domain.mapping.DetalleHelado" table="detalle_helado">
+        <meta attribute="sync-DAO">false</meta>
+        <id name="idDetalleHelado" type="java.lang.Integer" unsaved-value="0">
+            <column name="id_detalle_helado"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="pe.lamborgini.domain.mapping.Helado" fetch="join" lazy="false" name="helado">
+            <column name="id_helado" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="pe.lamborgini.domain.mapping.PagoHelado" fetch="select" name="pagoHelado" cascade="all">
+            <column name="id_pago_helado" not-null="false"/>
+        </many-to-one>
+        <many-to-one class="pe.lamborgini.domain.mapping.HeladosEntregadoRecibido" fetch="select"
+                     name="heladosEntregadoRecibido">
+            <column name="id_helados_entregado_recibido" not-null="true"/>
+        </many-to-one>
+        <property name="cantEntregada" type="int">
+            <column name="cant_entregada" not-null="true"/>
+        </property>
+        <property name="cantDevuelta" type="int">
+            <column name="cant_devuelta" not-null="true"/>
+        </property>
+        <property name="cantVendida" type="int">
+            <column name="cant_vendida" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>
