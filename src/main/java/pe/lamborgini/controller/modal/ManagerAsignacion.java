@@ -4,6 +4,8 @@
  */
 package pe.lamborgini.controller.modal;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pe.lamborgini.controller.ManagerHeladero;
 import pe.lamborgini.domain.mapping.DetalleHelado;
 import pe.lamborgini.domain.mapping.Helado;
@@ -23,6 +25,8 @@ import java.util.List;
  */
 public class ManagerAsignacion {
 
+    private static final Logger LOG = LoggerFactory.getLogger(ManagerAsignacion.class);
+
     private String nombre_consecionario;
     private String nombres_heladero;
     private String p_id_heladero;
@@ -31,9 +35,6 @@ public class ManagerAsignacion {
     private int sug_id_helado;
     private List<DetalleHelado> listaDetalleHelados;
     private String oncomplete;
-
-    public ManagerAsignacion() {
-    }
 
     public String getNombre_consecionario() {
         return nombre_consecionario;
@@ -84,6 +85,7 @@ public class ManagerAsignacion {
     }
 
     public List<DetalleHelado> getListaDetalleHelados() {
+        LOG.debug("Obteniendo lista de detalle de helado");
         return listaDetalleHelados;
     }
 
@@ -100,6 +102,7 @@ public class ManagerAsignacion {
     }
 
     public void asignarHelado(ActionEvent event) {
+        LOG.debug("Iniciando proceso de asignando helados [{}]", event.getPhaseId());
         this.setOncomplete("");
         p_id_heladero = ((UIParameter) event.getComponent().findComponent("p_id_heladero")).getValue().toString();
         nombres_heladero = ((UIParameter) event.getComponent().findComponent("p_nombres_heladero")).getValue().toString();
@@ -113,13 +116,14 @@ public class ManagerAsignacion {
         }
     }
 
-    public List<Helado> autocomplete(Object suggest) throws Exception {
+    public List<Helado> autocomplete(Object suggest) {
         String pref = (String) suggest;
 
         return HeladoService.obtenerHeladoPorNombre(pref);
     }
 
     public void addHelado(ActionEvent event) {
+        LOG.debug("Asignando helado [{}]", event.getPhaseId());
         this.setOncomplete("");
         if (cantidad == 0) {
             this.setOncomplete("javascript:alert('Ingrese un valor distinto a cero (0).');");
@@ -166,6 +170,7 @@ public class ManagerAsignacion {
     }
 
     public void guardarAsignaciones(ActionEvent event) {
+        LOG.debug("Guardando asignacione de helados [{}]", event.getPhaseId());
         this.setOncomplete("");
         if (listaDetalleHelados.isEmpty()) {
             this.setOncomplete("javascript:alert('Debe de ingresar algun helado.')");

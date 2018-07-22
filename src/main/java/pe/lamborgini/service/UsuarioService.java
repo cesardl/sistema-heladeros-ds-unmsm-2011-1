@@ -15,7 +15,10 @@ import java.util.Enumeration;
 /**
  * @author Cesardl
  */
-public class UsuarioService {
+public final class UsuarioService {
+
+    private UsuarioService() {
+    }
 
     public static boolean validarUsuario(String nombre_usuario, String contrasenha) {
         UsuarioDAO dao = new UsuarioDAO();

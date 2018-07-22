@@ -4,6 +4,8 @@
  */
 package pe.lamborgini.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pe.lamborgini.domain.mapping.Concesionario;
 import pe.lamborgini.domain.mapping.Usuario;
 import pe.lamborgini.service.ConcesionarioService;
@@ -18,15 +20,14 @@ import java.util.List;
  */
 public class ManagerUsuario {
 
+    private static final Logger LOG = LoggerFactory.getLogger(ManagerUsuario.class);
+
     private String nombre_usuario;
     private String contrasenha;
     private List<Usuario> listaUsuarios;
     private int id_concesionario;
     private SelectItem[] concesionarios;
     private String oncomplete;
-
-    public ManagerUsuario() {
-    }
 
     public String getContrasenha() {
         return contrasenha;
@@ -45,6 +46,7 @@ public class ManagerUsuario {
     }
 
     public List<Usuario> getListaUsuarios() {
+        LOG.debug("Obteniendo lista de usuarios");
         return listaUsuarios;
     }
 
@@ -53,6 +55,7 @@ public class ManagerUsuario {
     }
 
     public SelectItem[] getConcesionarios() {
+        LOG.debug("Obteniendo lista de concesionarios");
         if (concesionarios == null) {
             Collection<Concesionario> c = ConcesionarioService.obtenerConcesionario();
             concesionarios = new SelectItem[c.size()];

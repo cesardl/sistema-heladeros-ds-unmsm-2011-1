@@ -4,6 +4,8 @@
  */
 package pe.lamborgini.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pe.lamborgini.domain.mapping.Heladero;
 import pe.lamborgini.service.HeladeroService;
 
@@ -16,6 +18,8 @@ import java.util.List;
  * @author Cesardl
  */
 public class ManagerHeladero {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ManagerHeladero.class);
 
     private String nombre;
     private String apellido;
@@ -44,6 +48,7 @@ public class ManagerHeladero {
     }
 
     public List<Heladero> getListaHeladeros() {
+        LOG.debug("Obteniendo lista de heladeros");
         return listaHeladeros;
     }
 
@@ -60,6 +65,7 @@ public class ManagerHeladero {
     }
 
     public void buscarHeladero(ActionEvent event) {
+        LOG.debug("Buscando heladeros [{}]", event.getPhaseId());
         this.setOncomplete("");
         if (nombre.trim().length() == 0 && apellido.trim().length() == 0) {
             this.setOncomplete("javascript:alert('Ingrese campo para realizar la busqueda.')");

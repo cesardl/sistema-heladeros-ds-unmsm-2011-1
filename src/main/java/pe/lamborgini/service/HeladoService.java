@@ -12,7 +12,10 @@ import java.util.List;
 /**
  * @author Cesardl
  */
-public class HeladoService {
+public final class HeladoService {
+
+    private HeladoService() {
+    }
 
     public static List<Helado> obtenerHeladoPorNombre(String pref) {
         HeladoDAO dao = new HeladoDAO();

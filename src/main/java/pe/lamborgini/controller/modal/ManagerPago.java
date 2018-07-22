@@ -4,6 +4,8 @@
  */
 package pe.lamborgini.controller.modal;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pe.lamborgini.controller.ManagerHeladero;
 import pe.lamborgini.domain.mapping.DetalleHelado;
 import pe.lamborgini.domain.mapping.HeladosEntregadoRecibido;
@@ -21,14 +23,13 @@ import java.util.List;
  */
 public class ManagerPago {
 
+    private static final Logger LOG = LoggerFactory.getLogger(ManagerPago.class);
+
     private String nombre_consecionario;
     private String nombres_heladero;
     private List<DetalleHelado> listaDetalleHelados;
     private String p_id_heladero;
     private String oncomplete;
-
-    public ManagerPago() {
-    }
 
     public String getNombre_consecionario() {
         return nombre_consecionario;
@@ -47,6 +48,7 @@ public class ManagerPago {
     }
 
     public List<DetalleHelado> getListaDetalleHelados() {
+        LOG.debug("Obteniendo lista de detalle de helado");
         return listaDetalleHelados;
     }
 
@@ -63,6 +65,7 @@ public class ManagerPago {
     }
 
     public void pagarHeladero(ActionEvent event) {
+        LOG.debug("Iniciar proceso de devolucion de helados y pago al heladero [{}]", event.getPhaseId());
         this.setOncomplete("");
         p_id_heladero = ((UIParameter) event.getComponent().findComponent("p_id_heladero")).getValue().toString();
 
@@ -75,13 +78,14 @@ public class ManagerPago {
             } else {
                 nombres_heladero = her.getHeladero().toString();
                 nombre_consecionario = her.getHeladero().getConcesionario().getNombreConces();
-                listaDetalleHelados = new ArrayList<DetalleHelado>(her.getDetalleHelados());
+                listaDetalleHelados = new ArrayList<>(her.getDetalleHelados());
                 this.setOncomplete("Richfaces.showModalPanel('mp_pagar_heladero');");
             }
         }
     }
 
     public void realizarPago(ActionEvent event) {
+        LOG.debug("Realizando pago [{}]", event.getPhaseId());
         this.setOncomplete("");
         if (DetalleHeladoService.validarListaDeEntrega(listaDetalleHelados)) {
             DetalleHeladoService.actualizarEntregaHelados(listaDetalleHelados, p_id_heladero);

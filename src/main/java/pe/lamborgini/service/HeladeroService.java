@@ -19,9 +19,12 @@ import java.util.List;
 /**
  * @author Cesardl
  */
-public class HeladeroService {
+public final class HeladeroService {
 
     private static final Logger LOG = LoggerFactory.getLogger(HeladeroService.class);
+
+    private HeladeroService() {
+    }
 
     public static Collection<Heladero> obtenerHeladeros(String nombre, String apellido) {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().

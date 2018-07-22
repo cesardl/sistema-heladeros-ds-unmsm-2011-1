@@ -19,17 +19,19 @@ import java.util.List;
 /**
  * @author Cesardl
  */
-public class DetalleHeladoService {
+public final class DetalleHeladoService {
 
     private static final Logger LOG = LoggerFactory.getLogger(DetalleHeladoService.class);
+
+    private DetalleHeladoService() {
+    }
 
     public static int calcularHeladosPendientes(String id_heladero, int id_helado) {
         DetalleHelado dh = new DetalleHeladoDAO().getDetalleHeladoAnterior(id_heladero, id_helado);
         if (dh == null) {
             return 0;
         } else {
-            LOG.debug("a la fecha {}", AppUtil.calcularFechaAnterior());
-            LOG.debug("sobro {}", dh.getCantDevuelta());
+            LOG.debug("A la fecha {} sobro {}", AppUtil.calcularFechaAnterior(), dh.getCantDevuelta());
             return dh.getCantDevuelta();
         }
     }
@@ -48,8 +50,7 @@ public class DetalleHeladoService {
         return true;
     }
 
-    public static void actualizarEntregaHelados(List<DetalleHelado> listaDetalleHelados,
-                                                String id_heladero) {
+    public static void actualizarEntregaHelados(List<DetalleHelado> listaDetalleHelados, String id_heladero) {
 
         double pago = 0;
         Factura factura = new Factura();
@@ -58,8 +59,7 @@ public class DetalleHeladoService {
         factura.setFecha(new Date());
         factura.setNumeroFactura(AppUtil.random() * 100);
         for (DetalleHelado detalleHelado : listaDetalleHelados) {
-            double cantidad_pagada = detalleHelado.getHelado().getPrecio()
-                    * detalleHelado.getCantVendida();
+            double cantidad_pagada = detalleHelado.getHelado().getPrecio() * detalleHelado.getCantVendida();
 
             pago = pago + cantidad_pagada;
             PagoHelado ph = new PagoHelado();

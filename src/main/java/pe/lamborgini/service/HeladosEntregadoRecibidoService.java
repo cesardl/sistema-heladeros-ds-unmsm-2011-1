@@ -17,7 +17,10 @@ import java.util.List;
 /**
  * @author Cesardl
  */
-public class HeladosEntregadoRecibidoService {
+public final class HeladosEntregadoRecibidoService {
+
+    private HeladosEntregadoRecibidoService() {
+    }
 
     public static HeladosEntregadoRecibido existeAsignacionParaHeladero(String p_id_heladero) {
         return new HeladosEntregadoRecibidoDAO().getHeladosEntregadoRecibido(

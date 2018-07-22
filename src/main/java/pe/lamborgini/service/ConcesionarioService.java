@@ -14,7 +14,10 @@ import java.util.List;
 /**
  * @author Cesardl
  */
-public class ConcesionarioService {
+public final class ConcesionarioService {
+
+    private ConcesionarioService() {
+    }
 
     public static Collection<Concesionario> obtenerConcesionario() {
         ConcesionarioDAO dao = new ConcesionarioDAO();
