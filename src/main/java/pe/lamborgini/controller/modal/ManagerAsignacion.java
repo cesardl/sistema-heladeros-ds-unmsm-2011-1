@@ -17,7 +17,7 @@ import pe.lamborgini.util.AppUtil;
 
 import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -35,6 +35,10 @@ public class ManagerAsignacion {
     private int sug_id_helado;
     private List<DetalleHelado> listaDetalleHelados;
     private String oncomplete;
+
+    public ManagerAsignacion() {
+        listaDetalleHelados = Collections.emptyList();
+    }
 
     public String getNombre_consecionario() {
         return nombre_consecionario;
@@ -85,7 +89,7 @@ public class ManagerAsignacion {
     }
 
     public List<DetalleHelado> getListaDetalleHelados() {
-        LOG.debug("Obteniendo lista de detalle de helado");
+        LOG.debug("Obteniendo lista de detalle de helado, {} en total", listaDetalleHelados.size());
         return listaDetalleHelados;
     }
 
@@ -111,7 +115,7 @@ public class ManagerAsignacion {
         if (her != null) {
             this.setOncomplete("javascript:alert('Ya presenta asignaciones para el de hoy.');");
         } else {
-            listaDetalleHelados = new ArrayList<DetalleHelado>(0);
+            listaDetalleHelados = Collections.emptyList();
             this.setOncomplete("Richfaces.showModalPanel('mp_asignar_helados');");
         }
     }

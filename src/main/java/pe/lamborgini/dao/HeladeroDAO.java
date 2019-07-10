@@ -22,7 +22,8 @@ public class HeladeroDAO {
 
     private static final Logger LOG = LoggerFactory.getLogger(HeladeroDAO.class);
 
-    public List<Heladero> getListaHeladeros(String nombre, String apellido, int id_usuario) {
+    @SuppressWarnings("unchecked")
+    public List<Heladero> getListaHeladeros(final String nombre, final String apellido, final int id_usuario) {
         Session session = AppUtil.getSessionFactory().openSession();
         List<Heladero> heladeros = null;
         try {
@@ -35,8 +36,9 @@ public class HeladeroDAO {
                 c.add(Restrictions.like("apellidos", "%" + apellido + "%"));
             }
             heladeros = c.list();
+            LOG.info("Busqueda de heladeros {}", heladeros.size());
         } catch (HibernateException e) {
-            LOG.error("HeladeroDAO.getListaHeladeros", e);
+            LOG.error(e.getMessage(), e);
         } finally {
             session.close();
         }

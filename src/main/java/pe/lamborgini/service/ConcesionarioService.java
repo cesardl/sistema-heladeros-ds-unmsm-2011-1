@@ -7,8 +7,8 @@ package pe.lamborgini.service;
 import pe.lamborgini.dao.ConcesionarioDAO;
 import pe.lamborgini.domain.mapping.Concesionario;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,7 +23,7 @@ public final class ConcesionarioService {
         ConcesionarioDAO dao = new ConcesionarioDAO();
         List<Concesionario> c = dao.getConcesionarios();
         if (c == null) {
-            return new ArrayList<>(0);
+            return Collections.emptyList();
         } else {
             return c;
         }

@@ -12,6 +12,7 @@ import pe.lamborgini.service.HeladeroService;
 import javax.faces.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class ManagerHeladero {
     //Para el modal
 
     public ManagerHeladero() {
-        listaHeladeros = new ArrayList<>(0);
+        listaHeladeros = Collections.emptyList();
     }
 
     public String getNombre() {
@@ -48,7 +49,7 @@ public class ManagerHeladero {
     }
 
     public List<Heladero> getListaHeladeros() {
-        LOG.debug("Obteniendo lista de heladeros");
+        LOG.debug("Obteniendo lista de heladeros, {} en total", listaHeladeros.size());
         return listaHeladeros;
     }
 
@@ -66,18 +67,14 @@ public class ManagerHeladero {
 
     public void buscarHeladero(ActionEvent event) {
         LOG.debug("Buscando heladeros [{}]", event.getPhaseId());
-        this.setOncomplete("");
-        if (nombre.trim().length() == 0 && apellido.trim().length() == 0) {
-            this.setOncomplete("javascript:alert('Ingrese campo para realizar la busqueda.')");
-        } else {
-            Collection<Heladero> c = HeladeroService.obtenerHeladeros(nombre, apellido);
-            listaHeladeros = new ArrayList<>(c);
-        }
+        this.oncomplete = "";
+        Collection<Heladero> c = HeladeroService.obtenerHeladeros(nombre, apellido);
+        listaHeladeros = new ArrayList<>(c);
     }
 
     public void cleanFormularioPrincipal() {
         this.nombre = "";
         this.apellido = "";
-        this.listaHeladeros = new ArrayList<>(0);
+        this.listaHeladeros = Collections.emptyList();
     }
 }

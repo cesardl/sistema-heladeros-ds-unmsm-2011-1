@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import pe.lamborgini.domain.mapping.Concesionario;
 import pe.lamborgini.util.AppUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,13 +21,14 @@ public class ConcesionarioDAO {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConcesionarioDAO.class);
 
+    @SuppressWarnings("unchecked")
     public List<Concesionario> getConcesionarios() {
         Session session = AppUtil.getSessionFactory().openSession();
         List<Concesionario> concesionarios;
         try {
             Criteria c = session.createCriteria(Concesionario.class);
 
-            concesionarios = new ArrayList<Concesionario>(c.list());
+            concesionarios = c.list();
         } catch (HibernateException e) {
             LOG.error("ConcesionarioDAO.getConcesionarios", e);
             concesionarios = null;

@@ -21,7 +21,7 @@ import java.util.Date;
  *
  * @author Cesardl
  */
-public class AppUtil {
+public final class AppUtil {
 
     public static final int ERROR = -1;
     private static final Logger LOG = LoggerFactory.getLogger(AppUtil.class);
@@ -29,11 +29,11 @@ public class AppUtil {
 
     static {
         try {
-            // Create the SessionFactory from standard (hibernate.cfg.xml) 
+            // Create the SessionFactory from standard (hibernate.cfg.xml)
             // config file.
             sessionFactory = new Configuration().configure().buildSessionFactory();
         } catch (Throwable ex) {
-            // Log the exception. 
+            // Log the exception.
             LOG.error("Initial SessionFactory creation failed.", ex);
             throw new ExceptionInInitializerError(ex);
         }

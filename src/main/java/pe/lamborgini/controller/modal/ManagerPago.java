@@ -16,6 +16,7 @@ import pe.lamborgini.util.AppUtil;
 import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -30,6 +31,10 @@ public class ManagerPago {
     private List<DetalleHelado> listaDetalleHelados;
     private String p_id_heladero;
     private String oncomplete;
+
+    public ManagerPago() {
+        listaDetalleHelados = Collections.emptyList();
+    }
 
     public String getNombre_consecionario() {
         return nombre_consecionario;
@@ -48,7 +53,7 @@ public class ManagerPago {
     }
 
     public List<DetalleHelado> getListaDetalleHelados() {
-        LOG.debug("Obteniendo lista de detalle de helado");
+        LOG.debug("Obteniendo lista de detalle de helado, {} en total", listaDetalleHelados.size());
         return listaDetalleHelados;
     }
 

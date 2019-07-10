@@ -13,6 +13,7 @@ import pe.lamborgini.service.UsuarioService;
 
 import javax.faces.model.SelectItem;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,6 +29,10 @@ public class ManagerUsuario {
     private int id_concesionario;
     private SelectItem[] concesionarios;
     private String oncomplete;
+
+    public ManagerUsuario() {
+        listaUsuarios = Collections.emptyList();
+    }
 
     public String getContrasenha() {
         return contrasenha;
@@ -46,7 +51,7 @@ public class ManagerUsuario {
     }
 
     public List<Usuario> getListaUsuarios() {
-        LOG.debug("Obteniendo lista de usuarios");
+        LOG.debug("Obteniendo lista de usuarios, {} en total", listaUsuarios.size());
         return listaUsuarios;
     }
 

@@ -6,8 +6,8 @@ package pe.lamborgini.service;
 
 import pe.lamborgini.dao.UsuarioDAO;
 import pe.lamborgini.domain.mapping.Usuario;
+import pe.lamborgini.util.SessionUtils;
 
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
@@ -24,8 +24,7 @@ public final class UsuarioService {
         UsuarioDAO dao = new UsuarioDAO();
         Usuario usuario = dao.getUsuario(nombre_usuario, contrasenha);
         if (usuario != null) {
-            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-            HttpSession session = (HttpSession) context.getSession(false);
+            HttpSession session = SessionUtils.getInstance().load();
             session.setAttribute("usuario", usuario);
             return true;
         } else {
@@ -34,8 +33,7 @@ public final class UsuarioService {
     }
 
     public static void cerrarSesion() {
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().
-                getExternalContext().getSession(true);
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
         Enumeration atributos = session.getAttributeNames();
         while (atributos.hasMoreElements()) {
             session.removeAttribute((String) atributos.nextElement());

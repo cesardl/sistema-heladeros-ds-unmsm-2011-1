@@ -4,10 +4,7 @@
  */
 package pe.lamborgini.dao;
 
-import org.hibernate.Hibernate;
-import org.hibernate.Query;
-import org.hibernate.Transaction;
-import org.hibernate.classic.Session;
+import org.hibernate.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pe.lamborgini.domain.mapping.Helado;
@@ -29,16 +26,17 @@ public class HeladoDAO {
         List<Helado> helados = null;
         try {
             tx = session.beginTransaction();
+
             Query query = session.createSQLQuery("SELECT id_helado, nombre_helado FROM helado "
                     + "WHERE nombre_helado LIKE :n_helado").
                     addScalar("id_helado", Hibernate.INTEGER).
                     addScalar("nombre_helado", Hibernate.STRING).
                     setString("n_helado", "%" + nombre + "%");
 
-            List l = query.list();
+            List list = query.list();
             helados = new ArrayList<>();
-            for (Object aL : l) {
-                Object[] objs = (Object[]) aL;
+            for (Object obj : list) {
+                Object[] objs = (Object[]) obj;
 
                 Helado h = new Helado();
                 h.setIdHelado(AppUtil.aInteger(objs[0].toString()));
@@ -46,7 +44,7 @@ public class HeladoDAO {
                 helados.add(h);
             }
             tx.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             LOG.error("HeladoDAO.getListaHeladosPorNombre", e);
             if (tx != null) {
                 tx.rollback();
