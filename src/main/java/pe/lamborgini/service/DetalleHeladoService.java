@@ -26,9 +26,10 @@ public final class DetalleHeladoService {
     private DetalleHeladoService() {
     }
 
-    public static int calcularHeladosPendientes(String id_heladero, int id_helado) {
-        DetalleHelado dh = new DetalleHeladoDAO().getDetalleHeladoAnterior(id_heladero, id_helado);
+    public static int calcularHeladosPendientes(final String iceCreamManId, final int iceCreamId) {
+        DetalleHelado dh = new DetalleHeladoDAO().getDetalleHeladoAnterior(iceCreamManId, iceCreamId);
         if (dh == null) {
+            LOG.warn("Ice cream detail not found");
             return 0;
         } else {
             LOG.debug("A la fecha {} sobro {}", AppUtil.calcularFechaAnterior(), dh.getCantDevuelta());
@@ -54,7 +55,6 @@ public final class DetalleHeladoService {
 
         double pago = 0;
         Factura factura = new Factura();
-        factura.setNumeroFactura(AppUtil.random());
         factura.setDescripcion("Venta de helados a fecha " + AppUtil.dateWithFormat(new Date()));
         factura.setFecha(new Date());
         factura.setNumeroFactura(AppUtil.random() * 100);

@@ -5,6 +5,7 @@
 package pe.lamborgini.dao;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -22,19 +23,20 @@ public class HeladosEntregadoRecibidoDAO {
 
     private static final Logger LOG = LoggerFactory.getLogger(HeladosEntregadoRecibidoDAO.class);
 
-    public HeladosEntregadoRecibido getHeladosEntregadoRecibido(int id_heladero) {
+    public HeladosEntregadoRecibido getHeladosEntregadoRecibido(final int iceCreamManId) {
+        LOG.debug("DB query: iceCreamManId: '{}'", iceCreamManId);
         Session session = AppUtil.getSessionFactory().openSession();
         Transaction tx = null;
         HeladosEntregadoRecibido her = null;
         try {
             tx = session.beginTransaction();
             Criteria c = session.createCriteria(HeladosEntregadoRecibido.class).
-                    add(Restrictions.eq("heladero.idHeladero", id_heladero)).
+                    add(Restrictions.eq("heladero.idHeladero", iceCreamManId)).
                     add(Restrictions.eq("fecha", new Date()));
 
             her = (HeladosEntregadoRecibido) c.uniqueResult();
             tx.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             LOG.error("HeladosEntregadoRecibidoDAO.getHeladosEntregadoRecibido", e);
             if (tx != null) {
                 tx.rollback();
@@ -45,14 +47,14 @@ public class HeladosEntregadoRecibidoDAO {
         return her;
     }
 
-    public void insertHeladosEntregadoRecibido(HeladosEntregadoRecibido her) {
+    public void insertHeladosEntregadoRecibido(final HeladosEntregadoRecibido her) {
         Session session = AppUtil.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
             session.save(her);
             tx.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             LOG.error("HeladosEntregadoRecibidoDAO.insertHeladosEntregadoRecibido", e);
             if (tx != null) {
                 tx.rollback();

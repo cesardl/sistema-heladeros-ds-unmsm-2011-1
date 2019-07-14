@@ -8,33 +8,30 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import pe.lamborgini.DomainStubs;
-import pe.lamborgini.domain.mapping.Heladero;
+import pe.lamborgini.domain.mapping.Usuario;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
-import java.util.List;
+import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
- * Created on 07/07/2019.
+ * Created on 14/07/2019.
  *
  * @author Cesardl
  * @see <a href='https://github.com/powermock/powermock/wiki/Code-coverage-with-JaCoCo'>Code Coverage with JaCoCo</a>
+ * @see <a href='https://github.com/powermock/powermock/issues/478'>Add jacoco package to the default packages to be deferred #478</a>
  */
 @RunWith(PowerMockRunner.class)
 @PowerMockIgnore({"org.jacoco.agent.rt.*", "org.apache.log4j.*"})
 @PrepareForTest(FacesContext.class)
-public class ManagerHeladeroTest {
+public class ManagerUsuarioTest {
 
-    private ManagerHeladero manager = new ManagerHeladero();
-    @Mock
-    private ActionEvent actionEvent;
+    private ManagerUsuario manager = new ManagerUsuario();
     @Mock
     private FacesContext facesContext;
     @Mock
@@ -51,30 +48,35 @@ public class ManagerHeladeroTest {
     }
 
     @Test
-    public void buscarHeladeroWithoutFilterTest() {
-        manager.setNombre("");
-        manager.setApellido("");
+    public void ingresarUsuarioSuccesfullyTest() {
+        manager.setNombre_usuario("admin");
+        manager.setContrasenha("4dm1n");
 
-        when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.user(1));
+        String result = manager.ingresar();
 
-        manager.buscarHeladero(actionEvent);
+        assertEquals("SUCCESS", result);
 
-        List<Heladero> result = manager.getListaHeladeros();
-
-        assertEquals(5, result.size());
+        verify(httpSession, times(1)).setAttribute(anyString(), any(Usuario.class));
+        verifyNoMoreInteractions(httpSession);
     }
 
     @Test
-    public void buscarHeladeroWithFilterTest() {
-        manager.setNombre("d");
-        manager.setApellido("z");
+    public void ingresarUsuarioFailedTest() {
+        manager.setNombre_usuario("fakeUser");
+        manager.setContrasenha("fakePassword");
 
-        when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.user(2));
+        String result = manager.ingresar();
 
-        manager.buscarHeladero(actionEvent);
+        assertEquals("FAIL", result);
 
-        List<Heladero> result = manager.getListaHeladeros();
+        verify(httpSession, never()).setAttribute(anyString(), any(Usuario.class));
+    }
 
-        assertEquals(1, result.size());
+    @Test
+    public void salirTest() {
+        when(httpSession.getAttributeNames()).thenReturn(Collections.enumeration(Collections.singleton("usuario")));
+        String result = manager.salir();
+
+        assertEquals("TO_INDEX", result);
     }
 }

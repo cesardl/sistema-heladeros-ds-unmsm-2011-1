@@ -1,6 +1,6 @@
 # Sistema de Gesti&oacute;n de Venta de Helados (SIGEVH)
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=pe.edu.unmsm.fisi.sigevh-webapp&metric=alert_status)](https://sonarcloud.io/project/issues?id=pe.edu.unmsm.fisi.sigevh-webapp&resolved=false) [![Coverage Status](https://sonarcloud.io/api/project_badges/measure?project=pe.edu.unmsm.fisi.sigevh-webapp&metric=coverage)](https://sonarcloud.io/component_measures?id=pe.edu.unmsm.fisi.sigevh-webapp&metric=coverage)
+[![Build Status](https://travis-ci.org/cesardl/sistema-heladeros-ds-unmsm-2011-1.svg?branch=master)](https://travis-ci.org/cesardl/sistema-heladeros-ds-unmsm-2011-1) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=pe.edu.unmsm.fisi.sigevh-webapp&metric=alert_status)](https://sonarcloud.io/project/issues?id=pe.edu.unmsm.fisi.sigevh-webapp&resolved=false) [![Coverage Status](https://sonarcloud.io/api/project_badges/measure?project=pe.edu.unmsm.fisi.sigevh-webapp&metric=coverage)](https://sonarcloud.io/component_measures?id=pe.edu.unmsm.fisi.sigevh-webapp&metric=coverage)
 
 Proyecto del curso Dise&ntilde;o de Sistemas, ciclo 2011-I.
 

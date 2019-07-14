@@ -17,8 +17,9 @@ import pe.lamborgini.util.AppUtil;
 
 import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * @author Cesardl
@@ -37,7 +38,7 @@ public class ManagerAsignacion {
     private String oncomplete;
 
     public ManagerAsignacion() {
-        listaDetalleHelados = Collections.emptyList();
+        listaDetalleHelados = new ArrayList<>(0);
     }
 
     public String getNombre_consecionario() {
@@ -106,44 +107,68 @@ public class ManagerAsignacion {
     }
 
     public void asignarHelado(ActionEvent event) {
-        LOG.debug("Iniciando proceso de asignando helados [{}]", event.getPhaseId());
-        this.setOncomplete("");
+        LOG.debug("Iniciando proceso de asignacion de helados [{}]", event.getPhaseId());
+
+        oncomplete = "";
+
         p_id_heladero = ((UIParameter) event.getComponent().findComponent("p_id_heladero")).getValue().toString();
         nombres_heladero = ((UIParameter) event.getComponent().findComponent("p_nombres_heladero")).getValue().toString();
         nombre_consecionario = ((UIParameter) event.getComponent().findComponent("p_nombre_consecionario")).getValue().toString();
+
         HeladosEntregadoRecibido her = HeladosEntregadoRecibidoService.existeAsignacionParaHeladero(p_id_heladero);
-        if (her != null) {
-            this.setOncomplete("javascript:alert('Ya presenta asignaciones para el de hoy.');");
+        if (her == null) {
+            listaDetalleHelados = new ArrayList<>(0);
+            oncomplete = "Richfaces.showModalPanel('mp_asignar_helados');";
         } else {
-            listaDetalleHelados = Collections.emptyList();
-            this.setOncomplete("Richfaces.showModalPanel('mp_asignar_helados');");
+            oncomplete = "javascript:alert('Ya presenta asignaciones para el de hoy.');";
         }
     }
 
     public List<Helado> autocomplete(Object suggest) {
         String pref = (String) suggest;
-
+        LOG.debug("Making search of an ice cream with name '{}'", pref);
         return HeladoService.obtenerHeladoPorNombre(pref);
     }
 
     public void addHelado(ActionEvent event) {
         LOG.debug("Asignando helado [{}]", event.getPhaseId());
-        this.setOncomplete("");
-        if (cantidad == 0) {
-            this.setOncomplete("javascript:alert('Ingrese un valor distinto a cero (0).');");
+        oncomplete = "";
+
+        if (sug_id_helado == 0) {
+            LOG.warn("Should to select an ice cream");
+            oncomplete = "javascript:alert('Debe de ingresar algun helado.')";
+
+        } else if (cantidad == 0) {
+            LOG.warn("Should to enter a quantity");
+            oncomplete = "javascript:alert('Ingrese un valor distinto a cero (0).');";
+
         } else {
-            DetalleHelado dh = new DetalleHelado();
-            dh.setCantDevuelta(0);
-            dh.setCantEntregada(cantidad);
-            dh.setCantVendida(0);
-            dh.setCantPendiente(DetalleHeladoService.calcularHeladosPendientes(p_id_heladero, sug_id_helado));
+            LOG.info("Generating ice cream assignation");
+            DetalleHelado iceCreamDetail = listaDetalleHelados.stream()
+                    .filter(dh -> AppUtil.aInteger(dh.getHelado().getIdHelado().toString()) == sug_id_helado)
+                    .findFirst().orElse(new DetalleHelado());
+
+            if (iceCreamDetail.getHelado() == null) {
+                listaDetalleHelados.add(iceCreamDetail);
+                LOG.info("Adding new ice cream {} to current list", sug_helado);
+            } else {
+                LOG.info("Founded ice cream detail: {}", iceCreamDetail.getHelado().getNombreHelado());
+            }
+
+            int lastDayPendingIceCreams = DetalleHeladoService.calcularHeladosPendientes(p_id_heladero, sug_id_helado);
+
+            iceCreamDetail.setCantEntregada(cantidad + iceCreamDetail.getCantEntregada());
+            iceCreamDetail.setCantDevuelta(0);
+            iceCreamDetail.setCantVendida(0);
+            // Actually + pending assignations
+            iceCreamDetail.setCantPendiente(cantidad + +iceCreamDetail.getCantPendiente() + lastDayPendingIceCreams);
 
             Helado helado = new Helado();
             helado.setIdHelado(sug_id_helado);
             helado.setNombreHelado(sug_helado);
-            dh.setHelado(helado);
+            iceCreamDetail.setHelado(helado);
 
-            listaDetalleHelados.add(dh);
+            LOG.info("Adding {} ice creams", listaDetalleHelados.size());
             updatePositions();
             cleanFormularioAsignacion();
         }
@@ -151,20 +176,12 @@ public class ManagerAsignacion {
 
     public void removeHelado(ActionEvent event) {
         String p_dh_pos = ((UIParameter) event.getComponent().findComponent("dh_pos")).getValue().toString();
-        for (int i = 0; i < listaDetalleHelados.size(); i++) {
-            DetalleHelado dh = listaDetalleHelados.get(i);
-            if (dh.getPosicion() == AppUtil.aInteger(p_dh_pos)) {
-                listaDetalleHelados.remove(i);
-                break;
-            }
-        }
+        listaDetalleHelados.removeIf(dh -> dh.getPosicion() == AppUtil.aInteger(p_dh_pos));
         updatePositions();
     }
 
     private void updatePositions() {
-        for (int i = 0; i < listaDetalleHelados.size(); i++) {
-            listaDetalleHelados.get(i).setPosicion(i + 1);
-        }
+        IntStream.range(0, listaDetalleHelados.size()).forEach(i -> listaDetalleHelados.get(i).setPosicion(i + 1));
     }
 
     private void cleanFormularioAsignacion() {
@@ -175,16 +192,18 @@ public class ManagerAsignacion {
 
     public void guardarAsignaciones(ActionEvent event) {
         LOG.debug("Guardando asignacione de helados [{}]", event.getPhaseId());
-        this.setOncomplete("");
+
+        oncomplete = "";
+
         if (listaDetalleHelados.isEmpty()) {
-            this.setOncomplete("javascript:alert('Debe de ingresar algun helado.')");
+            oncomplete = "javascript:alert('Debe de ingresar algun helado.')";
         } else {
             HeladosEntregadoRecibidoService.guardarHeladosEntregadoRecibido(listaDetalleHelados, p_id_heladero);
 
             ManagerHeladero mh = (ManagerHeladero) AppUtil.callManageBean("managerHeladero");
             mh.cleanFormularioPrincipal();
-            this.setOncomplete("javascript:alert('Asignacion realizada con exito.');"
-                    + "Richfaces.hideModalPanel('mp_asignar_helados');");
+            oncomplete = "javascript:alert('Asignacion realizada con exito.');" +
+                    "Richfaces.hideModalPanel('mp_asignar_helados');";
         }
     }
 }

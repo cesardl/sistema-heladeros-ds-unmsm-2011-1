@@ -20,9 +20,9 @@ public final class UsuarioService {
     private UsuarioService() {
     }
 
-    public static boolean validarUsuario(String nombre_usuario, String contrasenha) {
+    public static boolean validarUsuario(String userName, String password) {
         UsuarioDAO dao = new UsuarioDAO();
-        Usuario usuario = dao.getUsuario(nombre_usuario, contrasenha);
+        Usuario usuario = dao.getUsuario(userName, password);
         if (usuario != null) {
             HttpSession session = SessionUtils.getInstance().load();
             session.setAttribute("usuario", usuario);

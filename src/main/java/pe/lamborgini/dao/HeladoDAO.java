@@ -20,10 +20,11 @@ public class HeladoDAO {
 
     private static final Logger LOG = LoggerFactory.getLogger(HeladoDAO.class);
 
-    public List<Helado> getListaHelados(String nombre) {
+    public List<Helado> getListaHelados(final String iceCreamName) {
+        LOG.debug("DB query: iceCreamName: '{}'", iceCreamName);
         Session session = AppUtil.getSessionFactory().getCurrentSession();
         Transaction tx = null;
-        List<Helado> helados = null;
+        List<Helado> helados = new ArrayList<>();
         try {
             tx = session.beginTransaction();
 
@@ -31,10 +32,10 @@ public class HeladoDAO {
                     + "WHERE nombre_helado LIKE :n_helado").
                     addScalar("id_helado", Hibernate.INTEGER).
                     addScalar("nombre_helado", Hibernate.STRING).
-                    setString("n_helado", "%" + nombre + "%");
+                    setString("n_helado", "%" + iceCreamName + "%");
 
             List list = query.list();
-            helados = new ArrayList<>();
+            LOG.debug("Getting {} rows from DB", list.size());
             for (Object obj : list) {
                 Object[] objs = (Object[]) obj;
 

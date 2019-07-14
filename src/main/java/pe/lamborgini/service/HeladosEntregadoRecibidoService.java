@@ -22,12 +22,11 @@ public final class HeladosEntregadoRecibidoService {
     private HeladosEntregadoRecibidoService() {
     }
 
-    public static HeladosEntregadoRecibido existeAsignacionParaHeladero(String p_id_heladero) {
-        return new HeladosEntregadoRecibidoDAO().getHeladosEntregadoRecibido(
-                AppUtil.aInteger(p_id_heladero));
+    public static HeladosEntregadoRecibido existeAsignacionParaHeladero(final String p_id_heladero) {
+        return new HeladosEntregadoRecibidoDAO().getHeladosEntregadoRecibido(AppUtil.aInteger(p_id_heladero));
     }
 
-    public static boolean existePagoParaHeladero(HeladosEntregadoRecibido her) {
+    public static boolean existePagoParaHeladero(final HeladosEntregadoRecibido her) {
         boolean tiene_pago = false;
         for (DetalleHelado dh : her.getDetalleHelados()) {
             if (dh.getPagoHelado() != null) {
@@ -38,11 +37,11 @@ public final class HeladosEntregadoRecibidoService {
         return tiene_pago;
     }
 
-    public static void guardarHeladosEntregadoRecibido(List<DetalleHelado> listaDetalleHelados, String p_id_heladero) {
+    public static void guardarHeladosEntregadoRecibido(final List<DetalleHelado> listaDetalleHelados, final String iceCreamMan) {
         HeladosEntregadoRecibido her = new HeladosEntregadoRecibido();
 
         her.setFecha(new Date());
-        her.setHeladero(new Heladero(AppUtil.aInteger(p_id_heladero)));
+        her.setHeladero(new Heladero(AppUtil.aInteger(iceCreamMan)));
 
         double total = 0;
 

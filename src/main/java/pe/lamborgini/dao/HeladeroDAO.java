@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import pe.lamborgini.domain.mapping.Heladero;
 import pe.lamborgini.util.AppUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,20 +24,21 @@ public class HeladeroDAO {
     private static final Logger LOG = LoggerFactory.getLogger(HeladeroDAO.class);
 
     @SuppressWarnings("unchecked")
-    public List<Heladero> getListaHeladeros(final String nombre, final String apellido, final int id_usuario) {
+    public List<Heladero> getListaHeladeros(final String name, final String lastName, final int userId) {
+        LOG.debug("DB query: name: '{}' | lastName: '{}' | userId: '{}'", name, lastName, userId);
         Session session = AppUtil.getSessionFactory().openSession();
-        List<Heladero> heladeros = null;
+        List<Heladero> heladeros = new ArrayList<>();
         try {
             Criteria c = session.createCriteria(Heladero.class).
-                    add(Restrictions.eq("concesionario.idConcesionario", id_usuario));
-            if (nombre.trim().length() != 0) {
-                c.add(Restrictions.like("nombres", "%" + nombre + "%"));
+                    add(Restrictions.eq("concesionario.idConcesionario", userId));
+            if (name.trim().length() != 0) {
+                c.add(Restrictions.like("nombres", "%" + name + "%"));
             }
-            if (apellido.trim().length() != 0) {
-                c.add(Restrictions.like("apellidos", "%" + apellido + "%"));
+            if (lastName.trim().length() != 0) {
+                c.add(Restrictions.like("apellidos", "%" + lastName + "%"));
             }
             heladeros = c.list();
-            LOG.info("Busqueda de heladeros {}", heladeros.size());
+            LOG.debug("Getting {} rows from DB", heladeros.size());
         } catch (HibernateException e) {
             LOG.error(e.getMessage(), e);
         } finally {

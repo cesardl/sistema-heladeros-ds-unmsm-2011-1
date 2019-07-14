@@ -8,14 +8,14 @@ import javax.servlet.http.HttpSession;
  *
  * @author Cesardl
  */
-public class SessionUtils {
+public final class SessionUtils {
     private static SessionUtils ourInstance = new SessionUtils();
+
+    private SessionUtils() {
+    }
 
     public static SessionUtils getInstance() {
         return ourInstance;
-    }
-
-    private SessionUtils() {
     }
 
     public HttpSession load() {

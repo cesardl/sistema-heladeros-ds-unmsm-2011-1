@@ -5,6 +5,7 @@ package pe.lamborgini.util;
  * and open the template in the editor.
  */
 
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import javax.faces.el.ValueBinding;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * Hibernate Utility class with a convenient method to get Session Factory object.
@@ -32,11 +34,14 @@ public final class AppUtil {
             // Create the SessionFactory from standard (hibernate.cfg.xml)
             // config file.
             sessionFactory = new Configuration().configure().buildSessionFactory();
-        } catch (Throwable ex) {
+        } catch (HibernateException ex) {
             // Log the exception.
             LOG.error("Initial SessionFactory creation failed.", ex);
             throw new ExceptionInInitializerError(ex);
         }
+    }
+
+    private AppUtil() {
     }
 
     public static SessionFactory getSessionFactory() {
@@ -63,7 +68,7 @@ public final class AppUtil {
     }
 
     public static int random() {
-        return (int) (Math.random() * 100000);
+        return new Random().nextInt() * 100000;
     }
 
     public static Date calcularFechaAnterior() {

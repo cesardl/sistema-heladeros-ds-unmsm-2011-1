@@ -1,4 +1,4 @@
-/* 
+/*
     Document   : default
     Created on : 10/02/2011, 05:01:54 PM
     Author     : cesardl
@@ -9,13 +9,14 @@
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
 
-root { 
+root {
     display: block;
 }
 
 body {
     padding: 10px;
-    font-size: 12px;
+    font-size: 13px;
+    font-family: Arial,Verdana,sans-serif;
 }
 
 .title-label {

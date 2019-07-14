@@ -13,8 +13,6 @@ import pe.lamborgini.util.SessionUtils;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Cesardl
@@ -33,11 +31,6 @@ public final class HeladeroService {
         LOG.debug("Nombre '{}', Apellido '{}', Concesionario: '{}'", nombre, apellido, id_concesionario);
 
         HeladeroDAO dao = new HeladeroDAO();
-        List<Heladero> c = dao.getListaHeladeros(nombre.trim(), apellido.trim(), id_concesionario);
-        if (c == null) {
-            return Collections.emptyList();
-        } else {
-            return c;
-        }
+        return dao.getListaHeladeros(nombre.trim(), apellido.trim(), id_concesionario);
     }
 }
