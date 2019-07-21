@@ -5,12 +5,14 @@
 package pe.lamborgini.dao;
 
 import org.hibernate.*;
+import org.hibernate.criterion.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pe.lamborgini.domain.mapping.Helado;
 import pe.lamborgini.util.AppUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -19,6 +21,32 @@ import java.util.List;
 public class HeladoDAO {
 
     private static final Logger LOG = LoggerFactory.getLogger(HeladoDAO.class);
+
+    @SuppressWarnings("unchecked")
+    public List<Helado> getAll() {
+        LOG.debug("DB query: iceCreamName");
+        Session session = AppUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = null;
+        List<Helado> iceCreams;
+        try {
+            tx = session.beginTransaction();
+
+            iceCreams = session.createCriteria(Helado.class)
+                    .setFetchMode("stockHelado", FetchMode.JOIN)
+                    .addOrder(Order.asc("nombreHelado"))
+                    .list();
+
+            LOG.debug("Getting {} rows from DB", iceCreams.size());
+            tx.commit();
+        } catch (HibernateException e) {
+            LOG.error(e.getMessage(), e);
+            if (tx != null) {
+                tx.rollback();
+            }
+            iceCreams = Collections.emptyList();
+        }
+        return iceCreams;
+    }
 
     public List<Helado> getListaHelados(final String iceCreamName) {
         LOG.debug("DB query: iceCreamName: '{}'", iceCreamName);
@@ -46,7 +74,7 @@ public class HeladoDAO {
             }
             tx.commit();
         } catch (HibernateException e) {
-            LOG.error("HeladoDAO.getListaHeladosPorNombre", e);
+            LOG.error(e.getMessage(), e);
             if (tx != null) {
                 tx.rollback();
             }

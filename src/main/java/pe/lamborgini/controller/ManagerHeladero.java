@@ -72,6 +72,10 @@ public class ManagerHeladero {
         listaHeladeros = new ArrayList<>(c);
     }
 
+    public void newIceCreamMan(ActionEvent event) {
+        LOG.debug("Nuevo heladero [{}]", event.getPhaseId());
+    }
+
     public void cleanFormularioPrincipal() {
         this.nombre = "";
         this.apellido = "";

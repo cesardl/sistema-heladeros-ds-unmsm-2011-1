@@ -12,14 +12,12 @@ public class StockHelado implements java.io.Serializable {
     private static final long serialVersionUID = -5743705707098731924L;
 
     private Integer idStockHelado;
-    private Helado helado;
     private int cantidad;
 
     public StockHelado() {
     }
 
-    public StockHelado(Helado helado, int cantidad) {
-        this.helado = helado;
+    public StockHelado(int cantidad) {
         this.cantidad = cantidad;
     }
 
@@ -29,14 +27,6 @@ public class StockHelado implements java.io.Serializable {
 
     public void setIdStockHelado(Integer idStockHelado) {
         this.idStockHelado = idStockHelado;
-    }
-
-    public Helado getHelado() {
-        return this.helado;
-    }
-
-    public void setHelado(Helado helado) {
-        this.helado = helado;
     }
 
     public int getCantidad() {

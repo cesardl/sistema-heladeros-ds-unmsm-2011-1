@@ -16,7 +16,7 @@ public class Helado implements java.io.Serializable {
     private Integer idHelado;
     private String nombreHelado;
     private double precio;
-    private Set<StockHelado> stockHelados = new HashSet<>(0);
+    private StockHelado stockHelado;
     private Set<DetalleHelado> detalleHelados = new HashSet<>(0);
 
     public Helado() {
@@ -27,10 +27,10 @@ public class Helado implements java.io.Serializable {
         this.precio = precio;
     }
 
-    public Helado(String nombreHelado, double precio, Set<StockHelado> stockHelados, Set<DetalleHelado> detalleHelados) {
+    public Helado(String nombreHelado, double precio, StockHelado stockHelado, Set<DetalleHelado> detalleHelados) {
         this.nombreHelado = nombreHelado;
         this.precio = precio;
-        this.stockHelados = stockHelados;
+        this.stockHelado = stockHelado;
         this.detalleHelados = detalleHelados;
     }
 
@@ -58,12 +58,12 @@ public class Helado implements java.io.Serializable {
         this.precio = precio;
     }
 
-    public Set<StockHelado> getStockHelados() {
-        return this.stockHelados;
+    public StockHelado getStockHelado() {
+        return stockHelado;
     }
 
-    public void setStockHelados(Set<StockHelado> stockHelados) {
-        this.stockHelados = stockHelados;
+    public void setStockHelado(StockHelado stockHelado) {
+        this.stockHelado = stockHelado;
     }
 
     public Set<DetalleHelado> getDetalleHelados() {
