@@ -16,8 +16,7 @@
             iNombreHelado.innerHTML = sgcomponent.getSelectedItems().pluck('nombreHelado');
         }
     </script>
-    <rich:modalPanel id="mp_asignar_helados" width="500"
-                     autosized="true">
+    <rich:modalPanel id="mp_asignar_helados" width="500" autosized="true">
         <f:facet name="header">
             <h:outputText value="Asignacion de Helados"/>
         </f:facet>
@@ -60,8 +59,7 @@
                                             cellspacing="2" shadowOpacity="4" shadowDepth="4"
                                             minChars="2" zindex="3500"
                                             usingSuggestObjects="true"
-                                            onobjectchange="printObjectsSelected(#{rich:component('suggestionHelado')},#{rich:element('iIdHelado')},#{rich:element('iHelado')});"
-                        >
+                                            onobjectchange="printObjectsSelected(#{rich:component('suggestionHelado')},#{rich:element('iIdHelado')},#{rich:element('iHelado')});">
                             <h:column>
                                 <h:outputText value="#{he.nombreHelado}" style="font-style:bold"/>
                             </h:column>

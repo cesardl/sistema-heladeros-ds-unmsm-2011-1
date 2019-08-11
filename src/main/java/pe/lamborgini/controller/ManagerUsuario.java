@@ -12,6 +12,7 @@ import pe.lamborgini.service.ConcesionarioService;
 import pe.lamborgini.service.UsuarioService;
 
 import javax.faces.model.SelectItem;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +20,9 @@ import java.util.List;
 /**
  * @author Cesardl
  */
-public class ManagerUsuario {
+public class ManagerUsuario implements Serializable {
+
+    private static final long serialVersionUID = 1863859236352270934L;
 
     private static final Logger LOG = LoggerFactory.getLogger(ManagerUsuario.class);
 

@@ -10,6 +10,7 @@ import pe.lamborgini.domain.mapping.Heladero;
 import pe.lamborgini.service.HeladeroService;
 
 import javax.faces.event.ActionEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -18,7 +19,9 @@ import java.util.List;
 /**
  * @author Cesardl
  */
-public class ManagerHeladero {
+public class ManagerHeladero implements Serializable {
+
+    private static final long serialVersionUID = -864588576450764331L;
 
     private static final Logger LOG = LoggerFactory.getLogger(ManagerHeladero.class);
 

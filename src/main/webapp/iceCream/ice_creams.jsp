@@ -12,6 +12,9 @@
 <%@taglib prefix="rich" uri="http://richfaces.org/rich" %>
 <%@taglib prefix="a4j" uri="http://richfaces.org/a4j" %>
 
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <f:view>
     <html>
     <head>
@@ -38,7 +41,7 @@
                             <a4j:commandButton value="Nuevo"
                                                image="images/new.png"
                                                actionListener="#{managerIceCream.newIceCream}"
-                            />
+                                               oncomplete="#{managerIceCream.oncomplete}"/>
                         </h:panelGrid>
                     </td>
                 </tr>
@@ -50,7 +53,9 @@
                 <tr>
                     <td align="center" colspan="3">
                         <rich:dataTable id="tableIceCreams" value="#{managerIceCream.iceCreamsList}" var="iceCream"
-                                        rows="25" style="width : 90%;">
+                                        rows="20" style="width : 90%;"
+                                        onRowMouseOver="this.style.backgroundColor='#F1F1F1'"
+                                        onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'">
 
                             <rich:column style="text-align: center;">
                                 <f:facet name="header">
@@ -74,6 +79,19 @@
                                         value="#{iceCream.stockHelado == null ? 0 : iceCream.stockHelado.cantidad}"/>
                             </rich:column>
 
+                            <rich:column style="text-align: center;">
+                                <f:facet name="header">
+                                    <h:outputText value="Editar"/>
+                                </f:facet>
+                                <a4j:commandButton image="images/edit.gif"
+                                                   reRender="mp_ice_cream"
+                                                   actionListener="#{managerIceCream.resetValues()}"
+                                                   oncomplete="#{rich:component('mp_ice_cream')}.show()">
+                                    <f:setPropertyActionListener target="#{managerIceCream.editedIceCream}"
+                                                                 value="#{iceCream}"/>
+                                </a4j:commandButton>
+                            </rich:column>
+
                             <f:facet name="footer">
                                 <rich:datascroller id="scrollerIceCream" for="tableIceCreams" fastStep="3"/>
                             </f:facet>
@@ -85,4 +103,5 @@
     </rich:panel>
     </body>
     </html>
+    <jsp:include page="model_ice_cream.jsp"/>
 </f:view>

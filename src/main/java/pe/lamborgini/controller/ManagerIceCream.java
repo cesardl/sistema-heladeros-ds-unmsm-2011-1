@@ -6,6 +6,7 @@ import pe.lamborgini.domain.mapping.Helado;
 import pe.lamborgini.service.HeladoService;
 
 import javax.faces.event.ActionEvent;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -13,11 +14,16 @@ import java.util.List;
  *
  * @author Cesardl
  */
-public class ManagerIceCream {
+public class ManagerIceCream implements Serializable {
+
+    private static final long serialVersionUID = 2057210783706393567L;
 
     private static final Logger LOG = LoggerFactory.getLogger(ManagerIceCream.class);
 
     private List<Helado> iceCreamsList;
+    private Helado editedIceCream;
+
+    private String oncomplete;
 
     public List<Helado> getIceCreamsList() {
         synchronized (this) {
@@ -35,7 +41,35 @@ public class ManagerIceCream {
         this.iceCreamsList = iceCreamsList;
     }
 
+    public Helado getEditedIceCream() {
+        return editedIceCream;
+    }
+
+    public void setEditedIceCream(Helado editedIceCream) {
+        this.editedIceCream = editedIceCream;
+    }
+
+    public String getOncomplete() {
+        return oncomplete;
+    }
+
+    public void setOncomplete(String oncomplete) {
+        this.oncomplete = oncomplete;
+    }
+
     public void newIceCream(ActionEvent event) {
         LOG.debug("New Ice Cream [{}]", event.getPhaseId());
+
+        editedIceCream = new Helado();
+
+        oncomplete = "Richfaces.showModalPanel('mp_ice_cream');";
+    }
+
+    public void resetValues() {
+        LOG.debug("Iniciar proceso de edicion de helado");
+    }
+
+    public void saveOrUpdate(ActionEvent event) {
+        LOG.debug("Guardando edicion de helado [{}]", event.getPhaseId());
     }
 }
