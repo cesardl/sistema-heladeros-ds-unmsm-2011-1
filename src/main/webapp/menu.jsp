@@ -40,6 +40,8 @@
                     </h:panelGroup>
                 </f:facet>
 
+                <rich:menuItem submitMode="ajax" value="Helados" action="TO_ICE_CREAMS"/>
+
                 <rich:menuItem submitMode="ajax" value="Heladeros" action="TO_HELADEROS"/>
 
                 <rich:menuItem submitMode="ajax" value="Usuarios" action="TO_USUARIOS"/>

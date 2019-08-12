@@ -1,335 +1,457 @@
--- MySQL dump 10.13  Distrib 5.7.13, for Win32 (AMD64)
---
--- Host: 127.0.0.1    Database: heladeros
--- ------------------------------------------------------
--- Server version	5.7.13-log
+-- MySQL Workbench Forward Engineering
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+SET @OLD_UNIQUE_CHECKS = @@UNIQUE_CHECKS, UNIQUE_CHECKS = 0;
+SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0;
+SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE = 'TRADITIONAL,ALLOW_INVALID_DATES';
 
---
--- Table structure for table `concepto`
---
+-- -----------------------------------------------------
+-- Schema heladeros
+-- -----------------------------------------------------
 
-DROP TABLE IF EXISTS `concepto`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `concepto` (
-  `id_concepto` int(11) NOT NULL AUTO_INCREMENT,
-  `detalle_concepto` varchar(250) NOT NULL,
-  PRIMARY KEY (`id_concepto`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- -----------------------------------------------------
+-- Schema heladeros
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `heladeros` DEFAULT CHARACTER SET utf8;
+USE `heladeros`;
 
---
--- Dumping data for table `concepto`
---
+-- -----------------------------------------------------
+-- Table `heladeros`.`concepto`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `heladeros`.`concepto`;
 
-LOCK TABLES `concepto` WRITE;
-/*!40000 ALTER TABLE `concepto` DISABLE KEYS */;
-INSERT INTO `concepto` VALUES (1,'Pago por venta de helados');
-/*!40000 ALTER TABLE `concepto` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE IF NOT EXISTS `heladeros`.`concepto`
+(
+    `id_concepto`      INT(11)      NOT NULL AUTO_INCREMENT,
+    `detalle_concepto` VARCHAR(250) NOT NULL,
+    PRIMARY KEY (`id_concepto`)
+)
+    ENGINE = InnoDB
+    AUTO_INCREMENT = 2
+    DEFAULT CHARACTER SET = utf8;
 
---
--- Table structure for table `concesionario`
---
 
-DROP TABLE IF EXISTS `concesionario`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `concesionario` (
-  `id_concesionario` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre_conces` varchar(45) NOT NULL,
-  `distrito` varchar(45) NOT NULL,
-  `propietario` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_concesionario`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- -----------------------------------------------------
+-- Table `heladeros`.`concesionario`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `heladeros`.`concesionario`;
 
---
--- Dumping data for table `concesionario`
---
+CREATE TABLE IF NOT EXISTS `heladeros`.`concesionario`
+(
+    `id_concesionario` INT(11)     NOT NULL AUTO_INCREMENT,
+    `nombre_conces`    VARCHAR(45) NOT NULL,
+    `distrito`         VARCHAR(45) NOT NULL,
+    `propietario`      VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`id_concesionario`)
+)
+    ENGINE = InnoDB
+    AUTO_INCREMENT = 6
+    DEFAULT CHARACTER SET = utf8;
 
-LOCK TABLES `concesionario` WRITE;
-/*!40000 ALTER TABLE `concesionario` DISABLE KEYS */;
-INSERT INTO `concesionario` VALUES (1,'Adex','Ate-Vitarte','Luis Hanampa'),(2,'GYH','Comas','Edgar Cordova'),(3,'Frigolac','Callao','Mariana Rivero'),(4,'PyT','Barranco','Javier Lorenao'),(5,'FerD','Jesus Maria','Delia Martinez');
-/*!40000 ALTER TABLE `concesionario` ENABLE KEYS */;
-UNLOCK TABLES;
 
---
--- Table structure for table `contrato_heladero`
---
+-- -----------------------------------------------------
+-- Table `heladeros`.`heladero`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `heladeros`.`heladero`;
 
-DROP TABLE IF EXISTS `contrato_heladero`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `contrato_heladero` (
-  `idcontrato_heladero` int(11) NOT NULL AUTO_INCREMENT,
-  `id_heladero` int(11) NOT NULL,
-  `numero_contrato` int(11) NOT NULL,
-  `tipo` varchar(45) NOT NULL,
-  `contenido` varchar(45) NOT NULL,
-  `fecha_inicio` date NOT NULL,
-  `fecha_fin` date NOT NULL,
-  PRIMARY KEY (`idcontrato_heladero`),
-  KEY `fk_contrato_heladero_heladero1` (`id_heladero`),
-  CONSTRAINT `fk_contrato_heladero_heladero1` FOREIGN KEY (`id_heladero`) REFERENCES `heladero` (`id_heladero`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE IF NOT EXISTS `heladeros`.`heladero`
+(
+    `id_heladero`      INT(11)     NOT NULL AUTO_INCREMENT,
+    `id_concesionario` INT(11)     NOT NULL,
+    `nombres`          VARCHAR(45) NOT NULL,
+    `apellidos`        VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`id_heladero`),
+    INDEX `fk_heladero_concesionario1` (`id_concesionario` ASC),
+    CONSTRAINT `fk_heladero_concesionario1`
+        FOREIGN KEY (`id_concesionario`)
+            REFERENCES `heladeros`.`concesionario` (`id_concesionario`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION
+)
+    ENGINE = InnoDB
+    AUTO_INCREMENT = 21
+    DEFAULT CHARACTER SET = utf8;
 
---
--- Dumping data for table `contrato_heladero`
---
 
-LOCK TABLES `contrato_heladero` WRITE;
-/*!40000 ALTER TABLE `contrato_heladero` DISABLE KEYS */;
-/*!40000 ALTER TABLE `contrato_heladero` ENABLE KEYS */;
-UNLOCK TABLES;
+-- -----------------------------------------------------
+-- Table `heladeros`.`contrato_heladero`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `heladeros`.`contrato_heladero`;
 
---
--- Table structure for table `detalle_helado`
---
+CREATE TABLE IF NOT EXISTS `heladeros`.`contrato_heladero`
+(
+    `idcontrato_heladero` INT(11)     NOT NULL AUTO_INCREMENT,
+    `id_heladero`         INT(11)     NOT NULL,
+    `numero_contrato`     INT(11)     NOT NULL,
+    `tipo`                VARCHAR(45) NOT NULL,
+    `contenido`           VARCHAR(45) NOT NULL,
+    `fecha_inicio`        DATE        NOT NULL,
+    `fecha_fin`           DATE        NOT NULL,
+    PRIMARY KEY (`idcontrato_heladero`),
+    INDEX `fk_contrato_heladero_heladero1` (`id_heladero` ASC),
+    CONSTRAINT `fk_contrato_heladero_heladero1`
+        FOREIGN KEY (`id_heladero`)
+            REFERENCES `heladeros`.`heladero` (`id_heladero`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION
+)
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8;
 
-DROP TABLE IF EXISTS `detalle_helado`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `detalle_helado` (
-  `id_detalle_helado` int(11) NOT NULL AUTO_INCREMENT,
-  `id_helado` int(11) NOT NULL,
-  `id_helados_entregado_recibido` int(11) NOT NULL,
-  `id_pago_helado` int(11) DEFAULT NULL,
-  `cant_entregada` int(11) NOT NULL,
-  `cant_devuelta` int(11) NOT NULL,
-  `cant_vendida` int(11) NOT NULL,
-  PRIMARY KEY (`id_detalle_helado`),
-  KEY `fk_detalle_helado_helado1` (`id_helado`),
-  KEY `fk_detalle_helado_helados_entregado_recibido1` (`id_helados_entregado_recibido`),
-  KEY `fk_detalle_helado_pago_helado1` (`id_pago_helado`),
-  CONSTRAINT `fk_detalle_helado_helado1` FOREIGN KEY (`id_helado`) REFERENCES `helado` (`id_helado`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_detalle_helado_helados_entregado_recibido1` FOREIGN KEY (`id_helados_entregado_recibido`) REFERENCES `helados_entregado_recibido` (`id_helados_entregado_recibido`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_detalle_helado_pago_helado1` FOREIGN KEY (`id_pago_helado`) REFERENCES `pago_helado` (`idpago_helado`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `detalle_helado`
---
+-- -----------------------------------------------------
+-- Table `heladeros`.`stock_helado`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `heladeros`.`stock_helado`;
 
-LOCK TABLES `detalle_helado` WRITE;
-/*!40000 ALTER TABLE `detalle_helado` DISABLE KEYS */;
-INSERT INTO `detalle_helado` VALUES (1,13,1,7,30,1,29),(2,8,1,6,10,2,8),(3,11,1,8,12,2,10),(4,17,2,4,20,3,17),(5,11,2,3,20,2,18),(6,9,2,5,11,1,10),(7,9,3,NULL,23,0,0),(8,11,4,NULL,20,0,0),(9,11,5,2,20,3,17),(10,9,5,1,12,2,10),(15,8,7,NULL,17,0,0),(16,9,7,NULL,20,0,0),(17,13,7,NULL,21,0,0),(18,11,7,NULL,27,0,0),(19,11,8,9,20,2,18),(20,2,8,10,10,4,6),(21,1,8,12,20,1,19),(22,8,8,11,10,2,8),(23,8,9,14,20,2,18),(24,11,9,13,15,2,13),(25,2,9,15,15,0,15),(26,20,10,NULL,44,0,0),(27,1,10,NULL,21,0,0);
-/*!40000 ALTER TABLE `detalle_helado` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE IF NOT EXISTS `heladeros`.`stock_helado`
+(
+    `id_stock_helado` INT(11) NOT NULL AUTO_INCREMENT,
+    `cantidad`        INT(11) NOT NULL,
+    PRIMARY KEY (`id_stock_helado`)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8;
 
---
--- Table structure for table `factura`
---
 
-DROP TABLE IF EXISTS `factura`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `factura` (
-  `id_factura` int(11) NOT NULL AUTO_INCREMENT,
-  `numero_factura` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  `descripcion` varchar(45) NOT NULL,
-  `pago` double NOT NULL,
-  PRIMARY KEY (`id_factura`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- -----------------------------------------------------
+-- Table `heladeros`.`helado`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `heladeros`.`helado`;
 
---
--- Dumping data for table `factura`
---
+CREATE TABLE IF NOT EXISTS `heladeros`.`helado`
+(
+    `id_helado`       INT(11)     NOT NULL AUTO_INCREMENT,
+    `nombre_helado`   VARCHAR(45) NOT NULL,
+    `precio`          DOUBLE      NOT NULL,
+    `id_stock_helado` INT(11)     NULL,
+    PRIMARY KEY (`id_helado`),
+    INDEX `fk_helado_stock_helado1_idx` (`id_stock_helado` ASC),
+    CONSTRAINT `fk_helado_stock_helado1`
+        FOREIGN KEY (`id_stock_helado`)
+            REFERENCES `heladeros`.`stock_helado` (`id_stock_helado`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION
+)
+    ENGINE = InnoDB
+    AUTO_INCREMENT = 28
+    DEFAULT CHARACTER SET = utf8;
 
-LOCK TABLES `factura` WRITE;
-/*!40000 ALTER TABLE `factura` DISABLE KEYS */;
-INSERT INTO `factura` VALUES (1,6812325,'2011-07-03','Venta de helados a fecha 03-07-2011',66),(2,2564848,'2011-07-03','Venta de helados a fecha 03-07-2011',86),(3,9035400,'2011-07-03','Venta de helados a fecha 03-07-2011',104),(4,8289500,'2011-07-04','Venta de helados a fecha 04-07-2011',126.5),(5,1125900,'2011-07-04','Venta de helados a fecha 04-07-2011',97.5);
-/*!40000 ALTER TABLE `factura` ENABLE KEYS */;
-UNLOCK TABLES;
 
---
--- Table structure for table `heladero`
---
+-- -----------------------------------------------------
+-- Table `heladeros`.`helados_entregado_recibido`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `heladeros`.`helados_entregado_recibido`;
 
-DROP TABLE IF EXISTS `heladero`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `heladero` (
-  `id_heladero` int(11) NOT NULL AUTO_INCREMENT,
-  `id_concesionario` int(11) NOT NULL,
-  `nombres` varchar(45) NOT NULL,
-  `apellidos` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_heladero`),
-  KEY `fk_heladero_concesionario1` (`id_concesionario`),
-  CONSTRAINT `fk_heladero_concesionario1` FOREIGN KEY (`id_concesionario`) REFERENCES `concesionario` (`id_concesionario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE IF NOT EXISTS `heladeros`.`helados_entregado_recibido`
+(
+    `id_helados_entregado_recibido` INT(11) NOT NULL AUTO_INCREMENT,
+    `id_heladero`                   INT(11) NOT NULL,
+    `fecha`                         DATE    NOT NULL,
+    `total`                         DOUBLE  NOT NULL,
+    PRIMARY KEY (`id_helados_entregado_recibido`),
+    INDEX `fk_helado_entregado_recibido_heladero1` (`id_heladero` ASC),
+    CONSTRAINT `fk_helado_entregado_recibido_heladero1`
+        FOREIGN KEY (`id_heladero`)
+            REFERENCES `heladeros`.`heladero` (`id_heladero`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION
+)
+    ENGINE = InnoDB
+    AUTO_INCREMENT = 11
+    DEFAULT CHARACTER SET = utf8;
 
---
--- Dumping data for table `heladero`
---
 
-LOCK TABLES `heladero` WRITE;
-/*!40000 ALTER TABLE `heladero` DISABLE KEYS */;
-INSERT INTO `heladero` VALUES (1,1,'Mario','Ramirez Coronado'),(2,1,'Jose David','Torres Cordova'),(3,1,'Mariana','Quispe Delgado'),(4,1,'Lady Diana','Saavedra Luque'),(5,1,'Francisco ','Gonzales Diaz'),(6,2,'Daniela','Zapata Cruz'),(7,2,'Juan Esteban','Gamarra Desposorio'),(8,2,'Miguel ','Zarate Abanto'),(9,3,'Flor de Maria','Izquierdo Morales'),(10,3,'Ana Cristina','Vadillo Montes'),(11,3,'Luis Enrique','Bustamante Montoya'),(12,4,'Cesar ','Salinas Romero'),(13,4,'Yasmin Liset','Carranza Lopez'),(14,4,'Eduardo ','Atoche Zapata'),(15,4,'Ulises ','Elguera Gallo'),(16,5,'Felipe Otoniel','Coronel Pedreros'),(17,5,'Denisse ','Infantes Morales'),(18,5,'Miguel ','Luyo Pineda'),(19,5,'Denisse Katherine','Palomino Astupuma'),(20,5,'Juan Luis','Hurtado Medina');
-/*!40000 ALTER TABLE `heladero` ENABLE KEYS */;
-UNLOCK TABLES;
+-- -----------------------------------------------------
+-- Table `heladeros`.`factura`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `heladeros`.`factura`;
 
---
--- Table structure for table `helado`
---
+CREATE TABLE IF NOT EXISTS `heladeros`.`factura`
+(
+    `id_factura`     INT(11)     NOT NULL AUTO_INCREMENT,
+    `numero_factura` INT(11)     NOT NULL,
+    `fecha`          DATE        NOT NULL,
+    `descripcion`    VARCHAR(45) NOT NULL,
+    `pago`           DOUBLE      NOT NULL,
+    PRIMARY KEY (`id_factura`)
+)
+    ENGINE = InnoDB
+    AUTO_INCREMENT = 6
+    DEFAULT CHARACTER SET = utf8;
 
-DROP TABLE IF EXISTS `helado`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `helado` (
-  `id_helado` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre_helado` varchar(45) NOT NULL,
-  `precio` double NOT NULL,
-  PRIMARY KEY (`id_helado`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `helado`
---
+-- -----------------------------------------------------
+-- Table `heladeros`.`pago_helado`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `heladeros`.`pago_helado`;
 
-LOCK TABLES `helado` WRITE;
-/*!40000 ALTER TABLE `helado` DISABLE KEYS */;
-INSERT INTO `helado` VALUES (1,'Carnevale fresa',2.5),(2,'Oasu',1.5),(3,'Copa viva vainilla',3.5),(4,'Piccolo fresa',1),(5,'Frutarello limon',1),(6,'DPelicula',4),(7,'Lamborgini Light',3.5),(8,'Tartufo',2),(9,'Tartufo Clasico',1.5),(10,'Tartuffo Pecatto',2),(11,'Bombones Choconum',3),(12,'Sandwich vainilla pequeño',1),(13,'Sandwich choconieve grande ',2),(14,'Sandiwch vainilla grande',2),(15,'Carnavale chocolate',2.5),(16,'Vip mora',1),(17,'Vip mango ',1),(18,'Copa viva lucuma - vainilla',3.5),(19,'Copa viva mermelada fresa',3.5),(20,'Piccolo chica',1),(21,'Piccolo manzana',1),(22,'Frutarello guanabana',1),(23,'Frutarello coco',1),(24,'Pionono vainilla',4.5),(25,'Pionono lucuma',4.5),(26,'Casino chocolate',1.5),(27,'Casino lucuma',1.5);
-/*!40000 ALTER TABLE `helado` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE IF NOT EXISTS `heladeros`.`pago_helado`
+(
+    `idpago_helado` INT(11)       NOT NULL AUTO_INCREMENT,
+    `id_factura`    INT(11)       NOT NULL,
+    `id_concepto`   INT(11)       NOT NULL,
+    `cant_pagada`   DOUBLE(11, 0) NOT NULL,
+    PRIMARY KEY (`idpago_helado`),
+    INDEX `fk_pago_helado_factura1` (`id_factura` ASC),
+    INDEX `fk_pago_helado_concepto1` (`id_concepto` ASC),
+    CONSTRAINT `fk_pago_helado_concepto1`
+        FOREIGN KEY (`id_concepto`)
+            REFERENCES `heladeros`.`concepto` (`id_concepto`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION,
+    CONSTRAINT `fk_pago_helado_factura1`
+        FOREIGN KEY (`id_factura`)
+            REFERENCES `heladeros`.`factura` (`id_factura`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION
+)
+    ENGINE = InnoDB
+    AUTO_INCREMENT = 16
+    DEFAULT CHARACTER SET = utf8;
 
---
--- Table structure for table `helados_entregado_recibido`
---
 
-DROP TABLE IF EXISTS `helados_entregado_recibido`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `helados_entregado_recibido` (
-  `id_helados_entregado_recibido` int(11) NOT NULL AUTO_INCREMENT,
-  `id_heladero` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  `total` double NOT NULL,
-  PRIMARY KEY (`id_helados_entregado_recibido`),
-  KEY `fk_helado_entregado_recibido_heladero1` (`id_heladero`),
-  CONSTRAINT `fk_helado_entregado_recibido_heladero1` FOREIGN KEY (`id_heladero`) REFERENCES `heladero` (`id_heladero`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- -----------------------------------------------------
+-- Table `heladeros`.`detalle_helado`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `heladeros`.`detalle_helado`;
 
---
--- Dumping data for table `helados_entregado_recibido`
---
+CREATE TABLE IF NOT EXISTS `heladeros`.`detalle_helado`
+(
+    `id_detalle_helado`             INT(11) NOT NULL AUTO_INCREMENT,
+    `id_helado`                     INT(11) NOT NULL,
+    `id_helados_entregado_recibido` INT(11) NOT NULL,
+    `id_pago_helado`                INT(11) NULL DEFAULT NULL,
+    `cant_entregada`                INT(11) NOT NULL,
+    `cant_devuelta`                 INT(11) NOT NULL,
+    `cant_vendida`                  INT(11) NOT NULL,
+    PRIMARY KEY (`id_detalle_helado`),
+    INDEX `fk_detalle_helado_helado1` (`id_helado` ASC),
+    INDEX `fk_detalle_helado_helados_entregado_recibido1` (`id_helados_entregado_recibido` ASC),
+    INDEX `fk_detalle_helado_pago_helado1` (`id_pago_helado` ASC),
+    CONSTRAINT `fk_detalle_helado_helado1`
+        FOREIGN KEY (`id_helado`)
+            REFERENCES `heladeros`.`helado` (`id_helado`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION,
+    CONSTRAINT `fk_detalle_helado_helados_entregado_recibido1`
+        FOREIGN KEY (`id_helados_entregado_recibido`)
+            REFERENCES `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION,
+    CONSTRAINT `fk_detalle_helado_pago_helado1`
+        FOREIGN KEY (`id_pago_helado`)
+            REFERENCES `heladeros`.`pago_helado` (`idpago_helado`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION
+)
+    ENGINE = InnoDB
+    AUTO_INCREMENT = 28
+    DEFAULT CHARACTER SET = utf8;
 
-LOCK TABLES `helados_entregado_recibido` WRITE;
-/*!40000 ALTER TABLE `helados_entregado_recibido` DISABLE KEYS */;
-INSERT INTO `helados_entregado_recibido` VALUES (1,2,'2011-07-02',52),(2,5,'2011-07-03',51),(3,7,'2011-07-03',23),(4,13,'2011-07-03',20),(5,3,'2011-07-03',32),(7,2,'2011-07-03',85),(8,1,'2011-07-04',60),(9,2,'2011-07-04',50),(10,1,'2018-06-24',65);
-/*!40000 ALTER TABLE `helados_entregado_recibido` ENABLE KEYS */;
-UNLOCK TABLES;
 
---
--- Table structure for table `pago_helado`
---
+-- -----------------------------------------------------
+-- Table `heladeros`.`usuario`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `heladeros`.`usuario`;
 
-DROP TABLE IF EXISTS `pago_helado`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pago_helado` (
-  `idpago_helado` int(11) NOT NULL AUTO_INCREMENT,
-  `id_factura` int(11) NOT NULL,
-  `id_concepto` int(11) NOT NULL,
-  `cant_pagada` double(11,0) NOT NULL,
-  PRIMARY KEY (`idpago_helado`),
-  KEY `fk_pago_helado_factura1` (`id_factura`),
-  KEY `fk_pago_helado_concepto1` (`id_concepto`),
-  CONSTRAINT `fk_pago_helado_concepto1` FOREIGN KEY (`id_concepto`) REFERENCES `concepto` (`id_concepto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_pago_helado_factura1` FOREIGN KEY (`id_factura`) REFERENCES `factura` (`id_factura`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE IF NOT EXISTS `heladeros`.`usuario`
+(
+    `id_usuario`       INT(11)     NOT NULL AUTO_INCREMENT,
+    `id_concesionario` INT(11)     NOT NULL,
+    `nombre_usuario`   VARCHAR(45) NOT NULL,
+    `contrasenha`      VARCHAR(45) NOT NULL,
+    `cargo`            VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`id_usuario`),
+    INDEX `fk_usuario_concesionario` (`id_concesionario` ASC),
+    CONSTRAINT `fk_usuario_concesionario`
+        FOREIGN KEY (`id_concesionario`)
+            REFERENCES `heladeros`.`concesionario` (`id_concesionario`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION
+)
+    ENGINE = InnoDB
+    AUTO_INCREMENT = 7
+    DEFAULT CHARACTER SET = utf8;
 
---
--- Dumping data for table `pago_helado`
---
 
-LOCK TABLES `pago_helado` WRITE;
-/*!40000 ALTER TABLE `pago_helado` DISABLE KEYS */;
-INSERT INTO `pago_helado` VALUES (1,1,1,15),(2,1,1,51),(3,2,1,54),(4,2,1,17),(5,2,1,15),(6,3,1,16),(7,3,1,58),(8,3,1,30),(9,4,1,54),(10,4,1,9),(11,4,1,16),(12,4,1,47),(13,5,1,39),(14,5,1,36),(15,5,1,22);
-/*!40000 ALTER TABLE `pago_helado` ENABLE KEYS */;
-UNLOCK TABLES;
+SET SQL_MODE = @OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;
 
---
--- Table structure for table `stock_helado`
---
+-- -----------------------------------------------------
+-- Data for table `heladeros`.`concepto`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `heladeros`;
+INSERT INTO `heladeros`.`concepto` (`id_concepto`, `detalle_concepto`)
+VALUES (1, 'Pago por venta de helados');
 
-DROP TABLE IF EXISTS `stock_helado`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `stock_helado` (
-  `id_stock_helado` int(11) NOT NULL AUTO_INCREMENT,
-  `id_helado` int(11) NOT NULL,
-  `cantidad` int(11) NOT NULL,
-  PRIMARY KEY (`id_stock_helado`),
-  KEY `fk_stock_helado_helado1` (`id_helado`),
-  CONSTRAINT `fk_stock_helado_helado1` FOREIGN KEY (`id_helado`) REFERENCES `helado` (`id_helado`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+COMMIT;
 
---
--- Dumping data for table `stock_helado`
---
 
-LOCK TABLES `stock_helado` WRITE;
-/*!40000 ALTER TABLE `stock_helado` DISABLE KEYS */;
-/*!40000 ALTER TABLE `stock_helado` ENABLE KEYS */;
-UNLOCK TABLES;
+-- -----------------------------------------------------
+-- Data for table `heladeros`.`concesionario`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `heladeros`;
+INSERT INTO `heladeros`.`concesionario` (`id_concesionario`, `nombre_conces`, `distrito`, `propietario`)
+VALUES (1, 'Adex', 'Ate-Vitarte', 'Luis Hanampa');
+INSERT INTO `heladeros`.`concesionario` (`id_concesionario`, `nombre_conces`, `distrito`, `propietario`)
+VALUES (2, 'GYH', 'Comas', 'Edgar Cordova');
+INSERT INTO `heladeros`.`concesionario` (`id_concesionario`, `nombre_conces`, `distrito`, `propietario`)
+VALUES (3, 'Frigolac', 'Callao', 'Mariana Rivero');
+INSERT INTO `heladeros`.`concesionario` (`id_concesionario`, `nombre_conces`, `distrito`, `propietario`)
+VALUES (4, 'PyT', 'Barranco', 'Javier Lorenao');
+INSERT INTO `heladeros`.`concesionario` (`id_concesionario`, `nombre_conces`, `distrito`, `propietario`)
+VALUES (5, 'FerD', 'Jesus Maria', 'Delia Martinez');
 
---
--- Table structure for table `usuario`
---
+COMMIT;
 
-DROP TABLE IF EXISTS `usuario`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `usuario` (
-  `id_usuario` int(11) NOT NULL AUTO_INCREMENT,
-  `id_concesionario` int(11) NOT NULL,
-  `nombre_usuario` varchar(45) NOT NULL,
-  `contrasenha` varchar(45) NOT NULL,
-  `cargo` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_usuario`),
-  KEY `fk_usuario_concesionario` (`id_concesionario`),
-  CONSTRAINT `fk_usuario_concesionario` FOREIGN KEY (`id_concesionario`) REFERENCES `concesionario` (`id_concesionario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `usuario`
---
+-- -----------------------------------------------------
+-- Data for table `heladeros`.`heladero`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `heladeros`;
+INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
+VALUES (1, 1, 'Mario', 'Ramirez Coronado');
+INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
+VALUES (2, 1, 'Jose David', 'Torres Cordova');
+INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
+VALUES (3, 1, 'Mariana', 'Quispe Delgado');
+INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
+VALUES (4, 1, 'Lady Diana', 'Saavedra Luque');
+INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
+VALUES (5, 1, 'Francisco ', 'Gonzales Diaz');
+INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
+VALUES (6, 2, 'Daniela', 'Zapata Cruz');
+INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
+VALUES (7, 2, 'Juan Esteban', 'Gamarra Desposorio');
+INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
+VALUES (8, 2, 'Miguel ', 'Zarate Abanto');
+INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
+VALUES (9, 3, 'Flor de Maria', 'Izquierdo Morales');
+INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
+VALUES (10, 3, 'Ana Cristina', 'Vadillo Montes');
+INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
+VALUES (11, 3, 'Luis Enrique', 'Bustamante Montoya');
+INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
+VALUES (12, 4, 'Cesar ', 'Salinas Romero');
+INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
+VALUES (13, 4, 'Yasmin Liset', 'Carranza Lopez');
+INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
+VALUES (14, 4, 'Eduardo ', 'Atoche Zapata');
+INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
+VALUES (15, 4, 'Ulises ', 'Elguera Gallo');
+INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
+VALUES (16, 5, 'Felipe Otoniel', 'Coronel Pedreros');
+INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
+VALUES (17, 5, 'Denisse ', 'Infantes Morales');
+INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
+VALUES (18, 5, 'Miguel ', 'Luyo Pineda');
+INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
+VALUES (19, 5, 'Denisse Katherine', 'Palomino Astupuma');
+INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
+VALUES (20, 5, 'Juan Luis', 'Hurtado Medina');
 
-LOCK TABLES `usuario` WRITE;
-/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,1,'LHanampa','luis','Gerente'),(2,2,'ECordova','edgar','Jefe de Ventas'),(3,3,'MRivero','mariana','Asistente'),(4,4,'JLorenao','javier','Gerente'),(5,5,'DMartinez','delia','Contador'),(6,1,'admin','4dm1n','Administrador');
-/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+COMMIT;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-24 11:58:13
+-- -----------------------------------------------------
+-- Data for table `heladeros`.`stock_helado`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `heladeros`;
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`)
+VALUES (1, 1000);
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`)
+VALUES (2, 2000);
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`)
+VALUES (3, 1500);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `heladeros`.`helado`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `heladeros`;
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (1, 'Carnevale fresa', 2.5, 3);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (2, 'Oasu', 1.5, 1);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (3, 'Copa viva vainilla', 3.5, 2);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (4, 'Piccolo fresa', 1, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (5, 'Frutarello limon', 1, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (6, 'DPelicula', 4, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (7, 'Lamborgini Light', 3.5, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (8, 'Tartufo', 2, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (9, 'Tartufo Clasico', 1.5, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (10, 'Tartuffo Pecatto', 2, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (11, 'Bombones Choconum', 3, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (12, 'Sandwich vainilla pequeño', 1, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (13, 'Sandwich choconieve grande ', 2, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (14, 'Sandiwch vainilla grande', 2, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (15, 'Carnavale chocolate', 2.5, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (16, 'Vip mora', 1, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (17, 'Vip mango ', 1, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (18, 'Copa viva lucuma - vainilla', 3.5, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (19, 'Copa viva mermelada fresa', 3.5, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (20, 'Piccolo chica', 1, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (21, 'Piccolo manzana', 1, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (22, 'Frutarello guanabana', 1, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (23, 'Frutarello coco', 1, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (24, 'Pionono vainilla', 4.5, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (25, 'Pionono lucuma', 4.5, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (26, 'Casino chocolate', 1.5, NULL);
+INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
+VALUES (27, 'Casino lucuma', 1.5, NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `heladeros`.`usuario`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `heladeros`;
+INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`)
+VALUES (1, 1, 'LHanampa', 'luis', 'Gerente');
+INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`)
+VALUES (2, 2, 'ECordova', 'edgar', 'Jefe de Ventas');
+INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`)
+VALUES (3, 3, 'MRivero', 'mariana', 'Asistente');
+INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`)
+VALUES (4, 4, 'JLorenao', 'javier', 'Gerente');
+INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`)
+VALUES (5, 5, 'DMartinez', 'delia', 'Contador');
+INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`)
+VALUES (6, 1, 'admin', '4dm1n', 'Administrador');
+
+COMMIT;
+

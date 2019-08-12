@@ -15,14 +15,19 @@ import java.util.List;
  */
 public final class HeladoService {
 
+    private static HeladoDAO dao = new HeladoDAO();
+
     private HeladoService() {
+    }
+
+    public static List<Helado> getAllIceCreams() {
+        return dao.getAll();
     }
 
     public static List<Helado> obtenerHeladoPorNombre(final String pref) {
         if (pref == null || "null".equals(pref)) {
             return Collections.emptyList();
         } else {
-            HeladoDAO dao = new HeladoDAO();
             return dao.getListaHelados(pref);
         }
     }
