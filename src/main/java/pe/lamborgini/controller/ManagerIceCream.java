@@ -3,6 +3,7 @@ package pe.lamborgini.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pe.lamborgini.domain.mapping.Helado;
+import pe.lamborgini.domain.mapping.StockHelado;
 import pe.lamborgini.service.HeladoService;
 
 import javax.faces.event.ActionEvent;
@@ -24,10 +25,11 @@ public class ManagerIceCream implements Serializable {
     private Helado editedIceCream;
 
     private String oncomplete;
+    private boolean refresh;
 
     public List<Helado> getIceCreamsList() {
         synchronized (this) {
-            if (iceCreamsList == null) {
+            if (iceCreamsList == null || refresh) {
                 LOG.info("Initializing ice creams list");
 
                 iceCreamsList = HeladoService.getAllIceCreams();
@@ -57,19 +59,40 @@ public class ManagerIceCream implements Serializable {
         this.oncomplete = oncomplete;
     }
 
-    public void newIceCream(ActionEvent event) {
+    public void newIceCream(final ActionEvent event) {
         LOG.debug("New Ice Cream [{}]", event.getPhaseId());
 
         editedIceCream = new Helado();
-
-        oncomplete = "Richfaces.showModalPanel('mp_ice_cream');";
+        editedIceCream.setStockHelado(new StockHelado());
     }
 
-    public void resetValues() {
-        LOG.debug("Iniciar proceso de edicion de helado");
-    }
-
-    public void saveOrUpdate(ActionEvent event) {
+    public void saveOrUpdate(final ActionEvent event) {
         LOG.debug("Guardando edicion de helado [{}]", event.getPhaseId());
+
+        boolean operationResult = HeladoService.saveOrUpdate(editedIceCream);
+
+        if (operationResult) {
+            refresh = true;
+            oncomplete = "javascript:alert('Registro de helado realizado con exito.');" +
+                    "Richfaces.hideModalPanel('mp_ice_cream');";
+        } else {
+            refresh = false;
+            oncomplete = "javascript:alert('Ocurrio un problema interno.')";
+        }
+    }
+
+    public void delete(final ActionEvent event) {
+        LOG.debug("Eliminando helado [{}]", event.getPhaseId());
+
+        boolean operationResult = HeladoService.delete(editedIceCream);
+
+        if (operationResult) {
+            refresh = true;
+            oncomplete = "javascript:alert('Registro de helado eliminado con exito.');" +
+                    "Richfaces.hideModalPanel('mp_ice_cream_deletion_confirm');";
+        } else {
+            refresh = false;
+            oncomplete = "javascript:alert('Ocurrio un problema interno.')";
+        }
     }
 }

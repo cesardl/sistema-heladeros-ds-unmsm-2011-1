@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import pe.lamborgini.domain.mapping.Helado;
 import pe.lamborgini.util.AppUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,5 +63,66 @@ public class HeladoDAO {
         }
         tx.commit();
         return iceCreams;
+    }
+
+    public boolean save(final Helado iceCream) {
+        LOG.debug("DB insert: iceCreamName: '{}'", iceCream.getNombreHelado());
+        Session session = AppUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            Serializable saved = session.save(iceCream);
+            tx.commit();
+            LOG.info("DB saved entity '{}'", saved);
+            return true;
+        } catch (final HibernateException e) {
+            LOG.error(e.getMessage(), e);
+            if (tx != null) {
+                tx.rollback();
+            }
+            return false;
+        } finally {
+            session.close();
+        }
+    }
+
+    public boolean update(final Helado iceCream) {
+        LOG.debug("DB update: iceCreamName: '{}'", iceCream.getNombreHelado());
+        Session session = AppUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.update(iceCream);
+            tx.commit();
+            return true;
+        } catch (final HibernateException e) {
+            LOG.error(e.getMessage(), e);
+            if (tx != null) {
+                tx.rollback();
+            }
+            return false;
+        } finally {
+            session.close();
+        }
+    }
+
+    public boolean delete(final Helado iceCream) {
+        LOG.debug("DB delete: iceCreamName: '{}'", iceCream.getNombreHelado());
+        Session session = AppUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.delete(iceCream);
+            tx.commit();
+            return true;
+        } catch (final HibernateException e) {
+            LOG.error(e.getMessage(), e);
+            if (tx != null) {
+                tx.rollback();
+            }
+            return false;
+        } finally {
+            session.close();
+        }
     }
 }

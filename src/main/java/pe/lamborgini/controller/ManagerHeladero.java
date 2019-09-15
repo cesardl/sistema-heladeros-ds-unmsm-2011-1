@@ -29,7 +29,6 @@ public class ManagerHeladero implements Serializable {
     private String apellido;
     private List<Heladero> listaHeladeros;
     private String oncomplete;
-    //Para el modal
 
     public ManagerHeladero() {
         listaHeladeros = Collections.emptyList();

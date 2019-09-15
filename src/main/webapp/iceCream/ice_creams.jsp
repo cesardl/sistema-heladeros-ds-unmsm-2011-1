@@ -28,8 +28,7 @@
             <table style="width: 100%">
                 <tr>
                     <td>
-                        <h:outputText value="Mantenimiento de helados"
-                                      styleClass="title-label"/>
+                        <h:outputText value="Mantenimiento de helados" styleClass="title-label"/>
                     </td>
                     <td align="right">
                         <h:panelGrid columns="2">
@@ -40,8 +39,9 @@
                             </a4j:status>
                             <a4j:commandButton value="Nuevo"
                                                image="images/new.png"
+                                               reRender="mp_ice_cream"
                                                actionListener="#{managerIceCream.newIceCream}"
-                                               oncomplete="#{managerIceCream.oncomplete}"/>
+                                               oncomplete="#{rich:component('mp_ice_cream')}.show()"/>
                         </h:panelGrid>
                     </td>
                 </tr>
@@ -85,8 +85,19 @@
                                 </f:facet>
                                 <a4j:commandButton image="images/edit.gif"
                                                    reRender="mp_ice_cream"
-                                                   actionListener="#{managerIceCream.resetValues()}"
                                                    oncomplete="#{rich:component('mp_ice_cream')}.show()">
+                                    <f:setPropertyActionListener target="#{managerIceCream.editedIceCream}"
+                                                                 value="#{iceCream}"/>
+                                </a4j:commandButton>
+                            </rich:column>
+
+                            <rich:column style="text-align: center;">
+                                <f:facet name="header">
+                                    <h:outputText value="Eliminar"/>
+                                </f:facet>
+                                <a4j:commandButton image="images/delete.gif"
+                                                   reRender="mp_ice_cream_deletion_confirm"
+                                                   oncomplete="#{rich:component('mp_ice_cream_deletion_confirm')}.show()">
                                     <f:setPropertyActionListener target="#{managerIceCream.editedIceCream}"
                                                                  value="#{iceCream}"/>
                                 </a4j:commandButton>
@@ -104,4 +115,21 @@
     </body>
     </html>
     <jsp:include page="model_ice_cream.jsp"/>
+    <rich:modalPanel id="mp_ice_cream_deletion_confirm" width="400" autosized="true">
+        <rich:panel id="panel">
+            <f:facet name="header">
+                <h:outputText value="Ice cream deletion"/>
+            </f:facet>
+            <h:outputText value="Está seguro de eliminar el helado #{managerIceCream.editedIceCream.nombreHelado}?"/>
+            <h:panelGrid columns="2">
+                <h:form id="deletionIceCream">
+                    <a4j:commandButton value="Delete" actionListener="#{managerIceCream.delete}"
+                                       oncomplete="#{managerIceCream.oncomplete}"
+                                       reRender="formIceCreams"/>
+                    <a4j:commandButton value="Cancel"
+                                       onclick="#{rich:component('mp_ice_cream_deletion_confirm')}.hide(); return false;"/>
+                </h:form>
+            </h:panelGrid>
+        </rich:panel>
+    </rich:modalPanel>
 </f:view>
