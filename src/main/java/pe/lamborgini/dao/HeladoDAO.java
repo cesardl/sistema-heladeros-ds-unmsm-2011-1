@@ -94,6 +94,7 @@ public class HeladoDAO {
             tx = session.beginTransaction();
             session.update(iceCream);
             tx.commit();
+            LOG.info("DB updated entity");
             return true;
         } catch (final HibernateException e) {
             LOG.error(e.getMessage(), e);
@@ -114,6 +115,7 @@ public class HeladoDAO {
             tx = session.beginTransaction();
             session.delete(iceCream);
             tx.commit();
+            LOG.info("DB deleted entity");
             return true;
         } catch (final HibernateException e) {
             LOG.error(e.getMessage(), e);

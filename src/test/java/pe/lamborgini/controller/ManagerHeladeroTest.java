@@ -1,5 +1,6 @@
 package pe.lamborgini.controller;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,6 +49,11 @@ public class ManagerHeladeroTest {
         when(FacesContext.getCurrentInstance()).thenReturn(facesContext);
         when(facesContext.getExternalContext()).thenReturn(externalContext);
         when(externalContext.getSession(anyBoolean())).thenReturn(httpSession);
+    }
+
+    @After
+    public void setDown() {
+        manager.setOncomplete(null);
     }
 
     @Test
