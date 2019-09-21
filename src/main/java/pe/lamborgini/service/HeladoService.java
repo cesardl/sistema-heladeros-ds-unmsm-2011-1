@@ -8,6 +8,7 @@ import pe.lamborgini.dao.HeladoDAO;
 import pe.lamborgini.domain.mapping.Helado;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,5 +31,18 @@ public final class HeladoService {
         } else {
             return dao.getListaHelados(pref);
         }
+    }
+
+    public static boolean saveOrUpdate(final Helado iceCream) {
+        if (iceCream.getIdHelado() == null) {
+            iceCream.getStockHelado().setCreatedAt(new Date());
+            return dao.save(iceCream);
+        } else {
+            return dao.update(iceCream);
+        }
+    }
+
+    public static boolean delete(final Helado iceCream) {
+        return dao.delete(iceCream);
     }
 }

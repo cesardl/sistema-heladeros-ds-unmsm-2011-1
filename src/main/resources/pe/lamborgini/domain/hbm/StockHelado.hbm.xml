@@ -12,5 +12,11 @@
         <property name="cantidad" type="int">
             <column name="cantidad" not-null="true"/>
         </property>
+        <property name="fechaCaducidad" type="java.util.Date">
+            <column name="fecha_caducidad" not-null="true"/>
+        </property>
+        <property name="createdAt" type="java.util.Date">
+            <column name="fecha_registro" not-null="true"/>
+        </property>
     </class>
 </hibernate-mapping>

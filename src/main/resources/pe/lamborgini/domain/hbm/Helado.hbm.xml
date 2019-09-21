@@ -15,7 +15,7 @@
             <column name="precio" not-null="true" precision="22" scale="0"/>
         </property>
         <many-to-one name="stockHelado" class="pe.lamborgini.domain.mapping.StockHelado"
-                     column="id_stock_helado" cascade="save-update"/>
+                     column="id_stock_helado" cascade="save-update,delete"/>
         <set inverse="true" name="detalleHelados">
             <key>
                 <column name="id_helado" not-null="true"/>

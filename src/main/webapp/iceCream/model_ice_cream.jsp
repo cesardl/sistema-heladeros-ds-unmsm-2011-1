@@ -27,7 +27,7 @@
                                            image="images/save.png"
                                            actionListener="#{managerIceCream.saveOrUpdate}"
                                            oncomplete="#{managerIceCream.oncomplete}"
-                                           reRender="formHeladeros"/>
+                                           reRender="formIceCreams"/>
                     </td>
                 </tr>
                 <tr class="tr-separator">
@@ -42,6 +42,11 @@
                 <tr>
                     <td class="td-label">Stock</td>
                     <td><h:inputText value="#{managerIceCream.editedIceCream.stockHelado.cantidad}"/></td>
+                </tr>
+                <tr>
+                    <td class="td-label">Fecha caducidad</td>
+                    <td><rich:calendar datePattern="yyyy-MM-dd" inputSize="10"
+                                       value="#{managerIceCream.editedIceCream.stockHelado.fechaCaducidad}"/></td>
                 </tr>
             </table>
         </a4j:form>
