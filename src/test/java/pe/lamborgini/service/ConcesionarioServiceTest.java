@@ -18,6 +18,6 @@ public class ConcesionarioServiceTest {
     public void getConcesionariosTest() {
         Collection<Concesionario> result = ConcesionarioService.obtenerConcesionario();
 
-        assertEquals(5, result.size());
+        assertEquals(6, result.size());
     }
 }

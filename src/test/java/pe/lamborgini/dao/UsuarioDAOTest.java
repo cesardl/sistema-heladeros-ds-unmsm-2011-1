@@ -17,7 +17,7 @@ public class UsuarioDAOTest {
     private UsuarioDAO dao = new UsuarioDAO();
 
     @Test
-    public void getUsuarioTest() {
+    public void getUserAdminTest() {
         String userName = "admin";
         String password = "4dm1n";
         Usuario result = dao.getUsuario(userName, password);
@@ -32,6 +32,24 @@ public class UsuarioDAOTest {
         assertEquals(userName, result.getNombreUsuario());
         assertEquals(password, result.getContrasenha());
         assertEquals(RoleType.ADMIN, result.getRoleType());
+    }
+
+    @Test
+    public void getUserManagerTest() {
+        String userName = "ECordova";
+        String password = "edgar";
+        Usuario result = dao.getUsuario(userName, password);
+
+        assertNotNull(result.getIdUsuario());
+        assertNotNull(result.getConcesionario().getIdConcesionario());
+        assertNotNull(result.getNombreUsuario());
+        assertNotNull(result.getContrasenha());
+        assertNotNull(result.getCargo());
+        assertNotNull(result.getRoleType());
+
+        assertEquals(userName, result.getNombreUsuario());
+        assertEquals(password, result.getContrasenha());
+        assertEquals(RoleType.MANAGER, result.getRoleType());
     }
 
 }

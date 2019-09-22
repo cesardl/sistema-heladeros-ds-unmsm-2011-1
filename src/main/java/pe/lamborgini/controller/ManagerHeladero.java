@@ -11,8 +11,6 @@ import pe.lamborgini.service.HeladeroService;
 
 import javax.faces.event.ActionEvent;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,11 +26,9 @@ public class ManagerHeladero implements Serializable {
     private String nombre;
     private String apellido;
     private List<Heladero> listaHeladeros;
-    private String oncomplete;
+    private Heladero editedIceCreamMan;
 
-    public ManagerHeladero() {
-        listaHeladeros = Collections.emptyList();
-    }
+    private String oncomplete;
 
     public String getNombre() {
         return nombre;
@@ -51,12 +47,27 @@ public class ManagerHeladero implements Serializable {
     }
 
     public List<Heladero> getListaHeladeros() {
+        synchronized (this) {
+            if (listaHeladeros == null) {
+                LOG.info("Initializing ice creams list");
+
+                listaHeladeros = HeladeroService.obtenerHeladeros("", "");
+            }
+        }
         LOG.debug("Obteniendo lista de heladeros, {} en total", listaHeladeros.size());
         return listaHeladeros;
     }
 
     public void setListaHeladeros(List<Heladero> listaHeladeros) {
         this.listaHeladeros = listaHeladeros;
+    }
+
+    public Heladero getEditedIceCreamMan() {
+        return editedIceCreamMan;
+    }
+
+    public void setEditedIceCreamMan(Heladero editedIceCreamMan) {
+        this.editedIceCreamMan = editedIceCreamMan;
     }
 
     public String getOncomplete() {
@@ -69,13 +80,18 @@ public class ManagerHeladero implements Serializable {
 
     public void buscarHeladero(ActionEvent event) {
         LOG.debug("Buscando heladeros [{}]", event.getPhaseId());
-        this.oncomplete = "";
-        Collection<Heladero> c = HeladeroService.obtenerHeladeros(nombre, apellido);
-        listaHeladeros = new ArrayList<>(c);
+
+        listaHeladeros = HeladeroService.obtenerHeladeros(nombre, apellido);
     }
 
     public void newIceCreamMan(ActionEvent event) {
         LOG.debug("Nuevo heladero [{}]", event.getPhaseId());
+
+        editedIceCreamMan = new Heladero();
+    }
+
+    public void saveOrUpdate(final ActionEvent event) {
+        LOG.debug("Guardando edicion de heladero [{}]", event.getPhaseId());
     }
 
     public void cleanFormularioPrincipal() {

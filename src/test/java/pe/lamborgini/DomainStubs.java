@@ -2,6 +2,7 @@ package pe.lamborgini;
 
 import pe.lamborgini.domain.mapping.Concesionario;
 import pe.lamborgini.domain.mapping.Helado;
+import pe.lamborgini.domain.mapping.RoleType;
 import pe.lamborgini.domain.mapping.Usuario;
 
 import java.time.LocalDate;
@@ -18,10 +19,11 @@ public final class DomainStubs {
     private DomainStubs() {
     }
 
-    public static Usuario user(int concessionaireId) {
+    public static Usuario user(final int concessionaireId, final RoleType roleType) {
         Usuario usuario = new Usuario();
         usuario.setConcesionario(new Concesionario());
         usuario.getConcesionario().setIdConcesionario(concessionaireId);
+        usuario.setRoleType(roleType);
         return usuario;
     }
 

@@ -36,7 +36,7 @@
             <rich:dropDownMenu>
                 <f:facet name="label">
                     <h:panelGroup>
-                        <h:outputText value="Sistema / usuarios"/>
+                        <h:outputText value="Sistema"/>
                     </h:panelGroup>
                 </f:facet>
 

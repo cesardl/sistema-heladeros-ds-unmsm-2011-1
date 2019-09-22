@@ -98,6 +98,8 @@ public class ManagerUsuario implements Serializable {
 
     public String ingresar() {
         if (UsuarioService.validarUsuario(nombre_usuario, contrasenha)) {
+            nombre_usuario = null;
+            contrasenha = null;
             return "SUCCESS";
         } else {
             return "FAIL";

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Mockito.*;
 
@@ -54,13 +55,15 @@ public class ManagerUsuarioTest {
     }
 
     @Test
-    public void ingresarUsuarioSuccesfullyTest() {
-        manager.setNombre_usuario("admin");
-        manager.setContrasenha("4dm1n");
+    public void ingresarUsuarioSuccessfulTest() {
+        manager.setNombre_usuario("LHanampa");
+        manager.setContrasenha("luis");
 
         String result = manager.ingresar();
 
         assertEquals("SUCCESS", result);
+        assertNull(manager.getNombre_usuario());
+        assertNull(manager.getContrasenha());
 
         verify(httpSession, times(1)).setAttribute(anyString(), any(Usuario.class));
         verifyNoMoreInteractions(httpSession);

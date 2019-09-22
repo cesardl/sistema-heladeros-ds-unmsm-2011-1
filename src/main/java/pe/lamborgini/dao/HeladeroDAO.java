@@ -7,10 +7,12 @@ package pe.lamborgini.dao;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pe.lamborgini.domain.mapping.Heladero;
+import pe.lamborgini.domain.mapping.RoleType;
 import pe.lamborgini.util.AppUtil;
 
 import java.util.ArrayList;
@@ -24,19 +26,28 @@ public class HeladeroDAO {
     private static final Logger LOG = LoggerFactory.getLogger(HeladeroDAO.class);
 
     @SuppressWarnings("unchecked")
-    public List<Heladero> getListaHeladeros(final String name, final String lastName, final int userId) {
-        LOG.debug("DB query: name: '{}' | lastName: '{}' | userId: '{}'", name, lastName, userId);
+    public List<Heladero> getListaHeladeros(final String name, final String lastName,
+                                            final int concessionaireId, final RoleType roleType) {
+        LOG.debug("DB query: name: '{}' | lastName: '{}' | concessionaireId: '{}' | roleType: '{}'",
+                name, lastName, concessionaireId, roleType);
+
         Session session = AppUtil.getSessionFactory().openSession();
         List<Heladero> heladeros = new ArrayList<>();
         try {
-            Criteria c = session.createCriteria(Heladero.class).
-                    add(Restrictions.eq("concesionario.idConcesionario", userId));
+            Criteria c = session.createCriteria(Heladero.class);
+
+            if (RoleType.MANAGER.equals(roleType)) {
+                c.add(Restrictions.eq("concesionario.idConcesionario", concessionaireId));
+            }
             if (name.trim().length() != 0) {
                 c.add(Restrictions.like("nombres", "%" + name + "%"));
             }
             if (lastName.trim().length() != 0) {
                 c.add(Restrictions.like("apellidos", "%" + lastName + "%"));
             }
+
+            c.addOrder(Order.asc("apellidos"));
+
             heladeros = c.list();
             LOG.debug("Getting {} rows from DB", heladeros.size());
         } catch (HibernateException e) {

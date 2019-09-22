@@ -115,21 +115,19 @@
     </body>
     </html>
     <jsp:include page="model_ice_cream.jsp"/>
-    <rich:modalPanel id="mp_ice_cream_deletion_confirm" width="400" autosized="true">
-        <rich:panel id="panel">
-            <f:facet name="header">
-                <h:outputText value="Ice cream deletion"/>
-            </f:facet>
-            <h:outputText value="Está seguro de eliminar el helado #{managerIceCream.editedIceCream.nombreHelado}?"/>
-            <h:panelGrid columns="2">
-                <h:form id="deletionIceCream">
-                    <a4j:commandButton value="Delete" actionListener="#{managerIceCream.delete}"
-                                       oncomplete="#{managerIceCream.oncomplete}"
-                                       reRender="formIceCreams"/>
-                    <a4j:commandButton value="Cancel"
-                                       onclick="#{rich:component('mp_ice_cream_deletion_confirm')}.hide(); return false;"/>
-                </h:form>
-            </h:panelGrid>
-        </rich:panel>
+    <rich:modalPanel id="mp_ice_cream_deletion_confirm" width="300" autosized="true">
+        <f:facet name="header">
+            <h:outputText value="Ice cream deletion"/>
+        </f:facet>
+        <h:outputText value="Está seguro de eliminar el helado #{managerIceCream.editedIceCream.nombreHelado}?"/>
+        <h:panelGrid columns="2">
+            <h:form id="deletionIceCream">
+                <a4j:commandButton value="Delete" actionListener="#{managerIceCream.delete}"
+                                   oncomplete="#{managerIceCream.oncomplete}"
+                                   reRender="formIceCreams"/>
+                <a4j:commandButton value="Cancel"
+                                   onclick="#{rich:component('mp_ice_cream_deletion_confirm')}.hide(); return false;"/>
+            </h:form>
+        </h:panelGrid>
     </rich:modalPanel>
 </f:view>

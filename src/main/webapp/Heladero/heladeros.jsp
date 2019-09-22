@@ -7,6 +7,7 @@
 
 <%@taglib prefix="f" uri="http://java.sun.com/jsf/core" %>
 <%@taglib prefix="h" uri="http://java.sun.com/jsf/html" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="rich" uri="http://richfaces.org/rich" %>
 <%@taglib prefix="a4j" uri="http://richfaces.org/a4j" %>
 
@@ -38,12 +39,13 @@
                             </a4j:status>
                             <a4j:commandButton value="Buscar"
                                                image="images/view.png"
-                                               reRender="scrollerHeladeros, tableHeladeros"
-                                               actionListener="#{managerHeladero.buscarHeladero}"
-                                               oncomplete="#{managerHeladero.oncomplete}"/>
+                                               reRender="scrollerHeladeros, tableHeladeros, lengthHeladeros"
+                                               actionListener="#{managerHeladero.buscarHeladero}"/>
                             <a4j:commandButton value="Nuevo"
                                                image="images/new.png"
-                                               actionListener="#{managerHeladero.newIceCreamMan}"/>
+                                               reRender="mp_ice_cream_man"
+                                               actionListener="#{managerHeladero.newIceCreamMan}"
+                                               oncomplete="#{rich:component('mp_ice_cream_man')}.show()"/>
                         </h:panelGrid>
                     </td>
                 </tr>
@@ -103,6 +105,18 @@
 
                             <rich:column style="text-align: center;">
                                 <f:facet name="header">
+                                    <h:outputText value="Editar"/>
+                                </f:facet>
+                                <a4j:commandButton image="images/edit.gif"
+                                                   reRender="mp_ice_cream_man"
+                                                   oncomplete="#{rich:component('mp_ice_cream_man')}.show()">
+                                    <f:setPropertyActionListener target="#{managerHeladero.editedIceCreamMan}"
+                                                                 value="#{heladero}"/>
+                                </a4j:commandButton>
+                            </rich:column>
+
+                            <rich:column style="text-align: center;">
+                                <f:facet name="header">
                                     <h:outputText value="Asignar"/>
                                 </f:facet>
                                 <a4j:commandButton value="Asignar" reRender="mp_asignar_helados"
@@ -121,11 +135,17 @@
                         </rich:dataTable>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="3" align="center">
+                        <h:outputText id="lengthHeladeros" value="Total rows: #{fn:length(managerHeladero.listaHeladeros)}"/>
+                    </td>
+                </tr>
             </table>
         </h:form>
     </rich:panel>
     </body>
     </html>
+    <jsp:include page="model_ice_cream_man.jsp"/>
     <jsp:include page="asignar_helados.jsp"/>
     <jsp:include page="pagar_heladero.jsp"/>
 </f:view>
