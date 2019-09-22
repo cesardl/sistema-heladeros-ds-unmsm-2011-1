@@ -1,6 +1,7 @@
 package pe.lamborgini.dao;
 
 import org.junit.Test;
+import pe.lamborgini.domain.mapping.RoleType;
 import pe.lamborgini.domain.mapping.Usuario;
 
 import static org.junit.Assert.assertEquals;
@@ -26,9 +27,11 @@ public class UsuarioDAOTest {
         assertNotNull(result.getNombreUsuario());
         assertNotNull(result.getContrasenha());
         assertNotNull(result.getCargo());
+        assertNotNull(result.getRoleType());
 
         assertEquals(userName, result.getNombreUsuario());
         assertEquals(password, result.getContrasenha());
+        assertEquals(RoleType.ADMIN, result.getRoleType());
     }
 
 }

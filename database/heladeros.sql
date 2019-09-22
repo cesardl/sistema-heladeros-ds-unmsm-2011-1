@@ -259,11 +259,12 @@ DROP TABLE IF EXISTS `heladeros`.`usuario`;
 
 CREATE TABLE IF NOT EXISTS `heladeros`.`usuario`
 (
-    `id_usuario`       INT(11)     NOT NULL AUTO_INCREMENT,
-    `id_concesionario` INT(11)     NOT NULL,
-    `nombre_usuario`   VARCHAR(45) NOT NULL,
-    `contrasenha`      VARCHAR(45) NOT NULL,
-    `cargo`            VARCHAR(45) NOT NULL,
+    `id_usuario`       INT(11)                   NOT NULL AUTO_INCREMENT,
+    `id_concesionario` INT(11)                   NOT NULL,
+    `nombre_usuario`   VARCHAR(45)               NOT NULL,
+    `contrasenha`      VARCHAR(45)               NOT NULL,
+    `cargo`            VARCHAR(45)               NOT NULL,
+    `role`             ENUM ('ADMIN', 'MANAGER') NOT NULL,
     PRIMARY KEY (`id_usuario`),
     INDEX `fk_usuario_concesionario` (`id_concesionario` ASC),
     CONSTRAINT `fk_usuario_concesionario`
@@ -508,18 +509,18 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `heladeros`;
-INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`)
-VALUES (1, 1, 'LHanampa', 'luis', 'Gerente');
-INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`)
-VALUES (2, 2, 'ECordova', 'edgar', 'Jefe de Ventas');
-INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`)
-VALUES (3, 3, 'MRivero', 'mariana', 'Asistente');
-INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`)
-VALUES (4, 4, 'JLorenao', 'javier', 'Gerente');
-INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`)
-VALUES (5, 5, 'DMartinez', 'delia', 'Contador');
-INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`)
-VALUES (6, 1, 'admin', '4dm1n', 'Administrador');
+INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`, `role`)
+VALUES (1, 1, 'LHanampa', 'luis', 'Gerente', 'MANAGER');
+INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`, `role`)
+VALUES (2, 2, 'ECordova', 'edgar', 'Jefe de Ventas', 'MANAGER');
+INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`, `role`)
+VALUES (3, 3, 'MRivero', 'mariana', 'Asistente', 'MANAGER');
+INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`, `role`)
+VALUES (4, 4, 'JLorenao', 'javier', 'Gerente', 'MANAGER');
+INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`, `role`)
+VALUES (5, 5, 'DMartinez', 'delia', 'Contador', 'MANAGER');
+INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`, `role`)
+VALUES (6, 1, 'admin', '4dm1n', 'Administrador', 'ADMIN');
 
 COMMIT;
 

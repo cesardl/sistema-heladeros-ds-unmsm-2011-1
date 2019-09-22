@@ -22,5 +22,11 @@
         <property name="cargo" type="string">
             <column length="45" name="cargo" not-null="true"/>
         </property>
+        <property name="roleType">
+            <column name="role" not-null="true"/>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">pe.lamborgini.domain.mapping.RoleType</param>
+            </type>
+        </property>
     </class>
 </hibernate-mapping>

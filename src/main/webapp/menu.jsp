@@ -11,7 +11,7 @@
 
 <f:subview id="menu">
     <div style="font-weight: bold; font-size: 13px;">
-        <%@page import="pe.lamborgini.domain.mapping.Usuario" %>
+        <%@ page import="pe.lamborgini.domain.mapping.Usuario" %>
         <%
             Usuario u = (Usuario) session.getAttribute("usuario");
             out.println("Bienvenido " + u.getNombreUsuario() + " - "
@@ -44,7 +44,9 @@
 
                 <rich:menuItem submitMode="ajax" value="Heladeros" action="TO_HELADEROS"/>
 
+                <% if (pe.lamborgini.domain.mapping.RoleType.ADMIN.equals(u.getRoleType())) {%>
                 <rich:menuItem submitMode="ajax" value="Usuarios" action="TO_USUARIOS"/>
+                <% }%>
             </rich:dropDownMenu>
 
             <rich:dropDownMenu>
