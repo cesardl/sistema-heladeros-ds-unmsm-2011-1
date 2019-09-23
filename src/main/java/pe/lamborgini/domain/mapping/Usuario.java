@@ -15,6 +15,7 @@ public class Usuario implements java.io.Serializable {
     private String nombreUsuario;
     private String contrasenha;
     private String cargo;
+    private RoleType roleType;
 
     public Usuario() {
     }
@@ -66,7 +67,13 @@ public class Usuario implements java.io.Serializable {
         this.cargo = cargo;
     }
 
+    public RoleType getRoleType() {
+        return roleType;
+    }
 
+    public void setRoleType(RoleType role) {
+        this.roleType = role;
+    }
 }
 
 

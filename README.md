@@ -14,6 +14,8 @@ En este proyecto se present&oacute; las funcionalidades de administraci&oacute;n
 
 [RichFaces Showcase](http://showcase.richfaces.org/richfaces/component-sample.jsf?demo=dataTable&sample=dataTableEdit&skin=blueSky)
 
+[RichFaces Dev Guide](https://docs.jboss.org/richfaces/latest_3_3_X/en/devguide/html/RichFacesComponentsLibrary.html)
+
 [![Scanned on](https://sonarcloud.io/images/project_badges/sonarcloud-black.svg)](https://sonarcloud.io/dashboard?id=pe.edu.unmsm.fisi.sigevh-webapp)
 
 ## [10 Retos que Debes Realizar para ser Buen Programador](http://solutions-site40.blogspot.pe/2015/05/10-retos-que-debes-realizar-para-ser.html#/?)

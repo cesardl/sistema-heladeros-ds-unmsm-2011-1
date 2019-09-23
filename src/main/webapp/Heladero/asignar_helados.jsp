@@ -16,7 +16,7 @@
             iNombreHelado.innerHTML = sgcomponent.getSelectedItems().pluck('nombreHelado');
         }
     </script>
-    <rich:modalPanel id="mp_asignar_helados" width="500" autosized="true">
+    <rich:modalPanel id="mp_asignar_helados" width="400" autosized="true">
         <f:facet name="header">
             <h:outputText value="Asignacion de Helados"/>
         </f:facet>

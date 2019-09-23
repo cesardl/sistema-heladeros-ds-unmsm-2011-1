@@ -9,14 +9,20 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import pe.lamborgini.DomainStubs;
 import pe.lamborgini.domain.mapping.Usuario;
+import pe.lamborgini.util.AppUtil;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Mockito.*;
 
@@ -33,6 +39,8 @@ import static org.mockito.Mockito.*;
 public class ManagerUsuarioTest {
 
     private ManagerUsuario manager = new ManagerUsuario();
+    @Mock
+    private ActionEvent actionEvent;
     @Mock
     private FacesContext facesContext;
     @Mock
@@ -51,16 +59,20 @@ public class ManagerUsuarioTest {
     @After
     public void setDown() {
         manager.setOncomplete(null);
+        manager.setListaUsuarios(null);
     }
 
     @Test
-    public void ingresarUsuarioSuccesfullyTest() {
-        manager.setNombre_usuario("admin");
-        manager.setContrasenha("4dm1n");
+    public void ingresarUsuarioSuccessfulTest() {
+        manager.setUsername("LHanampa");
+        manager.setPassword("luis");
 
         String result = manager.ingresar();
 
         assertEquals("SUCCESS", result);
+        assertNull(manager.getUsername());
+        assertNull(manager.getPassword());
+        assertNull(manager.getOncomplete());
 
         verify(httpSession, times(1)).setAttribute(anyString(), any(Usuario.class));
         verifyNoMoreInteractions(httpSession);
@@ -68,12 +80,13 @@ public class ManagerUsuarioTest {
 
     @Test
     public void ingresarUsuarioFailedTest() {
-        manager.setNombre_usuario("fakeUser");
-        manager.setContrasenha("fakePassword");
+        manager.setUsername("fakeUser");
+        manager.setPassword("fakePassword");
 
         String result = manager.ingresar();
 
         assertEquals("FAIL", result);
+        assertNull(manager.getOncomplete());
 
         verify(httpSession, never()).setAttribute(anyString(), any(Usuario.class));
     }
@@ -84,5 +97,35 @@ public class ManagerUsuarioTest {
         String result = manager.salir();
 
         assertEquals("TO_INDEX", result);
+    }
+
+    @Test
+    public void listConcessionairesTest() {
+        SelectItem[] result = manager.getConcessionaires();
+
+        assertEquals(6, result.length);
+        assertEquals(0, AppUtil.aInteger(result[0].getValue().toString()));
+    }
+
+    @Test
+    public void findAllConcessionaireTest() {
+        manager.setConcessionaireId(0);
+
+        when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.userAdmin());
+
+        List<Usuario> result = manager.getListaUsuarios();
+
+        assertEquals(5, result.size());
+    }
+
+    @Test
+    public void findConcessionaireByFilterTest() {
+        manager.setConcessionaireId(2);
+
+        when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.userAdmin());
+
+        manager.findByConcessionaire(actionEvent);
+
+        assertEquals(1, manager.getListaUsuarios().size());
     }
 }

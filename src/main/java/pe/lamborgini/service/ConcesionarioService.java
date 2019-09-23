@@ -19,6 +19,6 @@ public final class ConcesionarioService {
 
     public static Collection<Concesionario> obtenerConcesionario() {
         ConcesionarioDAO dao = new ConcesionarioDAO();
-        return dao.getConcesionarios();
+        return dao.listConcessionaires();
     }
 }

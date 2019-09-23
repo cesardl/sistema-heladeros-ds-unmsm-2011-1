@@ -1,6 +1,6 @@
-1,1,LHanampa,luis,Gerente
-2,2,ECordova,edgar,Jefe de Ventas
-3,3,MRivero,mariana,Asistente
-4,4,JLorenao,javier,Gerente
-5,5,DMartinez,delia,Contador
-6,1,admin,4dm1n,Administrador
+1,1,admin,4dm1n,Administrador,ADMIN
+2,2,LHanampa,luis,Gerente,MANAGER
+3,3,ECordova,edgar,Jefe de Ventas,MANAGER
+4,4,MRivero,mariana,Asistente,MANAGER
+5,5,JLorenao,javier,Gerente,MANAGER
+6,6,DMartinez,delia,Contador,MANAGER

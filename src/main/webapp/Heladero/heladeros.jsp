@@ -7,6 +7,7 @@
 
 <%@taglib prefix="f" uri="http://java.sun.com/jsf/core" %>
 <%@taglib prefix="h" uri="http://java.sun.com/jsf/html" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="rich" uri="http://richfaces.org/rich" %>
 <%@taglib prefix="a4j" uri="http://richfaces.org/a4j" %>
 
@@ -38,12 +39,13 @@
                             </a4j:status>
                             <a4j:commandButton value="Buscar"
                                                image="images/view.png"
-                                               reRender="scrollerHeladeros, tableHeladeros"
-                                               actionListener="#{managerHeladero.buscarHeladero}"
-                                               oncomplete="#{managerHeladero.oncomplete}"/>
+                                               reRender="scrollerHeladeros, tableHeladeros, lengthHeladeros"
+                                               actionListener="#{managerHeladero.buscarHeladero}"/>
                             <a4j:commandButton value="Nuevo"
                                                image="images/new.png"
-                                               actionListener="#{managerHeladero.newIceCreamMan}"/>
+                                               reRender="mp_ice_cream_man"
+                                               actionListener="#{managerHeladero.newIceCreamMan}"
+                                               oncomplete="#{rich:component('mp_ice_cream_man')}.show()"/>
                         </h:panelGrid>
                     </td>
                 </tr>
@@ -62,6 +64,23 @@
                     <td><h:inputText value="#{managerHeladero.apellido}"/></td>
                     <td></td>
                 </tr>
+                <%@ page import="pe.lamborgini.domain.mapping.Usuario" %>
+                <%
+                    Usuario u = (Usuario) session.getAttribute("usuario");
+                    if (pe.lamborgini.domain.mapping.RoleType.ADMIN.equals(u.getRoleType())) {
+                %>
+                <tr>
+                    <td class="td-label">Concesionario</td>
+                    <td>
+                        <h:selectOneMenu value="#{managerHeladero.concessionaireId}">
+                            <f:selectItems value="#{managerHeladero.concessionaires}"/>
+                        </h:selectOneMenu>
+                    </td>
+                    <td></td>
+                </tr>
+                <%
+                    }
+                %>
                 <tr class="tr-separator">
                     <td colspan="3">
                         <rich:separator width="100%" height="3px"/>
@@ -94,11 +113,29 @@
                                 <h:outputText value="#{heladero.apellidos} #{heladero.nombres}"/>
                             </rich:column>
 
+                            <%
+                                if (pe.lamborgini.domain.mapping.RoleType.ADMIN.equals(u.getRoleType())) {
+                            %>
                             <rich:column>
                                 <f:facet name="header">
                                     <h:outputText value="Concesionario"/>
                                 </f:facet>
                                 <h:outputText value="#{heladero.concesionario.nombreConces}"/>
+                            </rich:column>
+                            <%
+                                }
+                            %>
+
+                            <rich:column style="text-align: center;">
+                                <f:facet name="header">
+                                    <h:outputText value="Editar"/>
+                                </f:facet>
+                                <a4j:commandButton image="images/edit.gif"
+                                                   reRender="mp_ice_cream_man"
+                                                   oncomplete="#{rich:component('mp_ice_cream_man')}.show()">
+                                    <f:setPropertyActionListener target="#{managerHeladero.editedIceCreamMan}"
+                                                                 value="#{heladero}"/>
+                                </a4j:commandButton>
                             </rich:column>
 
                             <rich:column style="text-align: center;">
@@ -118,6 +155,11 @@
                                                    actionListener="#{managerPago.pagarHeladero}"
                                                    oncomplete="#{managerPago.oncomplete}"/>
                             </rich:column>
+
+                            <f:facet name="footer">
+                                <h:outputText id="lengthHeladeros"
+                                              value="Total rows: #{fn:length(managerHeladero.listaHeladeros)}"/>
+                            </f:facet>
                         </rich:dataTable>
                     </td>
                 </tr>
@@ -126,6 +168,7 @@
     </rich:panel>
     </body>
     </html>
+    <jsp:include page="model_ice_cream_man.jsp"/>
     <jsp:include page="asignar_helados.jsp"/>
     <jsp:include page="pagar_heladero.jsp"/>
 </f:view>

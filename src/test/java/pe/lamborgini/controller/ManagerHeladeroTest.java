@@ -18,7 +18,7 @@ import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Mockito.when;
 
@@ -53,34 +53,71 @@ public class ManagerHeladeroTest {
 
     @After
     public void setDown() {
-        manager.setOncomplete(null);
+        manager.setListaHeladeros(null);
+        manager.setConcessionaires(null);
     }
 
     @Test
-    public void buscarHeladeroWithoutFilterTest() {
+    public void firstPageLoadIceCreamMenListForAdminTest() {
+        manager.setNombre("");
+        manager.setApellido("");
+        manager.setConcessionaireId(0);
+
+        when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.userAdmin());
+
+        List<Heladero> result = manager.getListaHeladeros();
+
+        assertEquals(281, result.size());
+        assertTrue(manager.getNombre().isEmpty());
+        assertTrue(manager.getApellido().isEmpty());
+    }
+
+    @Test
+    public void firstPageLoadIceCreamMenListForManagerTest() {
         manager.setNombre("");
         manager.setApellido("");
 
-        when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.user(1));
+        when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.userManager(5, 5));
+
+        List<Heladero> result = manager.getListaHeladeros();
+
+        assertEquals(47, result.size());
+        assertTrue(manager.getNombre().isEmpty());
+        assertTrue(manager.getApellido().isEmpty());
+        assertEquals(0, manager.getConcessionaireId());
+    }
+
+    @Test
+    public void buscarHeladeroWithFilterForAdminTest() {
+        manager.setNombre("d");
+        manager.setApellido("z");
+        manager.setConcessionaireId(6);
+
+        when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.userAdmin());
+
+        manager.buscarHeladero(actionEvent);
+
+        List<Heladero> result = manager.getListaHeladeros();
+
+        assertEquals(7, result.size());
+        assertFalse(manager.getNombre().isEmpty());
+        assertFalse(manager.getApellido().isEmpty());
+    }
+
+    @Test
+    public void buscarHeladeroWithFilterForManagerTest() {
+        manager.setNombre("d");
+        manager.setApellido("z");
+
+        when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.userManager(2, 2));
 
         manager.buscarHeladero(actionEvent);
 
         List<Heladero> result = manager.getListaHeladeros();
 
         assertEquals(5, result.size());
-    }
-
-    @Test
-    public void buscarHeladeroWithFilterTest() {
-        manager.setNombre("d");
-        manager.setApellido("z");
-
-        when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.user(2));
-
-        manager.buscarHeladero(actionEvent);
-
-        List<Heladero> result = manager.getListaHeladeros();
-
-        assertEquals(1, result.size());
+        assertFalse(manager.getNombre().isEmpty());
+        assertFalse(manager.getApellido().isEmpty());
+        assertEquals(0, manager.getConcessionaireId());
     }
 }
