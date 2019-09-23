@@ -9,6 +9,7 @@
 
 <%@taglib prefix="f" uri="http://java.sun.com/jsf/core" %>
 <%@taglib prefix="h" uri="http://java.sun.com/jsf/html" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="rich" uri="http://richfaces.org/rich" %>
 <%@taglib prefix="a4j" uri="http://richfaces.org/a4j" %>
 
@@ -52,6 +53,9 @@
                 </tr>
                 <tr>
                     <td align="center" colspan="3">
+                        <rich:datascroller id="scrollerIceCream" align="right" for="tableIceCreams"
+                                           style="width : 90%;"/>
+                        <rich:spacer height="3px"/>
                         <rich:dataTable id="tableIceCreams" value="#{managerIceCream.iceCreamsList}" var="iceCream"
                                         rows="20" style="width : 90%;"
                                         onRowMouseOver="this.style.backgroundColor='#F1F1F1'"
@@ -104,7 +108,8 @@
                             </rich:column>
 
                             <f:facet name="footer">
-                                <rich:datascroller id="scrollerIceCream" for="tableIceCreams" fastStep="3"/>
+                                <h:outputText id="lengthHeladeros"
+                                              value="Total rows: #{fn:length(managerIceCream.iceCreamsList)}"/>
                             </f:facet>
                         </rich:dataTable>
                     </td>

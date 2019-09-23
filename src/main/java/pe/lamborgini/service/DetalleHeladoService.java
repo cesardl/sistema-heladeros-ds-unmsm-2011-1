@@ -51,19 +51,18 @@ public final class DetalleHeladoService {
         return true;
     }
 
-    public static void actualizarEntregaHelados(List<DetalleHelado> listaDetalleHelados, String id_heladero) {
-
+    public static void actualizarEntregaHelados(List<DetalleHelado> listaDetalleHelados, String iceCreamManId) {
         double pago = 0;
         Factura factura = new Factura();
         factura.setDescripcion("Venta de helados a fecha " + AppUtil.dateWithFormat(new Date()));
         factura.setFecha(new Date());
         factura.setNumeroFactura(AppUtil.random() * 100);
         for (DetalleHelado detalleHelado : listaDetalleHelados) {
-            double cantidad_pagada = detalleHelado.getHelado().getPrecio() * detalleHelado.getCantVendida();
+            double paidAmount = detalleHelado.getHelado().getPrecio() * detalleHelado.getCantVendida();
 
-            pago = pago + cantidad_pagada;
+            pago = pago + paidAmount;
             PagoHelado ph = new PagoHelado();
-            ph.setCantPagada(cantidad_pagada);
+            ph.setCantPagada(paidAmount);
             ph.setConcepto(new Concepto(1));
 
             ph.setFactura(factura);

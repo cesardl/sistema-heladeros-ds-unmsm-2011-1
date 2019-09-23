@@ -1,5 +1,6 @@
 package pe.lamborgini.controller;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +18,7 @@ import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Mockito.when;
 
@@ -50,6 +51,12 @@ public class ManagerHeladeroTest {
         when(externalContext.getSession(anyBoolean())).thenReturn(httpSession);
     }
 
+    @After
+    public void setDown() {
+        manager.setListaHeladeros(null);
+        manager.setConcessionaires(null);
+    }
+
     @Test
     public void firstPageLoadIceCreamMenListForAdminTest() {
         manager.setNombre("");
@@ -61,19 +68,23 @@ public class ManagerHeladeroTest {
         List<Heladero> result = manager.getListaHeladeros();
 
         assertEquals(281, result.size());
+        assertTrue(manager.getNombre().isEmpty());
+        assertTrue(manager.getApellido().isEmpty());
     }
 
     @Test
     public void firstPageLoadIceCreamMenListForManagerTest() {
         manager.setNombre("");
         manager.setApellido("");
-        manager.setConcessionaireId(0);
 
         when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.userManager(5, 5));
 
         List<Heladero> result = manager.getListaHeladeros();
 
         assertEquals(47, result.size());
+        assertTrue(manager.getNombre().isEmpty());
+        assertTrue(manager.getApellido().isEmpty());
+        assertEquals(0, manager.getConcessionaireId());
     }
 
     @Test
@@ -89,13 +100,14 @@ public class ManagerHeladeroTest {
         List<Heladero> result = manager.getListaHeladeros();
 
         assertEquals(7, result.size());
+        assertFalse(manager.getNombre().isEmpty());
+        assertFalse(manager.getApellido().isEmpty());
     }
 
     @Test
     public void buscarHeladeroWithFilterForManagerTest() {
         manager.setNombre("d");
         manager.setApellido("z");
-        manager.setConcessionaireId(0);
 
         when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.userManager(2, 2));
 
@@ -104,5 +116,8 @@ public class ManagerHeladeroTest {
         List<Heladero> result = manager.getListaHeladeros();
 
         assertEquals(5, result.size());
+        assertFalse(manager.getNombre().isEmpty());
+        assertFalse(manager.getApellido().isEmpty());
+        assertEquals(0, manager.getConcessionaireId());
     }
 }

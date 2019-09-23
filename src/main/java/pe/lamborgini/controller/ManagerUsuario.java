@@ -22,25 +22,25 @@ public class ManagerUsuario extends BaseManager implements Serializable {
 
     private static final Logger LOG = LoggerFactory.getLogger(ManagerUsuario.class);
 
-    private String nombre_usuario;
-    private String contrasenha;
+    private String username;
+    private String password;
     private List<Usuario> listaUsuarios;
     private String oncomplete;
 
-    public String getContrasenha() {
-        return contrasenha;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContrasenha(String contrasenha) {
-        this.contrasenha = contrasenha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getNombre_usuario() {
-        return nombre_usuario;
+    public String getUsername() {
+        return username;
     }
 
-    public void setNombre_usuario(String nombre_usuario) {
-        this.nombre_usuario = nombre_usuario;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public List<Usuario> getListaUsuarios() {
@@ -64,9 +64,9 @@ public class ManagerUsuario extends BaseManager implements Serializable {
     }
 
     public String ingresar() {
-        if (UsuarioService.validarUsuario(nombre_usuario, contrasenha)) {
-            nombre_usuario = null;
-            contrasenha = null;
+        if (UsuarioService.validarUsuario(username, password)) {
+            username = null;
+            password = null;
             return "SUCCESS";
         } else {
             return "FAIL";

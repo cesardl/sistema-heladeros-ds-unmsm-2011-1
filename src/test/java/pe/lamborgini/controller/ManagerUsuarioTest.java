@@ -19,6 +19,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -63,14 +64,15 @@ public class ManagerUsuarioTest {
 
     @Test
     public void ingresarUsuarioSuccessfulTest() {
-        manager.setNombre_usuario("LHanampa");
-        manager.setContrasenha("luis");
+        manager.setUsername("LHanampa");
+        manager.setPassword("luis");
 
         String result = manager.ingresar();
 
         assertEquals("SUCCESS", result);
-        assertNull(manager.getNombre_usuario());
-        assertNull(manager.getContrasenha());
+        assertNull(manager.getUsername());
+        assertNull(manager.getPassword());
+        assertNull(manager.getOncomplete());
 
         verify(httpSession, times(1)).setAttribute(anyString(), any(Usuario.class));
         verifyNoMoreInteractions(httpSession);
@@ -78,12 +80,13 @@ public class ManagerUsuarioTest {
 
     @Test
     public void ingresarUsuarioFailedTest() {
-        manager.setNombre_usuario("fakeUser");
-        manager.setContrasenha("fakePassword");
+        manager.setUsername("fakeUser");
+        manager.setPassword("fakePassword");
 
         String result = manager.ingresar();
 
         assertEquals("FAIL", result);
+        assertNull(manager.getOncomplete());
 
         verify(httpSession, never()).setAttribute(anyString(), any(Usuario.class));
     }
@@ -110,9 +113,9 @@ public class ManagerUsuarioTest {
 
         when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.userAdmin());
 
-        manager.findByConcessionaire(actionEvent);
+        List<Usuario> result = manager.getListaUsuarios();
 
-        assertEquals(5, manager.getListaUsuarios().size());
+        assertEquals(5, result.size());
     }
 
     @Test

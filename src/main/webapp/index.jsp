@@ -17,16 +17,23 @@
         <link type="text/css" href="style/default.css" rel="stylesheet" media="screen"/>
     </head>
     <body>
+    <%@ page import="pe.lamborgini.domain.mapping.Usuario" %>
+    <%
+        Usuario u = (Usuario) session.getAttribute("usuario");
+        if (u != null) {
+            out.print(u.getNombreUsuario() + " already logged!");
+        }
+    %>
     <rich:panel header="Ingreso al Sistema" style="width: 50%;">
         <h:form>
             <table>
                 <tr>
                     <td class="td-label">Usuario</td>
-                    <td><h:inputText value="#{managerUsuario.nombre_usuario}"/></td>
+                    <td><h:inputText value="#{managerUsuario.username}"/></td>
                 </tr>
                 <tr>
                     <td class="td-label">Contrase&ntilde;a</td>
-                    <td><h:inputSecret value="#{managerUsuario.contrasenha}"/></td>
+                    <td><h:inputSecret value="#{managerUsuario.password}"/></td>
                 </tr>
                 <tr>
                     <td colspan="2">
