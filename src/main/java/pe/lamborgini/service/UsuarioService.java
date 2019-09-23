@@ -11,17 +11,19 @@ import pe.lamborgini.util.SessionUtils;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
+import java.util.List;
 
 /**
  * @author Cesardl
  */
 public final class UsuarioService {
 
+    private static UsuarioDAO dao = new UsuarioDAO();
+
     private UsuarioService() {
     }
 
     public static boolean validarUsuario(String userName, String password) {
-        UsuarioDAO dao = new UsuarioDAO();
         Usuario usuario = dao.getUsuario(userName, password);
         if (usuario != null) {
             HttpSession session = SessionUtils.getInstance().load();
@@ -39,5 +41,12 @@ public final class UsuarioService {
             session.removeAttribute((String) atributos.nextElement());
         }
         session.invalidate();
+    }
+
+    public static List<Usuario> listUsersByConcessionaires(final int concessionaireId) {
+        HttpSession session = SessionUtils.getInstance().load();
+        Usuario user = (Usuario) session.getAttribute("usuario");
+
+        return dao.findByConcessionaire(user.getIdUsuario(), concessionaireId);
     }
 }

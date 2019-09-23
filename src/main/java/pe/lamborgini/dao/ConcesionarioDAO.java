@@ -7,6 +7,7 @@ package pe.lamborgini.dao;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pe.lamborgini.domain.mapping.Concesionario;
@@ -23,21 +24,22 @@ public class ConcesionarioDAO {
     private static final Logger LOG = LoggerFactory.getLogger(ConcesionarioDAO.class);
 
     @SuppressWarnings("unchecked")
-    public List<Concesionario> getConcesionarios() {
-        LOG.debug("DB query");
+    public List<Concesionario> listConcessionaires() {
+        LOG.debug("DB query: concessionaires");
         Session session = AppUtil.getSessionFactory().openSession();
-        List<Concesionario> concesionarios;
+        List<Concesionario> concessionaires;
         try {
-            Criteria c = session.createCriteria(Concesionario.class);
+            Criteria c = session.createCriteria(Concesionario.class)
+                    .add(Restrictions.ne("idConcesionario", 1));
 
-            concesionarios = c.list();
-            LOG.debug("Getting {} rows from DB", concesionarios.size());
+            concessionaires = c.list();
+            LOG.debug("Getting {} rows from DB", concessionaires.size());
         } catch (HibernateException e) {
             LOG.error("ConcesionarioDAO.getConcesionarios", e);
-            concesionarios = Collections.emptyList();
+            concessionaires = Collections.emptyList();
         } finally {
             session.close();
         }
-        return concesionarios;
+        return concessionaires;
     }
 }

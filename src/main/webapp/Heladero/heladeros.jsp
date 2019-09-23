@@ -64,6 +64,23 @@
                     <td><h:inputText value="#{managerHeladero.apellido}"/></td>
                     <td></td>
                 </tr>
+                <%@ page import="pe.lamborgini.domain.mapping.Usuario" %>
+                <%
+                    Usuario u = (Usuario) session.getAttribute("usuario");
+                    if (pe.lamborgini.domain.mapping.RoleType.ADMIN.equals(u.getRoleType())) {
+                %>
+                <tr>
+                    <td class="td-label">Concesionario</td>
+                    <td>
+                        <h:selectOneMenu value="#{managerHeladero.concessionaireId}">
+                            <f:selectItems value="#{managerHeladero.concessionaires}"/>
+                        </h:selectOneMenu>
+                    </td>
+                    <td></td>
+                </tr>
+                <%
+                    }
+                %>
                 <tr class="tr-separator">
                     <td colspan="3">
                         <rich:separator width="100%" height="3px"/>
@@ -96,12 +113,18 @@
                                 <h:outputText value="#{heladero.apellidos} #{heladero.nombres}"/>
                             </rich:column>
 
+                            <%
+                                if (pe.lamborgini.domain.mapping.RoleType.ADMIN.equals(u.getRoleType())) {
+                            %>
                             <rich:column>
                                 <f:facet name="header">
                                     <h:outputText value="Concesionario"/>
                                 </f:facet>
                                 <h:outputText value="#{heladero.concesionario.nombreConces}"/>
                             </rich:column>
+                            <%
+                                }
+                            %>
 
                             <rich:column style="text-align: center;">
                                 <f:facet name="header">
@@ -132,12 +155,12 @@
                                                    actionListener="#{managerPago.pagarHeladero}"
                                                    oncomplete="#{managerPago.oncomplete}"/>
                             </rich:column>
+
+                            <f:facet name="footer">
+                                <h:outputText id="lengthHeladeros"
+                                              value="Total rows: #{fn:length(managerHeladero.listaHeladeros)}"/>
+                            </f:facet>
                         </rich:dataTable>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3" align="center">
-                        <h:outputText id="lengthHeladeros" value="Total rows: #{fn:length(managerHeladero.listaHeladeros)}"/>
                     </td>
                 </tr>
             </table>

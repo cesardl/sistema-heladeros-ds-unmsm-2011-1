@@ -12,7 +12,6 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pe.lamborgini.domain.mapping.Heladero;
-import pe.lamborgini.domain.mapping.RoleType;
 import pe.lamborgini.util.AppUtil;
 
 import java.util.ArrayList;
@@ -26,17 +25,15 @@ public class HeladeroDAO {
     private static final Logger LOG = LoggerFactory.getLogger(HeladeroDAO.class);
 
     @SuppressWarnings("unchecked")
-    public List<Heladero> getListaHeladeros(final String name, final String lastName,
-                                            final int concessionaireId, final RoleType roleType) {
-        LOG.debug("DB query: name: '{}' | lastName: '{}' | concessionaireId: '{}' | roleType: '{}'",
-                name, lastName, concessionaireId, roleType);
+    public List<Heladero> getListaHeladeros(final String name, final String lastName, final int concessionaireId) {
+        LOG.debug("DB query: name: '{}' | lastName: '{}' | concessionaireId: '{}'", name, lastName, concessionaireId);
 
         Session session = AppUtil.getSessionFactory().openSession();
         List<Heladero> heladeros = new ArrayList<>();
         try {
             Criteria c = session.createCriteria(Heladero.class);
 
-            if (RoleType.MANAGER.equals(roleType)) {
+            if (concessionaireId != 0) {
                 c.add(Restrictions.eq("concesionario.idConcesionario", concessionaireId));
             }
             if (name.trim().length() != 0) {

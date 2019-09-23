@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * @author Cesardl
  */
-public class ManagerHeladero implements Serializable {
+public class ManagerHeladero extends BaseManager implements Serializable {
 
     private static final long serialVersionUID = -864588576450764331L;
 
@@ -25,6 +25,7 @@ public class ManagerHeladero implements Serializable {
 
     private String nombre;
     private String apellido;
+
     private List<Heladero> listaHeladeros;
     private Heladero editedIceCreamMan;
 
@@ -51,7 +52,7 @@ public class ManagerHeladero implements Serializable {
             if (listaHeladeros == null) {
                 LOG.info("Initializing ice creams list");
 
-                listaHeladeros = HeladeroService.obtenerHeladeros("", "");
+                listaHeladeros = HeladeroService.obtenerHeladeros("", "", 0);
             }
         }
         LOG.debug("Obteniendo lista de heladeros, {} en total", listaHeladeros.size());
@@ -81,7 +82,7 @@ public class ManagerHeladero implements Serializable {
     public void buscarHeladero(ActionEvent event) {
         LOG.debug("Buscando heladeros [{}]", event.getPhaseId());
 
-        listaHeladeros = HeladeroService.obtenerHeladeros(nombre, apellido);
+        listaHeladeros = HeladeroService.obtenerHeladeros(nombre, apellido, concessionaireId);
     }
 
     public void newIceCreamMan(ActionEvent event) {

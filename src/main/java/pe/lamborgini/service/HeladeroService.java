@@ -25,15 +25,21 @@ public final class HeladeroService {
     private HeladeroService() {
     }
 
-    public static List<Heladero> obtenerHeladeros(final String name, final String lastName) {
+    public static List<Heladero> obtenerHeladeros(final String name, final String lastName, final int concessionaireId) {
         HttpSession session = SessionUtils.getInstance().load();
         Usuario user = (Usuario) session.getAttribute("usuario");
-        int concessionaireId = user.getConcesionario().getIdConcesionario();
+        int concessionaireIdToSearch;
         RoleType roleType = user.getRoleType();
+
+        if (RoleType.MANAGER.equals(roleType)) {
+            concessionaireIdToSearch = user.getConcesionario().getIdConcesionario();
+        } else {
+            concessionaireIdToSearch = concessionaireId;
+        }
 
         LOG.debug("Nombre '{}', Apellido '{}', Concesionario: '{}' | role: {}", name, lastName, concessionaireId, roleType);
 
         HeladeroDAO dao = new HeladeroDAO();
-        return dao.getListaHeladeros(name.trim(), lastName.trim(), concessionaireId, roleType);
+        return dao.getListaHeladeros(name.trim(), lastName.trim(), concessionaireIdToSearch);
     }
 }

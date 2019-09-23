@@ -9,10 +9,14 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import pe.lamborgini.DomainStubs;
 import pe.lamborgini.domain.mapping.Usuario;
+import pe.lamborgini.util.AppUtil;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
 
@@ -35,6 +39,8 @@ public class ManagerUsuarioTest {
 
     private ManagerUsuario manager = new ManagerUsuario();
     @Mock
+    private ActionEvent actionEvent;
+    @Mock
     private FacesContext facesContext;
     @Mock
     private ExternalContext externalContext;
@@ -52,6 +58,7 @@ public class ManagerUsuarioTest {
     @After
     public void setDown() {
         manager.setOncomplete(null);
+        manager.setListaUsuarios(null);
     }
 
     @Test
@@ -87,5 +94,35 @@ public class ManagerUsuarioTest {
         String result = manager.salir();
 
         assertEquals("TO_INDEX", result);
+    }
+
+    @Test
+    public void listConcessionairesTest() {
+        SelectItem[] result = manager.getConcessionaires();
+
+        assertEquals(6, result.length);
+        assertEquals(0, AppUtil.aInteger(result[0].getValue().toString()));
+    }
+
+    @Test
+    public void findAllConcessionaireTest() {
+        manager.setConcessionaireId(0);
+
+        when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.userAdmin());
+
+        manager.findByConcessionaire(actionEvent);
+
+        assertEquals(5, manager.getListaUsuarios().size());
+    }
+
+    @Test
+    public void findConcessionaireByFilterTest() {
+        manager.setConcessionaireId(2);
+
+        when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.userAdmin());
+
+        manager.findByConcessionaire(actionEvent);
+
+        assertEquals(1, manager.getListaUsuarios().size());
     }
 }

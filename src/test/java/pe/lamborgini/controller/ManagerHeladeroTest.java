@@ -10,7 +10,6 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import pe.lamborgini.DomainStubs;
 import pe.lamborgini.domain.mapping.Heladero;
-import pe.lamborgini.domain.mapping.RoleType;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -52,23 +51,12 @@ public class ManagerHeladeroTest {
     }
 
     @Test
-    public void firstPageLoadIceCreamMenListForManagerTest() {
-        manager.setNombre("");
-        manager.setApellido("");
-
-        when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.user(1, RoleType.MANAGER));
-
-        List<Heladero> result = manager.getListaHeladeros();
-
-        assertEquals(60, result.size());
-    }
-
-    @Test
     public void firstPageLoadIceCreamMenListForAdminTest() {
         manager.setNombre("");
         manager.setApellido("");
+        manager.setConcessionaireId(0);
 
-        when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.user(6, RoleType.ADMIN));
+        when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.userAdmin());
 
         List<Heladero> result = manager.getListaHeladeros();
 
@@ -76,11 +64,40 @@ public class ManagerHeladeroTest {
     }
 
     @Test
+    public void firstPageLoadIceCreamMenListForManagerTest() {
+        manager.setNombre("");
+        manager.setApellido("");
+        manager.setConcessionaireId(0);
+
+        when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.userManager(5, 5));
+
+        List<Heladero> result = manager.getListaHeladeros();
+
+        assertEquals(47, result.size());
+    }
+
+    @Test
+    public void buscarHeladeroWithFilterForAdminTest() {
+        manager.setNombre("d");
+        manager.setApellido("z");
+        manager.setConcessionaireId(6);
+
+        when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.userAdmin());
+
+        manager.buscarHeladero(actionEvent);
+
+        List<Heladero> result = manager.getListaHeladeros();
+
+        assertEquals(7, result.size());
+    }
+
+    @Test
     public void buscarHeladeroWithFilterForManagerTest() {
         manager.setNombre("d");
         manager.setApellido("z");
+        manager.setConcessionaireId(0);
 
-        when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.user(2, RoleType.MANAGER));
+        when(httpSession.getAttribute("usuario")).thenReturn(DomainStubs.userManager(2, 2));
 
         manager.buscarHeladero(actionEvent);
 

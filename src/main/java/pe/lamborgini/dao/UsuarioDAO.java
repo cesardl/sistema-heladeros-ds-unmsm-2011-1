@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import pe.lamborgini.domain.mapping.Usuario;
 import pe.lamborgini.util.AppUtil;
 
+import java.util.List;
+
 /**
  * @author Cesardl
  */
@@ -29,6 +31,24 @@ public class UsuarioDAO {
                             Restrictions.eq("contrasenha", password)));
 
             return (Usuario) c.uniqueResult();
+        } finally {
+            session.close();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Usuario> findByConcessionaire(final int userId, final int concessionaireId) {
+        LOG.debug("DB query: userId:{} | concessionaireId: '{}'", userId, concessionaireId);
+        Session session = AppUtil.getSessionFactory().openSession();
+        try {
+            Criteria c = session.createCriteria(Usuario.class)
+                    .add(Restrictions.ne("idUsuario", userId));
+
+            if (concessionaireId != 0) {
+                c.add(Restrictions.eq("concesionario.idConcesionario", concessionaireId));
+            }
+
+            return c.list();
         } finally {
             session.close();
         }

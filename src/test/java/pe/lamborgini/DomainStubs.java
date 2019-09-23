@@ -19,11 +19,21 @@ public final class DomainStubs {
     private DomainStubs() {
     }
 
-    public static Usuario user(final int concessionaireId, final RoleType roleType) {
+    public static Usuario userAdmin() {
         Usuario usuario = new Usuario();
+        usuario.setIdUsuario(1);
+        usuario.setConcesionario(new Concesionario());
+        usuario.getConcesionario().setIdConcesionario(1);
+        usuario.setRoleType(RoleType.ADMIN);
+        return usuario;
+    }
+
+    public static Usuario userManager(final int userId, final int concessionaireId) {
+        Usuario usuario = new Usuario();
+        usuario.setIdUsuario(userId);
         usuario.setConcesionario(new Concesionario());
         usuario.getConcesionario().setIdConcesionario(concessionaireId);
-        usuario.setRoleType(roleType);
+        usuario.setRoleType(RoleType.MANAGER);
         return usuario;
     }
 

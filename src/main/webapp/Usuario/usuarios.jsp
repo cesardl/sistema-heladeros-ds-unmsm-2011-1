@@ -7,6 +7,7 @@
 
 <%@taglib prefix="f" uri="http://java.sun.com/jsf/core" %>
 <%@taglib prefix="h" uri="http://java.sun.com/jsf/html" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="rich" uri="http://richfaces.org/rich" %>
 <%@taglib prefix="a4j" uri="http://richfaces.org/a4j" %>
 
@@ -17,7 +18,7 @@
     <html>
     <head>
         <title>Usuarios</title>
-        <link type="text/css" href="style/default.css" rel="stylesheet" media="screen">
+        <link type="text/css" href="../style/default.css" rel="stylesheet" media="screen">
     </head>
     <body>
     <jsp:include page="../menu.jsp"/>
@@ -44,8 +45,10 @@
                 <tr>
                     <td class="td-label">Concesionario</td>
                     <td>
-                        <h:selectOneMenu value="#{managerUsuario.id_concesionario}">
-                            <f:selectItems value="#{managerUsuario.concesionarios}"/>
+                        <h:selectOneMenu value="#{managerUsuario.concessionaireId}">
+                            <f:selectItems value="#{managerUsuario.concessionaires}"/>
+                            <a4j:support event="onchange" actionListener="#{managerUsuario.findByConcessionaire}"
+                                         reRender="tableUsuarios"/>
                         </h:selectOneMenu>
                     </td>
                     <td></td>
@@ -57,14 +60,44 @@
                 </tr>
                 <tr>
                     <td colspan="3" align="center">
-                        <rich:datascroller id="scrollerUsuarios" align="right" for="tableUsuarios"
-                                           maxPages="10" style="width : 90%;"/>
                         <rich:spacer height="3px"/>
                         <rich:dataTable id="tableUsuarios" width="90%" rows="10"
                                         onRowMouseOver="this.style.backgroundColor='#F1F1F1'"
                                         onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'"
-                                        value="#{managerUsuario.listaUsuarios}" var="heladero">
+                                        value="#{managerUsuario.listaUsuarios}" var="user">
 
+                            <rich:column style="text-align: center;">
+                                <f:facet name="header">
+                                    <h:outputText value="Nro"/>
+                                </f:facet>
+                                <h:outputText value="#{user.idUsuario}"/>
+                            </rich:column>
+
+                            <rich:column>
+                                <f:facet name="header">
+                                    <h:outputText value="User"/>
+                                </f:facet>
+                                <h:outputText value="#{user.nombreUsuario}"/>
+                            </rich:column>
+
+                            <rich:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Owner"/>
+                                </f:facet>
+                                <h:outputText value="#{user.concesionario.propietario}"/>
+                            </rich:column>
+
+                            <rich:column>
+                                <f:facet name="header">
+                                    <h:outputText value="District"/>
+                                </f:facet>
+                                <h:outputText value="#{user.concesionario.distrito}"/>
+                            </rich:column>
+
+                            <f:facet name="footer">
+                                <h:outputText id="lengthHeladeros"
+                                              value="Total rows: #{fn:length(managerUsuario.listaUsuarios)}"/>
+                            </f:facet>
                         </rich:dataTable>
                     </td>
                 </tr>

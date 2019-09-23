@@ -11,7 +11,7 @@
 <%@taglib prefix="a4j" uri="http://richfaces.org/a4j" %>
 
 <f:subview id="ice_cream_man">
-    <rich:modalPanel id="mp_ice_cream_man" width="500" autosized="true">
+    <rich:modalPanel id="mp_ice_cream_man" width="400" autosized="true">
         <f:facet name="header">
             <h:outputText value="Mantenimiento de heladeros"/>
         </f:facet>
