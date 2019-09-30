@@ -14,8 +14,12 @@
         <%@ page import="pe.lamborgini.domain.mapping.Usuario" %>
         <%
             Usuario u = (Usuario) session.getAttribute("usuario");
-            out.println("Bienvenido " + u.getNombreUsuario() + " - "
-                    + "Concesionario " + u.getConcesionario().getNombreConces());
+            if (u == null) {
+                out.print("Logueese por favor");
+            } else {
+                out.println("Bienvenido " + u.getNombreUsuario() + " - "
+                        + "Concesionario " + u.getConcesionario().getNombreConces());
+            }
         %>
     </div>
     <rich:separator width="100%" height="3px"/>

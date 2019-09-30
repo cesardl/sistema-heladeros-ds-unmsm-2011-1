@@ -11,14 +11,12 @@ public class DetalleHelado implements java.io.Serializable {
     private static final long serialVersionUID = -2363126522481600244L;
 
     private Integer idDetalleHelado;
-    private int posicion;
+    private int position;
     private Helado helado;
     private PagoHelado pagoHelado;
     private HeladosEntregadoRecibido heladosEntregadoRecibido;
     private int cantEntregada;
     private int cantDevuelta;
-    private String strCantDevuelta;
-    private int cantPendiente;
     private int cantVendida;
 
     public DetalleHelado() {
@@ -41,12 +39,12 @@ public class DetalleHelado implements java.io.Serializable {
         this.idDetalleHelado = idDetalleHelado;
     }
 
-    public int getPosicion() {
-        return posicion;
+    public int getPosition() {
+        return position;
     }
 
-    public void setPosicion(int posicion) {
-        this.posicion = posicion;
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     public Helado getHelado() {
@@ -88,23 +86,6 @@ public class DetalleHelado implements java.io.Serializable {
     public void setCantDevuelta(int cantDevuelta) {
         this.cantDevuelta = cantDevuelta;
     }
-
-    public String getStrCantDevuelta() {
-        return strCantDevuelta;
-    }
-
-    public void setStrCantDevuelta(String strCantDevuelta) {
-        this.strCantDevuelta = strCantDevuelta;
-    }
-
-    public int getCantPendiente() {
-        return cantPendiente;
-    }
-
-    public void setCantPendiente(int cantPendiente) {
-        this.cantPendiente = cantPendiente;
-    }
-
 
     public int getCantVendida() {
         return this.cantVendida;

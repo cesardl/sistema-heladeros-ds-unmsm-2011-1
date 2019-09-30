@@ -29,17 +29,24 @@ public class ManagerIceCreamTest {
     @After
     public void setDown() {
         manager.setOncomplete(null);
+        manager.setIceCreamsList(null);
     }
 
     @Test
     public void getIceCreamsListTest() {
-        List<Helado> iceCreamsList = manager.getIceCreamsList();
+        List<Helado> iceCreamsResult = manager.getIceCreamsList();
 
-        assertEquals(27, iceCreamsList.size());
+        assertEquals(27, iceCreamsResult.size());
 
-        iceCreamsList.stream()
+        iceCreamsResult.stream()
                 .filter(iceCream -> iceCream.getStockHelado() != null)
                 .forEach(iceCream -> assertFalse(iceCream.getStockHelado().getCantidad() == 0));
+
+        // reload
+        List<Helado> resultReload = manager.getIceCreamsList();
+
+        assertEquals(iceCreamsResult, resultReload);
+        assertSame(iceCreamsResult, resultReload);
     }
 
     @Test

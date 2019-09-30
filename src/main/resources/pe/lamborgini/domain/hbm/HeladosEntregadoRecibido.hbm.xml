@@ -3,7 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 29/06/2011 07:47:22 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-    <class catalog="heladeros" name="pe.lamborgini.domain.mapping.HeladosEntregadoRecibido"
+    <class name="pe.lamborgini.domain.mapping.HeladosEntregadoRecibido"
            table="helados_entregado_recibido">
         <meta attribute="sync-DAO">false</meta>
         <id name="idHeladosEntregadoRecibido" type="java.lang.Integer">
@@ -16,10 +16,10 @@
         <property name="fecha" type="date">
             <column length="10" name="fecha" not-null="true"/>
         </property>
-        <property name="total" type="double">
-            <column name="total" not-null="true" precision="22" scale="0"/>
+        <property name="createdAt" type="java.util.Date">
+            <column name="created_at" not-null="true"/>
         </property>
-        <set inverse="true" name="detalleHelados" cascade="all" lazy="false" fetch="join">
+        <set inverse="true" name="detalleHelados" cascade="all" lazy="false">
             <key>
                 <column name="id_helados_entregado_recibido" not-null="true"/>
             </key>

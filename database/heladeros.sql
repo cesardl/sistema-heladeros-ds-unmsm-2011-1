@@ -18,8 +18,6 @@ USE `heladeros`;
 -- -----------------------------------------------------
 -- Table `heladeros`.`concepto`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `heladeros`.`concepto`;
-
 CREATE TABLE IF NOT EXISTS `heladeros`.`concepto`
 (
     `id_concepto`      INT(11)      NOT NULL AUTO_INCREMENT,
@@ -27,15 +25,12 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`concepto`
     PRIMARY KEY (`id_concepto`)
 )
     ENGINE = InnoDB
-    AUTO_INCREMENT = 2
     DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
 -- Table `heladeros`.`concesionario`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `heladeros`.`concesionario`;
-
 CREATE TABLE IF NOT EXISTS `heladeros`.`concesionario`
 (
     `id_concesionario` INT(11)     NOT NULL AUTO_INCREMENT,
@@ -45,15 +40,12 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`concesionario`
     PRIMARY KEY (`id_concesionario`)
 )
     ENGINE = InnoDB
-    AUTO_INCREMENT = 6
     DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
 -- Table `heladeros`.`heladero`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `heladeros`.`heladero`;
-
 CREATE TABLE IF NOT EXISTS `heladeros`.`heladero`
 (
     `id_heladero`      INT(11)     NOT NULL AUTO_INCREMENT,
@@ -69,15 +61,12 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`heladero`
             ON UPDATE NO ACTION
 )
     ENGINE = InnoDB
-    AUTO_INCREMENT = 21
     DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
 -- Table `heladeros`.`contrato_heladero`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `heladeros`.`contrato_heladero`;
-
 CREATE TABLE IF NOT EXISTS `heladeros`.`contrato_heladero`
 (
     `idcontrato_heladero` INT(11)     NOT NULL AUTO_INCREMENT,
@@ -102,14 +91,12 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`contrato_heladero`
 -- -----------------------------------------------------
 -- Table `heladeros`.`stock_helado`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `heladeros`.`stock_helado`;
-
 CREATE TABLE IF NOT EXISTS `heladeros`.`stock_helado`
 (
     `id_stock_helado` INT(11)          NOT NULL AUTO_INCREMENT,
     `cantidad`        INT(11) ZEROFILL NOT NULL,
     `fecha_caducidad` DATE             NULL,
-    `fecha_registro`  TIMESTAMP        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `created_at`      TIMESTAMP        NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id_stock_helado`)
 )
     ENGINE = InnoDB
@@ -119,8 +106,6 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`stock_helado`
 -- -----------------------------------------------------
 -- Table `heladeros`.`helado`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `heladeros`.`helado`;
-
 CREATE TABLE IF NOT EXISTS `heladeros`.`helado`
 (
     `id_helado`       INT(11)     NOT NULL AUTO_INCREMENT,
@@ -136,21 +121,18 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`helado`
             ON UPDATE CASCADE
 )
     ENGINE = InnoDB
-    AUTO_INCREMENT = 28
     DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
 -- Table `heladeros`.`helados_entregado_recibido`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `heladeros`.`helados_entregado_recibido`;
-
 CREATE TABLE IF NOT EXISTS `heladeros`.`helados_entregado_recibido`
 (
-    `id_helados_entregado_recibido` INT(11) NOT NULL AUTO_INCREMENT,
-    `id_heladero`                   INT(11) NOT NULL,
-    `fecha`                         DATE    NOT NULL,
-    `total`                         DOUBLE  NOT NULL,
+    `id_helados_entregado_recibido` INT(11)   NOT NULL AUTO_INCREMENT,
+    `id_heladero`                   INT(11)   NOT NULL,
+    `fecha`                         DATE      NULL,
+    `created_at`                    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id_helados_entregado_recibido`),
     INDEX `fk_helado_entregado_recibido_heladero1` (`id_heladero` ASC),
     CONSTRAINT `fk_helado_entregado_recibido_heladero1`
@@ -160,15 +142,12 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`helados_entregado_recibido`
             ON UPDATE NO ACTION
 )
     ENGINE = InnoDB
-    AUTO_INCREMENT = 11
     DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
 -- Table `heladeros`.`factura`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `heladeros`.`factura`;
-
 CREATE TABLE IF NOT EXISTS `heladeros`.`factura`
 (
     `id_factura`     INT(11)     NOT NULL AUTO_INCREMENT,
@@ -176,18 +155,16 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`factura`
     `fecha`          DATE        NOT NULL,
     `descripcion`    VARCHAR(45) NOT NULL,
     `pago`           DOUBLE      NOT NULL,
+    `create_at`      TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id_factura`)
 )
     ENGINE = InnoDB
-    AUTO_INCREMENT = 6
     DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
 -- Table `heladeros`.`pago_helado`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `heladeros`.`pago_helado`;
-
 CREATE TABLE IF NOT EXISTS `heladeros`.`pago_helado`
 (
     `idpago_helado` INT(11)       NOT NULL AUTO_INCREMENT,
@@ -209,24 +186,21 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`pago_helado`
             ON UPDATE NO ACTION
 )
     ENGINE = InnoDB
-    AUTO_INCREMENT = 16
     DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
 -- Table `heladeros`.`detalle_helado`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `heladeros`.`detalle_helado`;
-
 CREATE TABLE IF NOT EXISTS `heladeros`.`detalle_helado`
 (
     `id_detalle_helado`             INT(11) NOT NULL AUTO_INCREMENT,
     `id_helado`                     INT(11) NOT NULL,
     `id_helados_entregado_recibido` INT(11) NOT NULL,
-    `id_pago_helado`                INT(11) NULL DEFAULT NULL,
-    `cant_entregada`                INT(11) NOT NULL,
-    `cant_devuelta`                 INT(11) NOT NULL,
-    `cant_vendida`                  INT(11) NOT NULL,
+    `id_pago_helado`                INT(11) NULL     DEFAULT NULL,
+    `cant_entregada`                INT(11) NOT NULL DEFAULT 0,
+    `cant_devuelta`                 INT(11) NOT NULL DEFAULT 0,
+    `cant_vendida`                  INT(11) NOT NULL DEFAULT 0,
     PRIMARY KEY (`id_detalle_helado`),
     INDEX `fk_detalle_helado_helado1` (`id_helado` ASC),
     INDEX `fk_detalle_helado_helados_entregado_recibido1` (`id_helados_entregado_recibido` ASC),
@@ -248,15 +222,12 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`detalle_helado`
             ON UPDATE NO ACTION
 )
     ENGINE = InnoDB
-    AUTO_INCREMENT = 28
     DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
 -- Table `heladeros`.`usuario`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `heladeros`.`usuario`;
-
 CREATE TABLE IF NOT EXISTS `heladeros`.`usuario`
 (
     `id_usuario`       INT(11)                   NOT NULL AUTO_INCREMENT,
@@ -274,15 +245,11 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`usuario`
             ON UPDATE NO ACTION
 )
     ENGINE = InnoDB
-    AUTO_INCREMENT = 7
     DEFAULT CHARACTER SET = utf8;
 
 USE `heladeros`;
 
 DELIMITER $$
-
-USE `heladeros`$$
-DROP TRIGGER IF EXISTS `heladeros`.`stock_helado_BEFORE_INSERT` $$
 USE `heladeros`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `heladeros`.`stock_helado_BEFORE_INSERT`
     BEFORE INSERT
@@ -290,6 +257,15 @@ CREATE DEFINER = CURRENT_USER TRIGGER `heladeros`.`stock_helado_BEFORE_INSERT`
     FOR EACH ROW
 BEGIN
     SET NEW.fecha_caducidad = DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL 30 DAY);
+END$$
+
+USE `heladeros`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `heladeros`.`helados_entregado_recibido_BEFORE_INSERT`
+    BEFORE INSERT
+    ON `helados_entregado_recibido`
+    FOR EACH ROW
+BEGIN
+    SET NEW.fecha = DATE_FORMAT(CURRENT_TIMESTAMP, '%Y-%m-%d');
 END$$
 
 
@@ -621,7 +597,7 @@ VALUES (141, 2, 'Christopher', 'Cesti Castro');
 INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
 VALUES (142, 5, 'Diego Enrique', 'Juarez Vargas');
 INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
-VALUES (143, 4, 'jose carlos ', ' gamarra');
+VALUES (143, 4, 'Jose Carlos', 'Gamarra');
 INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
 VALUES (144, 4, 'Roger Mitchel', 'Ungaro Casanova');
 INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
@@ -907,59 +883,59 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `heladeros`;
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (1, 1000, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (2, 2000, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (3, 1500, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (4, 1200, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (5, 1100, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (6, 1147, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (7, 2500, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (8, 8215, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (9, 15968, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (10, 21584, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (11, 38416, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (12, 318421, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (13, 578132, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (14, 15482, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (15, 1211812, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (16, 18412, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (17, 1548513, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (18, 1519845, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (19, 188134, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (20, 51854812, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (21, 18461, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (22, 154123, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (23, 154745, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (24, 11546512, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (25, 15194, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (26, 15231, NULL, DEFAULT);
-INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `fecha_registro`)
+INSERT INTO `heladeros`.`stock_helado` (`id_stock_helado`, `cantidad`, `fecha_caducidad`, `created_at`)
 VALUES (27, 2888623, NULL, DEFAULT);
 
 COMMIT;
@@ -1029,6 +1005,98 @@ COMMIT;
 
 
 -- -----------------------------------------------------
+-- Data for table `heladeros`.`helados_entregado_recibido`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `heladeros`;
+INSERT INTO `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`, `id_heladero`, `fecha`, `created_at`)
+VALUES (1, 37, NULL, DEFAULT);
+INSERT INTO `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`, `id_heladero`, `fecha`, `created_at`)
+VALUES (2, 143, NULL, DEFAULT);
+INSERT INTO `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`, `id_heladero`, `fecha`, `created_at`)
+VALUES (3, 193, NULL, DEFAULT);
+INSERT INTO `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`, `id_heladero`, `fecha`, `created_at`)
+VALUES (4, 214, NULL, DEFAULT);
+INSERT INTO `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`, `id_heladero`, `fecha`, `created_at`)
+VALUES (5, 276, NULL, DEFAULT);
+INSERT INTO `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`, `id_heladero`, `fecha`, `created_at`)
+VALUES (6, 76, NULL, DEFAULT);
+INSERT INTO `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`, `id_heladero`, `fecha`, `created_at`)
+VALUES (7, 80, NULL, DEFAULT);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `heladeros`.`detalle_helado`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `heladeros`;
+INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`,
+                                          `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`)
+VALUES (1, 1, 1, NULL, 100, DEFAULT, DEFAULT);
+INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`,
+                                          `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`)
+VALUES (2, 2, 1, NULL, 100, DEFAULT, DEFAULT);
+INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`,
+                                          `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`)
+VALUES (3, 5, 2, NULL, 20, DEFAULT, DEFAULT);
+INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`,
+                                          `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`)
+VALUES (4, 6, 2, NULL, 50, DEFAULT, DEFAULT);
+INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`,
+                                          `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`)
+VALUES (5, 11, 2, NULL, 30, DEFAULT, DEFAULT);
+INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`,
+                                          `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`)
+VALUES (6, 15, 3, NULL, 40, DEFAULT, DEFAULT);
+INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`,
+                                          `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`)
+VALUES (7, 16, 3, NULL, 10, DEFAULT, DEFAULT);
+INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`,
+                                          `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`)
+VALUES (8, 17, 4, NULL, 40, DEFAULT, DEFAULT);
+INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`,
+                                          `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`)
+VALUES (9, 20, 4, NULL, 50, DEFAULT, DEFAULT);
+INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`,
+                                          `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`)
+VALUES (10, 16, 4, NULL, 30, DEFAULT, DEFAULT);
+INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`,
+                                          `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`)
+VALUES (11, 2, 4, NULL, 40, DEFAULT, DEFAULT);
+INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`,
+                                          `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`)
+VALUES (12, 3, 5, NULL, 50, DEFAULT, DEFAULT);
+INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`,
+                                          `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`)
+VALUES (13, 11, 5, NULL, 20, DEFAULT, DEFAULT);
+INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`,
+                                          `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`)
+VALUES (14, 11, 6, NULL, 30, DEFAULT, DEFAULT);
+INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`,
+                                          `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`)
+VALUES (15, 19, 6, NULL, 60, DEFAULT, DEFAULT);
+INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`,
+                                          `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`)
+VALUES (16, 19, 7, NULL, 50, DEFAULT, DEFAULT);
+INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`,
+                                          `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`)
+VALUES (17, 12, 7, NULL, 300, DEFAULT, DEFAULT);
+INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`,
+                                          `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`)
+VALUES (18, 5, 7, NULL, 11, DEFAULT, DEFAULT);
+INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`,
+                                          `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`)
+VALUES (19, 22, 7, NULL, 203, DEFAULT, DEFAULT);
+INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`,
+                                          `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`)
+VALUES (20, 18, 7, NULL, 252, DEFAULT, DEFAULT);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
 -- Data for table `heladeros`.`usuario`
 -- -----------------------------------------------------
 START TRANSACTION;
@@ -1050,4 +1118,8 @@ COMMIT;
 
 -- begin attached script 'script'
 DROP TRIGGER `heladeros`.`stock_helado_BEFORE_INSERT`;
+DROP TRIGGER `heladeros`.`helados_entregado_recibido_BEFORE_INSERT`;
+ALTER TABLE helados_entregado_recibido
+    MODIFY fecha DATE NOT NULL;
+
 -- end attached script 'script'

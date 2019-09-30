@@ -60,6 +60,10 @@
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>
 
+    <listener>
+        <listener-class>pe.lamborgini.util.HibernateListener</listener-class>
+    </listener>
+
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/index.jsp</location>

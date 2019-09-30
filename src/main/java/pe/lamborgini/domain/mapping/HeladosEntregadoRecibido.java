@@ -17,22 +17,20 @@ public class HeladosEntregadoRecibido implements java.io.Serializable {
     private Integer idHeladosEntregadoRecibido;
     private Heladero heladero;
     private Date fecha;
-    private double total;
+    private Date createdAt;
     private Set<DetalleHelado> detalleHelados = new HashSet<>(0);
 
     public HeladosEntregadoRecibido() {
     }
 
-    public HeladosEntregadoRecibido(Heladero heladero, Date fecha, double total) {
+    public HeladosEntregadoRecibido(Heladero heladero, Date fecha) {
         this.heladero = heladero;
         this.fecha = fecha;
-        this.total = total;
     }
 
-    public HeladosEntregadoRecibido(Heladero heladero, Date fecha, double total, Set<DetalleHelado> detalleHelados) {
+    public HeladosEntregadoRecibido(Heladero heladero, Date fecha, Set<DetalleHelado> detalleHelados) {
         this.heladero = heladero;
         this.fecha = fecha;
-        this.total = total;
         this.detalleHelados = detalleHelados;
     }
 
@@ -60,12 +58,12 @@ public class HeladosEntregadoRecibido implements java.io.Serializable {
         this.fecha = fecha;
     }
 
-    public double getTotal() {
-        return this.total;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setTotal(double total) {
-        this.total = total;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Set<DetalleHelado> getDetalleHelados() {

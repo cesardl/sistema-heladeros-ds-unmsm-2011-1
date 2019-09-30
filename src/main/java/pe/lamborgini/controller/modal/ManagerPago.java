@@ -6,17 +6,14 @@ package pe.lamborgini.controller.modal;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pe.lamborgini.controller.ManagerHeladero;
 import pe.lamborgini.domain.mapping.DetalleHelado;
 import pe.lamborgini.domain.mapping.HeladosEntregadoRecibido;
 import pe.lamborgini.service.DetalleHeladoService;
 import pe.lamborgini.service.HeladosEntregadoRecibidoService;
-import pe.lamborgini.util.AppUtil;
 
 import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -26,39 +23,34 @@ public class ManagerPago {
 
     private static final Logger LOG = LoggerFactory.getLogger(ManagerPago.class);
 
-    private String nombre_consecionario;
-    private String nombres_heladero;
-    private List<DetalleHelado> listaDetalleHelados;
-    private String p_id_heladero;
+    private String concessionaireName;
+    private String iceCreamManName;
+    private List<DetalleHelado> iceCreamDetailsList;
+    private String paramIceCreamManId;
     private String oncomplete;
 
-    public ManagerPago() {
-        listaDetalleHelados = Collections.emptyList();
+    public String getConcessionaireName() {
+        return concessionaireName;
     }
 
-    public String getNombre_consecionario() {
-        return nombre_consecionario;
+    public void setConcessionaireName(String concessionaireName) {
+        this.concessionaireName = concessionaireName;
     }
 
-    public void setNombre_consecionario(String nombre_consecionario) {
-        this.nombre_consecionario = nombre_consecionario;
+    public String getIceCreamManName() {
+        return iceCreamManName;
     }
 
-    public String getNombres_heladero() {
-        return nombres_heladero;
+    public void setIceCreamManName(String iceCreamManName) {
+        this.iceCreamManName = iceCreamManName;
     }
 
-    public void setNombres_heladero(String nombres_heladero) {
-        this.nombres_heladero = nombres_heladero;
+    public List<DetalleHelado> getIceCreamDetailsList() {
+        return iceCreamDetailsList;
     }
 
-    public List<DetalleHelado> getListaDetalleHelados() {
-        LOG.debug("Obteniendo lista de detalle de helado, {} en total", listaDetalleHelados.size());
-        return listaDetalleHelados;
-    }
-
-    public void setListaDetalleHelados(List<DetalleHelado> listaDetalleHelados) {
-        this.listaDetalleHelados = listaDetalleHelados;
+    public void setIceCreamDetailsList(List<DetalleHelado> iceCreamDetailsList) {
+        this.iceCreamDetailsList = iceCreamDetailsList;
     }
 
     public String getOncomplete() {
@@ -72,18 +64,19 @@ public class ManagerPago {
     public void pagarHeladero(ActionEvent event) {
         LOG.debug("Iniciar proceso de devolucion de helados y pago al heladero [{}]", event.getPhaseId());
         this.setOncomplete("");
-        p_id_heladero = ((UIParameter) event.getComponent().findComponent("p_id_heladero")).getValue().toString();
+        paramIceCreamManId = ((UIParameter) event.getComponent().findComponent("p_id_heladero")).getValue().toString();
+        iceCreamDetailsList = null;
 
-        HeladosEntregadoRecibido her = HeladosEntregadoRecibidoService.existeAsignacionParaHeladero(p_id_heladero);
+        HeladosEntregadoRecibido her = HeladosEntregadoRecibidoService.existeAsignacionParaHeladero(paramIceCreamManId);
         if (her == null) {
             this.setOncomplete("javascript:alert('Debe realizar una asignacion de helados antes de pagar.');");
         } else {
             if (HeladosEntregadoRecibidoService.existePagoParaHeladero(her)) {
                 this.setOncomplete("javascript:alert('Ya se ejecuto el proceso de pago.');");
             } else {
-                nombres_heladero = her.getHeladero().toString();
-                nombre_consecionario = her.getHeladero().getConcesionario().getNombreConces();
-                listaDetalleHelados = new ArrayList<>(her.getDetalleHelados());
+                iceCreamManName = her.getHeladero().toString();
+                concessionaireName = her.getHeladero().getConcesionario().getNombreConces();
+                iceCreamDetailsList = new ArrayList<>(her.getDetalleHelados());
                 this.setOncomplete("Richfaces.showModalPanel('mp_pagar_heladero');");
             }
         }
@@ -92,11 +85,9 @@ public class ManagerPago {
     public void realizarPago(ActionEvent event) {
         LOG.debug("Realizando pago [{}]", event.getPhaseId());
         this.setOncomplete("");
-        if (DetalleHeladoService.validarListaDeEntrega(listaDetalleHelados)) {
-            DetalleHeladoService.actualizarEntregaHelados(listaDetalleHelados, p_id_heladero);
+        if (DetalleHeladoService.validarListaDeEntrega(iceCreamDetailsList)) {
+            DetalleHeladoService.actualizarEntregaHelados(iceCreamDetailsList, paramIceCreamManId);
 
-            ManagerHeladero mh = (ManagerHeladero) AppUtil.callManageBean("managerHeladero");
-            mh.cleanFormularioPrincipal();
             this.setOncomplete("javascript:alert('Pago generados con exito.');"
                     + "Richfaces.hideModalPanel('mp_pagar_heladero');");
         } else {

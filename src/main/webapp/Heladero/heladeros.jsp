@@ -45,7 +45,7 @@
                                                image="images/new.png"
                                                reRender="mp_ice_cream_man"
                                                actionListener="#{managerHeladero.newIceCreamMan}"
-                                               oncomplete="#{rich:component('mp_ice_cream_man')}.show()"/>
+                                               oncomplete="Richfaces.showModalPanel('mp_ice_cream_man');"/>
                         </h:panelGrid>
                     </td>
                 </tr>
@@ -132,7 +132,7 @@
                                 </f:facet>
                                 <a4j:commandButton image="images/edit.gif"
                                                    reRender="mp_ice_cream_man"
-                                                   oncomplete="#{rich:component('mp_ice_cream_man')}.show()">
+                                                   oncomplete="Richfaces.showModalPanel('mp_ice_cream_man');">
                                     <f:setPropertyActionListener target="#{managerHeladero.editedIceCreamMan}"
                                                                  value="#{heladero}"/>
                                 </a4j:commandButton>
@@ -142,16 +142,18 @@
                                 <f:facet name="header">
                                     <h:outputText value="Asignar"/>
                                 </f:facet>
-                                <a4j:commandButton value="Asignar" reRender="mp_asignar_helados"
+                                <a4j:commandButton image="images/assignation.png"
+                                                   reRender="mp_asignar_helados"
                                                    actionListener="#{managerAsignacion.asignarHelado}"
                                                    oncomplete="#{managerAsignacion.oncomplete}"/>
                             </rich:column>
 
                             <rich:column style="text-align: center;">
                                 <f:facet name="header">
-                                    <h:outputText value="Pagas"/>
+                                    <h:outputText value="Pagar"/>
                                 </f:facet>
-                                <a4j:commandButton value="Pagar" reRender="mp_pagar_heladero"
+                                <a4j:commandButton image="images/payment.png"
+                                                   reRender="mp_pagar_heladero"
                                                    actionListener="#{managerPago.pagarHeladero}"
                                                    oncomplete="#{managerPago.oncomplete}"/>
                             </rich:column>

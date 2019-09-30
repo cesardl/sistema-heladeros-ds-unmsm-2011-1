@@ -89,6 +89,20 @@
 
                             <rich:column>
                                 <f:facet name="header">
+                                    <h:outputText value="Position"/>
+                                </f:facet>
+                                <h:outputText value="#{user.cargo}"/>
+                            </rich:column>
+
+                            <rich:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Concessionaire"/>
+                                </f:facet>
+                                <h:outputText value="#{user.concesionario.nombreConces}"/>
+                            </rich:column>
+
+                            <rich:column>
+                                <f:facet name="header">
                                     <h:outputText value="District"/>
                                 </f:facet>
                                 <h:outputText value="#{user.concesionario.distrito}"/>

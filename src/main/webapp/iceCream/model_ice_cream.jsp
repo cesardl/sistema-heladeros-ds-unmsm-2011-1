@@ -17,7 +17,7 @@
         </f:facet>
         <f:facet name="controls">
             <h:graphicImage value="../images/close.png" style="cursor: pointer;"
-                            onclick="#{rich:component('mp_ice_cream')}.hide()"/>
+                            onclick="Richfaces.hideModalPanel('mp_ice_cream');"/>
         </f:facet>
         <a4j:form id="formIceCream">
             <table style="width: 100%;">
@@ -38,6 +38,10 @@
                 <tr>
                     <td class="td-label">Helado</td>
                     <td><h:inputText value="#{managerIceCream.editedIceCream.nombreHelado}"/></td>
+                </tr>
+                <tr>
+                    <td class="td-label">Precio</td>
+                    <td><h:inputText value="#{managerIceCream.editedIceCream.precio}"/></td>
                 </tr>
                 <tr>
                     <td class="td-label">Stock</td>

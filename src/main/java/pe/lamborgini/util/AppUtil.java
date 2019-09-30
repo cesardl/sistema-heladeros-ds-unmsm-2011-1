@@ -11,8 +11,6 @@ import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.faces.context.FacesContext;
-import javax.faces.el.ValueBinding;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -55,12 +53,6 @@ public final class AppUtil {
             LOG.error("AppUtil.aInteger", nfe);
             return ERROR;
         }
-    }
-
-    public static Object callManageBean(String name) {
-        FacesContext ctx = FacesContext.getCurrentInstance();
-        ValueBinding vb = ctx.getApplication().createValueBinding("#{" + name + "}");
-        return vb.getValue(ctx);
     }
 
     public static String dateWithFormat(Date date) {

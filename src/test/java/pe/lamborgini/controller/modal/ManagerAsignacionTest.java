@@ -1,15 +1,19 @@
 package pe.lamborgini.controller.modal;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import pe.lamborgini.DomainStubs;
+import pe.lamborgini.domain.mapping.DetalleHelado;
 import pe.lamborgini.domain.mapping.Helado;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -24,10 +28,9 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ManagerAsignacionTest {
 
-    private static final String ICE_CREAM_MAN_ID = "20";
     private static final String ICE_CREAM_STUB_NAME = "STUB";
 
-    private ManagerAsignacion manager;
+    private ManagerAsignacion manager = new ManagerAsignacion();
 
     @Mock
     private ActionEvent actionEvent;
@@ -38,10 +41,16 @@ public class ManagerAsignacionTest {
 
     @Before
     public void setUp() {
-        manager = new ManagerAsignacion();
-
         when(actionEvent.getComponent()).thenReturn(uiComponent);
         when(uiComponent.findComponent(anyString())).thenReturn(uiParameter);
+    }
+
+    @After
+    public void setDown() {
+        manager.setOncomplete(null);
+        manager.setIceCreamDetailsList(null);
+        manager.setParamIceCreamManNames(null);
+        manager.setParamConcessionaireName(null);
     }
 
     @Test
@@ -60,114 +69,174 @@ public class ManagerAsignacionTest {
 
     @Test
     public void openModalForIceCreamsAssignationTest() {
-        when(uiParameter.getValue()).thenReturn(ICE_CREAM_MAN_ID);
+        when(uiParameter.getValue()).thenReturn("20");
 
         manager.asignarHelado(actionEvent);
 
-        assertNotNull(manager.getNombre_consecionario());
-        assertNotNull(manager.getNombres_heladero());
-        assertNotNull(manager.getP_id_heladero());
-        assertEquals(ICE_CREAM_MAN_ID, manager.getP_id_heladero());
-        assertEquals(0, manager.getSug_id_helado());
-        assertEquals(0, manager.getCantidad());
-        assertNull(manager.getSug_helado());
+        assertNotNull(manager.getParamConcessionaireName());
+        assertNotNull(manager.getParamIceCreamManNames());
+        assertNotNull(manager.getParamIceCreamManId());
+        assertEquals("20", manager.getParamIceCreamManId());
+        assertEquals(0, manager.getSuggestedIceCreamId());
+        assertEquals(0, manager.getQuantity());
+        assertNull(manager.getSuggestedIceCream());
 
-        assertTrue(manager.getListaDetalleHelados().isEmpty());
+        assertTrue(manager.getIceCreamDetailsList().isEmpty());
         assertTrue(manager.getOncomplete().startsWith("Richfaces."));
     }
 
     @Test
+    public void openModalForIceCreamsAssignationOnSellerWithDailyAssignationTest() {
+        String paramIceCreamManId = "37";
+        when(uiParameter.getValue()).thenReturn(paramIceCreamManId);
+
+        manager.asignarHelado(actionEvent);
+
+        assertNotNull(manager.getParamConcessionaireName());
+        assertNotNull(manager.getParamIceCreamManNames());
+        assertNotNull(manager.getParamIceCreamManId());
+        assertEquals(paramIceCreamManId, manager.getParamIceCreamManId());
+        assertEquals(0, manager.getSuggestedIceCreamId());
+        assertEquals(0, manager.getQuantity());
+        assertNull(manager.getSuggestedIceCream());
+
+        assertNull(manager.getIceCreamDetailsList());
+        assertTrue(manager.getOncomplete().startsWith("javascript:"));
+    }
+
+    @Test
     public void addingIceCreamsToSellWithAssignEmptyQuantityTest() {
-        manager.setP_id_heladero(ICE_CREAM_MAN_ID);
-        manager.setSug_id_helado(1);
-        manager.setCantidad(0);
+        manager.setIceCreamDetailsList(new ArrayList<>());
+        manager.setParamIceCreamManId("21");
+        manager.setSuggestedIceCreamId(1);
+        manager.setQuantity(0);
 
-        manager.addHelado(actionEvent);
+        manager.addIceCream(actionEvent);
 
-        assertTrue(manager.getListaDetalleHelados().isEmpty());
+        assertTrue(manager.getIceCreamDetailsList().isEmpty());
         assertTrue(manager.getOncomplete().startsWith("javascript:"));
     }
 
     @Test
     public void addingIceCreamsToSellWithAssignEmptySuggestedIceCreamTest() {
-        manager.setP_id_heladero(ICE_CREAM_MAN_ID);
-        manager.setSug_id_helado(0);
-        manager.setCantidad(1000);
+        manager.setIceCreamDetailsList(new ArrayList<>());
+        manager.setParamIceCreamManId("22");
+        manager.setSuggestedIceCreamId(0);
+        manager.setQuantity(1000);
 
-        manager.addHelado(actionEvent);
+        manager.addIceCream(actionEvent);
 
-        assertTrue(manager.getListaDetalleHelados().isEmpty());
+        assertTrue(manager.getIceCreamDetailsList().isEmpty());
         assertTrue(manager.getOncomplete().startsWith("javascript:"));
     }
 
     @Test
     public void addingAndRemovingIceCreamWhenCurrentListIsEmpty() {
-        manager.setP_id_heladero(ICE_CREAM_MAN_ID);
-        manager.setSug_id_helado(1);
-        manager.setSug_helado(ICE_CREAM_STUB_NAME);
-        manager.setCantidad(10);
+        manager.setIceCreamDetailsList(new ArrayList<>());
+        manager.setParamIceCreamManId("23");
 
-        manager.addHelado(actionEvent);
+        // new ice cream with id 1
+        manager.setSuggestedIceCreamId(1);
+        manager.setSuggestedIceCream(ICE_CREAM_STUB_NAME);
+        manager.setQuantity(10);
 
-        assertFalse(manager.getListaDetalleHelados().isEmpty());
-        assertEquals(1, manager.getListaDetalleHelados().size());
-        assertNotNull(manager.getListaDetalleHelados().get(0).getHelado().getNombreHelado());
-        assertEquals(10, manager.getListaDetalleHelados().get(0).getCantPendiente());
-        assertEquals(10, manager.getListaDetalleHelados().get(0).getCantEntregada());
+        manager.addIceCream(actionEvent);
+
+        assertFalse(manager.getIceCreamDetailsList().isEmpty());
+        assertEquals(1, manager.getIceCreamDetailsList().size());
+        assertNotNull(manager.getIceCreamDetailsList().get(0).getHelado().getIdHelado());
+        assertNotNull(manager.getIceCreamDetailsList().get(0).getHelado().getNombreHelado());
+        assertEquals(10, manager.getIceCreamDetailsList().get(0).getCantEntregada());
+        assertEquals(0, manager.getIceCreamDetailsList().get(0).getCantDevuelta());
+        assertEquals(0, manager.getIceCreamDetailsList().get(0).getCantVendida());
 
         // new ice cream with id 2
-        manager.setSug_id_helado(2);
-        manager.setSug_helado(ICE_CREAM_STUB_NAME);
-        manager.setCantidad(10);
+        manager.setSuggestedIceCreamId(2);
+        manager.setSuggestedIceCream(ICE_CREAM_STUB_NAME);
+        manager.setQuantity(20);
 
-        manager.addHelado(actionEvent);
+        manager.addIceCream(actionEvent);
 
-        assertFalse(manager.getListaDetalleHelados().isEmpty());
-        assertEquals(2, manager.getListaDetalleHelados().size());
-        assertNotNull(manager.getListaDetalleHelados().get(0).getHelado().getNombreHelado());
-        assertNotNull(manager.getListaDetalleHelados().get(1).getHelado().getNombreHelado());
+        assertFalse(manager.getIceCreamDetailsList().isEmpty());
+        assertEquals(2, manager.getIceCreamDetailsList().size());
+        assertNotNull(manager.getIceCreamDetailsList().get(0).getHelado().getIdHelado());
+        assertNotNull(manager.getIceCreamDetailsList().get(1).getHelado().getIdHelado());
+        assertNotNull(manager.getIceCreamDetailsList().get(0).getHelado().getNombreHelado());
+        assertNotNull(manager.getIceCreamDetailsList().get(1).getHelado().getNombreHelado());
+        assertEquals(10, manager.getIceCreamDetailsList().get(0).getCantEntregada());
+        assertEquals(20, manager.getIceCreamDetailsList().get(1).getCantEntregada());
+        assertEquals(0, manager.getIceCreamDetailsList().get(1).getCantDevuelta());
+        assertEquals(0, manager.getIceCreamDetailsList().get(1).getCantVendida());
 
         // new ice cream with id 3
-        manager.setSug_id_helado(3);
-        manager.setSug_helado(ICE_CREAM_STUB_NAME);
-        manager.setCantidad(15);
+        manager.setSuggestedIceCreamId(3);
+        manager.setSuggestedIceCream(ICE_CREAM_STUB_NAME);
+        manager.setQuantity(15);
 
-        manager.addHelado(actionEvent);
+        manager.addIceCream(actionEvent);
 
-        assertFalse(manager.getListaDetalleHelados().isEmpty());
-        assertEquals(3, manager.getListaDetalleHelados().size());
-        assertNotNull(manager.getListaDetalleHelados().get(0).getHelado().getNombreHelado());
-        assertNotNull(manager.getListaDetalleHelados().get(1).getHelado().getNombreHelado());
-        assertNotNull(manager.getListaDetalleHelados().get(2).getHelado().getNombreHelado());
+        assertFalse(manager.getIceCreamDetailsList().isEmpty());
+        assertEquals(3, manager.getIceCreamDetailsList().size());
+        assertNotNull(manager.getIceCreamDetailsList().get(0).getHelado().getIdHelado());
+        assertNotNull(manager.getIceCreamDetailsList().get(1).getHelado().getIdHelado());
+        assertNotNull(manager.getIceCreamDetailsList().get(2).getHelado().getIdHelado());
+        assertNotNull(manager.getIceCreamDetailsList().get(0).getHelado().getNombreHelado());
+        assertNotNull(manager.getIceCreamDetailsList().get(1).getHelado().getNombreHelado());
+        assertNotNull(manager.getIceCreamDetailsList().get(2).getHelado().getNombreHelado());
+        assertEquals(10, manager.getIceCreamDetailsList().get(0).getCantEntregada());
+        assertEquals(20, manager.getIceCreamDetailsList().get(1).getCantEntregada());
+        assertEquals(15, manager.getIceCreamDetailsList().get(2).getCantEntregada());
+        assertEquals(0, manager.getIceCreamDetailsList().get(2).getCantDevuelta());
+        assertEquals(0, manager.getIceCreamDetailsList().get(2).getCantVendida());
 
-        //adding more ice creams to the same
-        manager.setSug_id_helado(2);
-        manager.setSug_helado(ICE_CREAM_STUB_NAME);
-        manager.setCantidad(20);
+        //adding more ice creams to the same id 2
+        manager.setSuggestedIceCreamId(2);
+        manager.setSuggestedIceCream(ICE_CREAM_STUB_NAME);
+        manager.setQuantity(5);
 
-        manager.addHelado(actionEvent);
+        manager.addIceCream(actionEvent);
 
-        assertFalse(manager.getListaDetalleHelados().isEmpty());
-        assertEquals(3, manager.getListaDetalleHelados().size());
-        assertEquals(30, manager.getListaDetalleHelados().get(1).getCantPendiente());
-        assertEquals(30, manager.getListaDetalleHelados().get(1).getCantEntregada());
-        assertNotNull(manager.getListaDetalleHelados().get(0).getHelado().getIdHelado());
-        assertNotNull(manager.getListaDetalleHelados().get(1).getHelado().getIdHelado());
-        assertNotNull(manager.getListaDetalleHelados().get(2).getHelado().getIdHelado());
-        assertNotNull(manager.getListaDetalleHelados().get(0).getHelado().getNombreHelado());
-        assertNotNull(manager.getListaDetalleHelados().get(1).getHelado().getNombreHelado());
-        assertNotNull(manager.getListaDetalleHelados().get(2).getHelado().getNombreHelado());
+        assertFalse(manager.getIceCreamDetailsList().isEmpty());
+        assertEquals(3, manager.getIceCreamDetailsList().size());
+        assertNotNull(manager.getIceCreamDetailsList().get(0).getHelado().getIdHelado());
+        assertNotNull(manager.getIceCreamDetailsList().get(1).getHelado().getIdHelado());
+        assertNotNull(manager.getIceCreamDetailsList().get(2).getHelado().getIdHelado());
+        assertNotNull(manager.getIceCreamDetailsList().get(0).getHelado().getNombreHelado());
+        assertNotNull(manager.getIceCreamDetailsList().get(1).getHelado().getNombreHelado());
+        assertNotNull(manager.getIceCreamDetailsList().get(2).getHelado().getNombreHelado());
+        assertEquals(10, manager.getIceCreamDetailsList().get(0).getCantEntregada());
+        assertEquals(25, manager.getIceCreamDetailsList().get(1).getCantEntregada());
+        assertEquals(0, manager.getIceCreamDetailsList().get(1).getCantDevuelta());
+        assertEquals(0, manager.getIceCreamDetailsList().get(1).getCantVendida());
+        assertEquals(15, manager.getIceCreamDetailsList().get(2).getCantEntregada());
 
-        // removing by index
+        // removing by index position 1
         when(uiParameter.getValue()).thenReturn("1");
 
-        manager.removeHelado(actionEvent);
+        manager.removeIceCream(actionEvent);
 
-        assertFalse(manager.getListaDetalleHelados().isEmpty());
-        assertEquals(2, manager.getListaDetalleHelados().size());
-        assertNotNull(manager.getListaDetalleHelados().get(0).getHelado().getIdHelado());
-        assertNotNull(manager.getListaDetalleHelados().get(1).getHelado().getIdHelado());
-        assertNotNull(manager.getListaDetalleHelados().get(0).getHelado().getNombreHelado());
-        assertNotNull(manager.getListaDetalleHelados().get(1).getHelado().getNombreHelado());
+        assertFalse(manager.getIceCreamDetailsList().isEmpty());
+        assertEquals(2, manager.getIceCreamDetailsList().size());
+        assertNotNull(manager.getIceCreamDetailsList().get(0).getHelado().getIdHelado());
+        assertNotNull(manager.getIceCreamDetailsList().get(1).getHelado().getIdHelado());
+        assertNotNull(manager.getIceCreamDetailsList().get(0).getHelado().getNombreHelado());
+        assertNotNull(manager.getIceCreamDetailsList().get(1).getHelado().getNombreHelado());
+        assertEquals(25, manager.getIceCreamDetailsList().get(0).getCantEntregada());
+        assertEquals(15, manager.getIceCreamDetailsList().get(1).getCantEntregada());
+    }
+
+    @Test
+    public void saveAssignationsTest() {
+        List<DetalleHelado> iceCreamDetails = new ArrayList<>();
+        iceCreamDetails.add(DomainStubs.iceCreamDetail(1));
+        iceCreamDetails.add(DomainStubs.iceCreamDetail(2));
+        iceCreamDetails.add(DomainStubs.iceCreamDetail(3));
+        iceCreamDetails.add(DomainStubs.iceCreamDetail(4));
+
+        manager.setIceCreamDetailsList(iceCreamDetails);
+
+        manager.setParamIceCreamManId("24");
+
+        manager.saveAssignations(actionEvent);
     }
 }

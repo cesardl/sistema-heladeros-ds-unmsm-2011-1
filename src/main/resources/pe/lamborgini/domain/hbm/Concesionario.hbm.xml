@@ -3,7 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 29/06/2011 07:47:22 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-    <class catalog="heladeros" name="pe.lamborgini.domain.mapping.Concesionario" table="concesionario">
+    <class name="pe.lamborgini.domain.mapping.Concesionario" table="concesionario">
         <meta attribute="sync-DAO">false</meta>
         <id name="idConcesionario" type="java.lang.Integer">
             <column name="id_concesionario"/>
