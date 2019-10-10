@@ -43,10 +43,11 @@ public final class DomainStubs {
                 Date.from(LocalDate.now().plusMonths(3).atStartOfDay().toInstant(ZoneOffset.UTC)));
     }
 
-    public static DetalleHelado iceCreamDetail(int id) {
+    public static DetalleHelado iceCreamDetail(int id, int deliveredQuantity) {
         DetalleHelado e = new DetalleHelado();
         e.setHelado(new Helado());
         e.getHelado().setIdHelado(id);
+        e.setCantEntregada(deliveredQuantity);
         return e;
     }
 }

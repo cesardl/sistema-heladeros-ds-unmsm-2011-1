@@ -201,9 +201,12 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <configuration>
                     <path>/SIGEVH</path>
-                    <port>8080</port>
+                    <httpsPort>8443</httpsPort>
                     <jarScanAllDirectories>true</jarScanAllDirectories>
                     <tomcatLoggingFile>${project.basedir}/tomcat/conf/logging.properties</tomcatLoggingFile>
+                    <keystoreFile>${project.basedir}/tomcat/keystore/ice-creams-providers.p12</keystoreFile>
+                    <keystorePass>1234567890</keystorePass>
+                    <keystoreType>PKCS12</keystoreType>
                 </configuration>
             </plugin>
             <plugin>

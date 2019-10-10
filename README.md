@@ -8,22 +8,38 @@ En este proyecto se present&oacute; las funcionalidades de administraci&oacute;n
 
 - JSF & RichFaces
 - Hibernate
+- C3P0
 - MySQL
+- PowerMock
 
-### Resources
+## Resources
 
-#### Creating docker instance
+### Creating docker container for db
+I use version 5.6.33 because is the version of MySQL on Travis-CI.
 ```
 docker run --name mysql-ice-creams-providers -p 3306:3306 -e MYSQL_DATABASE=heladeros -e MYSQL_ROOT_PASSWORD=rootroot -e TZ='America/Lima' -d mysql:5.6.33
 ```
 
-#### Updating timezone for db
+#### Updating timezone on db
+Get into the container 
 ```
 docker exec -it mysql-ice-creams-providers /bin/bash
+```
+Edit MySQL file config and set our time zone
+```
 echo default-time-zone='America/Lima' >> /etc/mysql/my.cnf
 ```
+Restart container
+```
+docker restart mysql-ice-creams-providers
+```
 
-### Documentation
+### Generating keystore for HTTPS connections
+```
+keytool -genkeypair -keystore ice-creams-providers.p12 -storetype PKCS12 -storepass 1234567890 -alias sigevh -keyalg RSA -keysize 2048 -validity 99999 -dname "CN=Cesardl, OU=UNMSM, O=Cesardl, L=Chorrillos, ST=Lima, C=PE"
+```
+
+## Documentation
 
 [RichFaces Showcase](http://showcase.richfaces.org/richfaces/component-sample.jsf?demo=dataTable&sample=dataTableEdit&skin=blueSky)
 

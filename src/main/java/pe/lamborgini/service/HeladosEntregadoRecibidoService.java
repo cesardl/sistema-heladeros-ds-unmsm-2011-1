@@ -52,8 +52,6 @@ public final class HeladosEntregadoRecibidoService {
      * @param iceCreamMan     seller
      */
     public static void guardarHeladosEntregadoRecibido(final List<DetalleHelado> iceCreamsDetail, final String iceCreamMan) {
-        // TODO revisar si hay stock
-
         HeladosEntregadoRecibido her = new HeladosEntregadoRecibido();
 
         Date currentDate = new Date();

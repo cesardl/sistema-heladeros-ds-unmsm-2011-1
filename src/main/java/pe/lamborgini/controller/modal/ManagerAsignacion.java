@@ -6,7 +6,6 @@ package pe.lamborgini.controller.modal;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pe.lamborgini.controller.ManagerHeladero;
 import pe.lamborgini.domain.mapping.DetalleHelado;
 import pe.lamborgini.domain.mapping.Helado;
 import pe.lamborgini.domain.mapping.HeladosEntregadoRecibido;
@@ -199,12 +198,18 @@ public class ManagerAsignacion {
         if (iceCreamDetailsList.isEmpty()) {
             oncomplete = "javascript:alert('Debe de ingresar algun helado.')";
         } else {
-            if (HeladoService.reservarStock(iceCreamDetailsList)) {
-                HeladosEntregadoRecibidoService.guardarHeladosEntregadoRecibido(iceCreamDetailsList, paramIceCreamManId);
+            List<DetalleHelado> iceCreamWithoutStock = HeladoService.checkAvailableStock(iceCreamDetailsList);
+            if (iceCreamWithoutStock.isEmpty()) {
+                if (HeladoService.updateStock(iceCreamDetailsList)) {
+                    HeladosEntregadoRecibidoService.guardarHeladosEntregadoRecibido(iceCreamDetailsList, paramIceCreamManId);
 
-                oncomplete = "javascript:alert('Asignacion realizada con exito.');" +
-                        "Richfaces.hideModalPanel('mp_asignar_helados');";
+                    oncomplete = "javascript:alert('Asignacion realizada con exito.');" +
+                            "Richfaces.hideModalPanel('mp_asignar_helados');";
+                } else {
+                    oncomplete = "javascript:alert('Ocurrio un problema interno.')";
+                }
             } else {
+                // TODO show the unavailable ice creams
                 oncomplete = "javascript:alert('No hay stock disponible.')";
             }
         }

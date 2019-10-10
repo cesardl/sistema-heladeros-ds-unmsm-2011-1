@@ -18,6 +18,7 @@ public class DetalleHelado implements java.io.Serializable {
     private int cantEntregada;
     private int cantDevuelta;
     private int cantVendida;
+    private boolean hasStock;
 
     public DetalleHelado() {
     }
@@ -93,5 +94,13 @@ public class DetalleHelado implements java.io.Serializable {
 
     public void setCantVendida(int cantVendida) {
         this.cantVendida = cantVendida;
+    }
+
+    public boolean isHasStock() {
+        return hasStock;
+    }
+
+    public void setHasStock(boolean hasStock) {
+        this.hasStock = hasStock;
     }
 }

@@ -75,7 +75,7 @@ public class ManagerIceCreamTest {
         assertNotNull(result.getStockHelado().getCantidad());
         assertNotNull(result.getStockHelado().getFechaCaducidad());
         assertNotNull(result.getStockHelado().getCreatedAt());
-        assertTrue(manager.getOncomplete().contains("Richfaces"));
+        assertTrue(manager.getOncomplete().contains("Richfaces."));
 
         iceCreamsList = manager.getIceCreamsList();
 
@@ -107,7 +107,7 @@ public class ManagerIceCreamTest {
 
         manager.saveOrUpdate(actionEvent);
 
-        assertFalse(manager.getOncomplete().contains("Richfaces"));
+        assertFalse(manager.getOncomplete().contains("Richfaces."));
     }
 
     @Test
@@ -136,7 +136,7 @@ public class ManagerIceCreamTest {
         assertNotNull(result.getStockHelado().getCantidad());
         assertNotNull(result.getStockHelado().getFechaCaducidad());
         assertNotNull(result.getStockHelado().getCreatedAt());
-        assertTrue(manager.getOncomplete().contains("Richfaces"));
+        assertTrue(manager.getOncomplete().contains("Richfaces."));
 
         iceCreamsList = manager.getIceCreamsList();
 
@@ -162,7 +162,7 @@ public class ManagerIceCreamTest {
 
         manager.saveOrUpdate(actionEvent);
 
-        assertFalse(manager.getOncomplete().contains("Richfaces"));
+        assertFalse(manager.getOncomplete().contains("Richfaces."));
     }
 
     @Test
@@ -176,6 +176,6 @@ public class ManagerIceCreamTest {
 
         manager.delete(actionEvent);
 
-        assertFalse(manager.getOncomplete().contains("Richfaces"));
+        assertFalse(manager.getOncomplete().contains("Richfaces."));
     }
 }

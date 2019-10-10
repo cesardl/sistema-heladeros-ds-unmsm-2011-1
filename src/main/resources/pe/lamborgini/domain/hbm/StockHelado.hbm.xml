@@ -18,5 +18,8 @@
         <property name="createdAt" type="java.util.Date">
             <column name="created_at" not-null="true"/>
         </property>
+        <property name="lastModified" type="java.util.Date">
+            <column name="last_modified"/>
+        </property>
     </class>
 </hibernate-mapping>

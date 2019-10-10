@@ -14,6 +14,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -228,15 +229,47 @@ public class ManagerAsignacionTest {
     @Test
     public void saveAssignationsTest() {
         List<DetalleHelado> iceCreamDetails = new ArrayList<>();
-        iceCreamDetails.add(DomainStubs.iceCreamDetail(1));
-        iceCreamDetails.add(DomainStubs.iceCreamDetail(2));
-        iceCreamDetails.add(DomainStubs.iceCreamDetail(3));
-        iceCreamDetails.add(DomainStubs.iceCreamDetail(4));
+        iceCreamDetails.add(DomainStubs.iceCreamDetail(1, 500));
+        iceCreamDetails.add(DomainStubs.iceCreamDetail(2, 500));
+        iceCreamDetails.add(DomainStubs.iceCreamDetail(3, 500));
+        iceCreamDetails.add(DomainStubs.iceCreamDetail(4, 500));
 
         manager.setIceCreamDetailsList(iceCreamDetails);
 
         manager.setParamIceCreamManId("24");
 
         manager.saveAssignations(actionEvent);
+
+        assertTrue(manager.getOncomplete().contains("javascript:alert"));
+        assertTrue(manager.getOncomplete().contains("Richfaces.hideModalPanel"));
+    }
+
+    @Test
+    public void tryingToSaveAssignationWithoutIceCreamsTest() {
+        manager.setIceCreamDetailsList(Collections.emptyList());
+
+        manager.setParamIceCreamManId("26");
+
+        manager.saveAssignations(actionEvent);
+
+        assertTrue(manager.getOncomplete().contains("javascript:alert('Debe de ingresar algun helado.')"));
+        assertFalse(manager.getOncomplete().contains("Richfaces.hideModalPanel"));
+    }
+
+    @Test
+    public void tryingToSaveAssignationsWithoutStockTest() {
+        List<DetalleHelado> iceCreamDetails = new ArrayList<>();
+        iceCreamDetails.add(DomainStubs.iceCreamDetail(5, 21584));
+        iceCreamDetails.add(DomainStubs.iceCreamDetail(6, 38416 + 1));
+        iceCreamDetails.add(DomainStubs.iceCreamDetail(7, 318421));
+
+        manager.setIceCreamDetailsList(iceCreamDetails);
+
+        manager.setParamIceCreamManId("25");
+
+        manager.saveAssignations(actionEvent);
+
+        assertTrue(manager.getOncomplete().contains("javascript:alert"));
+        assertFalse(manager.getOncomplete().contains("Richfaces.hideModalPanel"));
     }
 }
