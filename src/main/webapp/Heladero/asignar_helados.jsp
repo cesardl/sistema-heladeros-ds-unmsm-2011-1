@@ -32,7 +32,7 @@
                                            image="images/save.png"
                                            actionListener="#{managerAsignacion.saveAssignations}"
                                            oncomplete="#{managerAsignacion.oncomplete}"
-                                           reRender="formHeladeros"/>
+                                           reRender="mp_ice_cream_without_stock, formHeladeros"/>
                     </td>
                 </tr>
                 <tr class="tr-separator">
@@ -51,7 +51,8 @@
                 <tr>
                     <td class="td-label">Helado</td>
                     <td colspan="2">
-                        <h:inputText id="iSugHelado" value="#{managerAsignacion.suggestedIceCream}" style="width:200px;"/>
+                        <h:inputText id="iSugHelado" value="#{managerAsignacion.suggestedIceCream}"
+                                     style="width:200px;"/>
                         <rich:suggestionbox id="suggestionHelado"
                                             for="iSugHelado" nothingLabel="Helado no encontrado"
                                             suggestionAction="#{managerAsignacion.autocomplete}" var="he"
@@ -124,5 +125,20 @@
                 </tr>
             </table>
         </a4j:form>
+    </rich:modalPanel>
+
+    <rich:modalPanel id="mp_ice_cream_without_stock" width="300" autosized="true">
+        <f:facet name="header">
+            <h:outputText value="Ice cream without stocks"/>
+        </f:facet>
+        <h:form>
+            <rich:dataList value="#{managerAsignacion.iceCreamWithoutStock}" var="iceCream">
+                <h:outputText value="#{iceCream.helado.nombreHelado}" styleClass="td-label"/>
+            </rich:dataList>
+            <div style="text-align: right;">
+                <a4j:commandButton value="OK"
+                                   onclick="Richfaces.hideModalPanel('mp_ice_cream_without_stock');"/>
+            </div>
+        </h:form>
     </rich:modalPanel>
 </f:subview>

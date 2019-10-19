@@ -40,7 +40,7 @@
                 </tr>
                 <tr>
                     <td class="td-label">Apellido</td>
-                    <td><h:inputText value="#{managerHeladero.editedIceCreamMan.apellidos}"/></td>
+                    <td><h:inputText value="#{managerHeladero.editedIceCreamMan.lastName}"/></td>
                 </tr>
             </table>
         </a4j:form>

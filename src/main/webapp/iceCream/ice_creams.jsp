@@ -127,20 +127,22 @@
     </rich:panel>
     </body>
     </html>
+
     <jsp:include page="model_ice_cream.jsp"/>
+
     <rich:modalPanel id="mp_ice_cream_deletion_confirm" width="300" autosized="true">
         <f:facet name="header">
             <h:outputText value="Ice cream deletion"/>
         </f:facet>
         <h:outputText value="Está seguro de eliminar el helado #{managerIceCream.editedIceCream.nombreHelado}?"/>
-        <h:panelGrid columns="2">
-            <h:form id="deletionIceCream">
+        <h:form id="deletionIceCream">
+            <div style="text-align: right;padding-top: 10px;">
                 <a4j:commandButton value="Delete" actionListener="#{managerIceCream.delete}"
                                    oncomplete="#{managerIceCream.oncomplete}"
                                    reRender="formIceCreams"/>
                 <a4j:commandButton value="Cancel"
                                    onclick="Richfaces.hideModalPanel('mp_ice_cream_deletion_confirm');"/>
-            </h:form>
-        </h:panelGrid>
+            </div>
+        </h:form>
     </rich:modalPanel>
 </f:view>

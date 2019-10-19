@@ -15,7 +15,7 @@
         <property name="nombres" type="string">
             <column length="45" name="nombres" not-null="true"/>
         </property>
-        <property name="apellidos" type="string">
+        <property name="lastName" type="string">
             <column length="45" name="apellidos" not-null="true"/>
         </property>
         <set inverse="true" name="contratoHeladeros">

@@ -34,6 +34,7 @@ public class ManagerAsignacion {
     private String suggestedIceCream;
     private int quantity;
     private List<DetalleHelado> iceCreamDetailsList;
+    private List<DetalleHelado> iceCreamWithoutStock;
     private String oncomplete;
 
     public String getParamIceCreamManId() {
@@ -90,6 +91,14 @@ public class ManagerAsignacion {
 
     public void setIceCreamDetailsList(List<DetalleHelado> iceCreamDetailsList) {
         this.iceCreamDetailsList = iceCreamDetailsList;
+    }
+
+    public List<DetalleHelado> getIceCreamWithoutStock() {
+        return iceCreamWithoutStock;
+    }
+
+    public void setIceCreamWithoutStock(List<DetalleHelado> iceCreamWithoutStock) {
+        this.iceCreamWithoutStock = iceCreamWithoutStock;
     }
 
     public String getOncomplete() {
@@ -191,14 +200,15 @@ public class ManagerAsignacion {
     }
 
     public void saveAssignations(ActionEvent event) {
-        LOG.debug("Guardando asignacione de helados [{}]", event.getPhaseId());
+        LOG.debug("Guardando asignaciones de helados [{}]", event.getPhaseId());
 
         oncomplete = "";
 
         if (iceCreamDetailsList.isEmpty()) {
             oncomplete = "javascript:alert('Debe de ingresar algun helado.')";
         } else {
-            List<DetalleHelado> iceCreamWithoutStock = HeladoService.checkAvailableStock(iceCreamDetailsList);
+            LOG.debug("Checking available stock");
+            iceCreamWithoutStock = HeladoService.checkAvailableStock(iceCreamDetailsList);
             if (iceCreamWithoutStock.isEmpty()) {
                 if (HeladoService.updateStock(iceCreamDetailsList)) {
                     HeladosEntregadoRecibidoService.guardarHeladosEntregadoRecibido(iceCreamDetailsList, paramIceCreamManId);
@@ -209,8 +219,7 @@ public class ManagerAsignacion {
                     oncomplete = "javascript:alert('Ocurrio un problema interno.')";
                 }
             } else {
-                // TODO show the unavailable ice creams
-                oncomplete = "javascript:alert('No hay stock disponible.')";
+                oncomplete = "Richfaces.showModalPanel('mp_ice_cream_without_stock');";
             }
         }
     }

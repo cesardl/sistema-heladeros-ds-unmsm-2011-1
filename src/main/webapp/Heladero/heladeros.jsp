@@ -97,7 +97,7 @@
                                         value="#{managerHeladero.listaHeladeros}" var="heladero">
 
                             <f:param id="p_id_heladero" value="#{heladero.idHeladero}"/>
-                            <f:param id="p_nombres_heladero" value="#{heladero.apellidos} #{heladero.nombres}"/>
+                            <f:param id="p_nombres_heladero" value="#{heladero.lastName} #{heladero.nombres}"/>
                             <f:param id="p_nombre_consecionario" value="#{heladero.concesionario.nombreConces}"/>
                             <rich:column style="text-align: center;">
                                 <f:facet name="header">
@@ -110,7 +110,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="Apellido y nombre"/>
                                 </f:facet>
-                                <h:outputText value="#{heladero.apellidos} #{heladero.nombres}"/>
+                                <h:outputText value="#{heladero.lastName} #{heladero.nombres}"/>
                             </rich:column>
 
                             <%
@@ -142,20 +142,22 @@
                                 <f:facet name="header">
                                     <h:outputText value="Asignar"/>
                                 </f:facet>
-                                <a4j:commandButton image="images/assignation.png"
-                                                   reRender="mp_asignar_helados"
-                                                   actionListener="#{managerAsignacion.asignarHelado}"
-                                                   oncomplete="#{managerAsignacion.oncomplete}"/>
+                                <a4j:commandButton
+                                        image="#{heladero.heladosEntregadoRecibidos.size() == 0 ? 'images/assignation.png' : 'images/assignation_gray.png'}"
+                                        reRender="mp_asignar_helados"
+                                        actionListener="#{managerAsignacion.asignarHelado}"
+                                        oncomplete="#{managerAsignacion.oncomplete}"/>
                             </rich:column>
 
                             <rich:column style="text-align: center;">
                                 <f:facet name="header">
                                     <h:outputText value="Pagar"/>
                                 </f:facet>
-                                <a4j:commandButton image="images/payment.png"
-                                                   reRender="mp_pagar_heladero"
-                                                   actionListener="#{managerPago.pagarHeladero}"
-                                                   oncomplete="#{managerPago.oncomplete}"/>
+                                <a4j:commandButton
+                                        image="#{heladero.heladosEntregadoRecibidos.size() == 0 ? 'images/payment_gray.png' : 'images/payment.png'}"
+                                        reRender="mp_pagar_heladero"
+                                        actionListener="#{managerPago.pagarHeladero}"
+                                        oncomplete="#{managerPago.oncomplete}"/>
                             </rich:column>
 
                             <f:facet name="footer">

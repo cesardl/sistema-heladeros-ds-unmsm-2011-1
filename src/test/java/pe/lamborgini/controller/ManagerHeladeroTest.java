@@ -69,6 +69,13 @@ public class ManagerHeladeroTest {
         List<Heladero> result = manager.getListaHeladeros();
 
         assertEquals(281, result.size());
+        result.forEach(icm -> {
+            assertNotNull(icm.getIdHeladero());
+            assertNotNull(icm.getLastName());
+            assertNotNull(icm.getNombres());
+            assertNotNull(icm.getConcesionario().getNombreConces());
+            assertNotNull(icm.getHeladosEntregadoRecibidos());
+        });
         assertTrue(manager.getNombre().isEmpty());
         assertTrue(manager.getApellido().isEmpty());
     }

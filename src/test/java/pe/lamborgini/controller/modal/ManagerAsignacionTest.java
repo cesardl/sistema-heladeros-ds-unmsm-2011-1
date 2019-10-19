@@ -248,7 +248,7 @@ public class ManagerAsignacionTest {
     public void tryingToSaveAssignationWithoutIceCreamsTest() {
         manager.setIceCreamDetailsList(Collections.emptyList());
 
-        manager.setParamIceCreamManId("26");
+        manager.setParamIceCreamManId("25");
 
         manager.saveAssignations(actionEvent);
 
@@ -265,11 +265,10 @@ public class ManagerAsignacionTest {
 
         manager.setIceCreamDetailsList(iceCreamDetails);
 
-        manager.setParamIceCreamManId("25");
+        manager.setParamIceCreamManId("26");
 
         manager.saveAssignations(actionEvent);
 
-        assertTrue(manager.getOncomplete().contains("javascript:alert"));
-        assertFalse(manager.getOncomplete().contains("Richfaces.hideModalPanel"));
+        assertTrue(manager.getOncomplete().contains("mp_ice_cream_without_stock"));
     }
 }

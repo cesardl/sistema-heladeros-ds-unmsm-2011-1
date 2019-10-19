@@ -698,7 +698,7 @@ VALUES (191, 6, 'miguel alfonso', 'morales rojo');
 INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
 VALUES (192, 3, 'pablo miguel', 'sullca perez');
 INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
-VALUES (193, 6, 'hugo kenyo', 'arbieto torres');
+VALUES (193, 6, 'Hugo Kenyo', 'Arbieto Torres');
 INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
 VALUES (194, 5, 'Juan Gustavo', 'Giraldo');
 INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
@@ -776,7 +776,7 @@ VALUES (230, 5, 'Claudel Helder', 'Dominguez Fernandez');
 INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
 VALUES (231, 6, 'Adrian ', 'Rodriguez');
 INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
-VALUES (232, 3, 'yuri', 'arias');
+VALUES (232, 3, 'Yuri', 'Arias');
 INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
 VALUES (233, 3, 'jose joel', 'ramos tanca');
 INSERT INTO `heladeros`.`heladero` (`id_heladero`, `id_concesionario`, `nombres`, `apellidos`)
@@ -956,7 +956,7 @@ VALUES (3, 'Copa viva vainilla', 3.5, 2);
 INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
 VALUES (4, 'Piccolo fresa', 1, 6);
 INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
-VALUES (5, 'Frutarello limon', 1, 10);
+VALUES (5, 'Frutarello limón', 1, 10);
 INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
 VALUES (6, 'DPelicula', 4, 11);
 INSERT INTO `heladeros`.`helado` (`id_helado`, `nombre_helado`, `precio`, `id_stock_helado`)
