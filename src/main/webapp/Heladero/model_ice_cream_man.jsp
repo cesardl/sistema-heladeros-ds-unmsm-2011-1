@@ -17,14 +17,13 @@
         </f:facet>
         <f:facet name="controls">
             <h:graphicImage value="../images/close.png" style="cursor: pointer;"
-                            onclick="#{rich:component('mp_ice_cream_man')}.hide()"/>
+                            onclick="Richfaces.hideModalPanel('mp_ice_cream_man');"/>
         </f:facet>
         <a4j:form id="formIceCreamMan">
             <table style="width: 100%;">
                 <tr>
                     <td style="text-align: right" colspan="2">
-                        <a4j:commandButton value="Guardar"
-                                           image="images/save.png"
+                        <a4j:commandButton image="images/save.png"
                                            actionListener="#{managerHeladero.saveOrUpdate}"
                                            oncomplete="#{managerHeladero.oncomplete}"
                                            reRender="formHeladeros"/>
@@ -41,7 +40,7 @@
                 </tr>
                 <tr>
                     <td class="td-label">Apellido</td>
-                    <td><h:inputText value="#{managerHeladero.editedIceCreamMan.apellidos}"/></td>
+                    <td><h:inputText value="#{managerHeladero.editedIceCreamMan.lastName}"/></td>
                 </tr>
             </table>
         </a4j:form>

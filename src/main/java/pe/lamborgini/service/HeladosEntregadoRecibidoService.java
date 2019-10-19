@@ -19,41 +19,51 @@ import java.util.List;
  */
 public final class HeladosEntregadoRecibidoService {
 
+    private static HeladosEntregadoRecibidoDAO dao = new HeladosEntregadoRecibidoDAO();
+
     private HeladosEntregadoRecibidoService() {
     }
 
-    public static HeladosEntregadoRecibido existeAsignacionParaHeladero(final String p_id_heladero) {
-        return new HeladosEntregadoRecibidoDAO().getHeladosEntregadoRecibido(AppUtil.aInteger(p_id_heladero));
+    /**
+     * Check if exist current daily assignation.
+     *
+     * @param iceCreamManId seller
+     * @return an instance of <i>helados_entregado_recibido</i>
+     */
+    public static HeladosEntregadoRecibido existeAsignacionParaHeladero(final String iceCreamManId) {
+        return dao.getHeladosEntregadoRecibido(AppUtil.aInteger(iceCreamManId));
     }
 
     public static boolean existePagoParaHeladero(final HeladosEntregadoRecibido her) {
-        boolean tiene_pago = false;
+        boolean hasPayment = false;
         for (DetalleHelado dh : her.getDetalleHelados()) {
             if (dh.getPagoHelado() != null) {
-                tiene_pago = true;
+                hasPayment = true;
                 break;
             }
         }
-        return tiene_pago;
+        return hasPayment;
     }
 
-    public static void guardarHeladosEntregadoRecibido(final List<DetalleHelado> listaDetalleHelados, final String iceCreamMan) {
+    /**
+     * Only create a row in <i>helados_entregado_recibido</i> on daily assignation.
+     *
+     * @param iceCreamsDetail a list of ice creams
+     * @param iceCreamMan     seller
+     */
+    public static void guardarHeladosEntregadoRecibido(final List<DetalleHelado> iceCreamsDetail, final String iceCreamMan) {
         HeladosEntregadoRecibido her = new HeladosEntregadoRecibido();
 
-        her.setFecha(new Date());
+        Date currentDate = new Date();
+        her.setFecha(currentDate);
+        her.setCreatedAt(currentDate);
         her.setHeladero(new Heladero(AppUtil.aInteger(iceCreamMan)));
 
-        double total = 0;
-
-        for (DetalleHelado dh : listaDetalleHelados) {
-            dh.setCantEntregada(dh.getCantPendiente() + dh.getCantEntregada());
+        for (DetalleHelado dh : iceCreamsDetail) {
             dh.setHeladosEntregadoRecibido(her);
-            total = total + dh.getCantEntregada();
         }
-        her.setDetalleHelados(new HashSet<>(listaDetalleHelados));
-        her.setTotal(total);
+        her.setDetalleHelados(new HashSet<>(iceCreamsDetail));
 
-        HeladosEntregadoRecibidoDAO dao = new HeladosEntregadoRecibidoDAO();
         dao.insertHeladosEntregadoRecibido(her);
     }
 }

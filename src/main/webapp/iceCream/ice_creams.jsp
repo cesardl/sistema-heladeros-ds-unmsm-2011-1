@@ -42,7 +42,7 @@
                                                image="images/new.png"
                                                reRender="mp_ice_cream"
                                                actionListener="#{managerIceCream.newIceCream}"
-                                               oncomplete="#{rich:component('mp_ice_cream')}.show()"/>
+                                               oncomplete="Richfaces.showModalPanel('mp_ice_cream');"/>
                         </h:panelGrid>
                     </td>
                 </tr>
@@ -75,6 +75,14 @@
                                 <h:outputText value="#{iceCream.nombreHelado}"/>
                             </rich:column>
 
+                            <rich:column sortBy="#{iceCream.precio}">
+                                <f:facet name="header">
+                                    <h:outputText value="Precio"/>
+                                </f:facet>
+                                <h:outputText
+                                        value="#{iceCream.precio}"/>
+                            </rich:column>
+
                             <rich:column sortBy="#{iceCream.stockHelado.cantidad}">
                                 <f:facet name="header">
                                     <h:outputText value="Stock"/>
@@ -89,7 +97,7 @@
                                 </f:facet>
                                 <a4j:commandButton image="images/edit.gif"
                                                    reRender="mp_ice_cream"
-                                                   oncomplete="#{rich:component('mp_ice_cream')}.show()">
+                                                   oncomplete="Richfaces.showModalPanel('mp_ice_cream');">
                                     <f:setPropertyActionListener target="#{managerIceCream.editedIceCream}"
                                                                  value="#{iceCream}"/>
                                 </a4j:commandButton>
@@ -101,7 +109,7 @@
                                 </f:facet>
                                 <a4j:commandButton image="images/delete.gif"
                                                    reRender="mp_ice_cream_deletion_confirm"
-                                                   oncomplete="#{rich:component('mp_ice_cream_deletion_confirm')}.show()">
+                                                   oncomplete="Richfaces.showModalPanel('mp_ice_cream_deletion_confirm')">
                                     <f:setPropertyActionListener target="#{managerIceCream.editedIceCream}"
                                                                  value="#{iceCream}"/>
                                 </a4j:commandButton>
@@ -119,20 +127,22 @@
     </rich:panel>
     </body>
     </html>
+
     <jsp:include page="model_ice_cream.jsp"/>
+
     <rich:modalPanel id="mp_ice_cream_deletion_confirm" width="300" autosized="true">
         <f:facet name="header">
             <h:outputText value="Ice cream deletion"/>
         </f:facet>
         <h:outputText value="Está seguro de eliminar el helado #{managerIceCream.editedIceCream.nombreHelado}?"/>
-        <h:panelGrid columns="2">
-            <h:form id="deletionIceCream">
+        <h:form id="deletionIceCream">
+            <div style="text-align: right;padding-top: 10px;">
                 <a4j:commandButton value="Delete" actionListener="#{managerIceCream.delete}"
                                    oncomplete="#{managerIceCream.oncomplete}"
                                    reRender="formIceCreams"/>
                 <a4j:commandButton value="Cancel"
-                                   onclick="#{rich:component('mp_ice_cream_deletion_confirm')}.hide(); return false;"/>
-            </h:form>
-        </h:panelGrid>
+                                   onclick="Richfaces.hideModalPanel('mp_ice_cream_deletion_confirm');"/>
+            </div>
+        </h:form>
     </rich:modalPanel>
 </f:view>

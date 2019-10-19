@@ -21,7 +21,7 @@ git:
   depth: false
 
 before_install:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS heladeros CHARACTER SET utf8 COLLATE utf8_general_ci;'
+  - mysql -e 'CREATE DATABASE heladeros CHARACTER SET utf8 COLLATE utf8_general_ci;'
   - mysql -u travis heladeros < database/heladeros.sql
 
 script:

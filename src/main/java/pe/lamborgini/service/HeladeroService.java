@@ -22,6 +22,8 @@ public final class HeladeroService {
 
     private static final Logger LOG = LoggerFactory.getLogger(HeladeroService.class);
 
+    private static HeladeroDAO dao = new HeladeroDAO();
+
     private HeladeroService() {
     }
 
@@ -39,7 +41,6 @@ public final class HeladeroService {
 
         LOG.debug("Nombre '{}', Apellido '{}', Concesionario: '{}' | role: {}", name, lastName, concessionaireId, roleType);
 
-        HeladeroDAO dao = new HeladeroDAO();
         return dao.getListaHeladeros(name.trim(), lastName.trim(), concessionaireIdToSearch);
     }
 }

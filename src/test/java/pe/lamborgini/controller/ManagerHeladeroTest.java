@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
  * @see <a href='https://github.com/powermock/powermock/wiki/Code-coverage-with-JaCoCo'>Code Coverage with JaCoCo</a>
  */
 @RunWith(PowerMockRunner.class)
-@PowerMockIgnore({"org.jacoco.agent.rt.*", "org.apache.log4j.*"})
+@PowerMockIgnore({"javax.management.*", "org.jacoco.agent.rt.*", "org.apache.log4j.*"})
 @PrepareForTest(FacesContext.class)
 public class ManagerHeladeroTest {
 
@@ -53,6 +53,7 @@ public class ManagerHeladeroTest {
 
     @After
     public void setDown() {
+        manager.setOncomplete(null);
         manager.setListaHeladeros(null);
         manager.setConcessionaires(null);
     }
@@ -68,6 +69,13 @@ public class ManagerHeladeroTest {
         List<Heladero> result = manager.getListaHeladeros();
 
         assertEquals(281, result.size());
+        result.forEach(icm -> {
+            assertNotNull(icm.getIdHeladero());
+            assertNotNull(icm.getLastName());
+            assertNotNull(icm.getNombres());
+            assertNotNull(icm.getConcesionario().getNombreConces());
+            assertNotNull(icm.getHeladosEntregadoRecibidos());
+        });
         assertTrue(manager.getNombre().isEmpty());
         assertTrue(manager.getApellido().isEmpty());
     }

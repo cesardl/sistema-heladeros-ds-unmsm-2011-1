@@ -23,23 +23,25 @@ public final class DetalleHeladoService {
 
     private static final Logger LOG = LoggerFactory.getLogger(DetalleHeladoService.class);
 
+    private static DetalleHeladoDAO dao = new DetalleHeladoDAO();
+
     private DetalleHeladoService() {
     }
 
     public static int calcularHeladosPendientes(final String iceCreamManId, final int iceCreamId) {
-        DetalleHelado dh = new DetalleHeladoDAO().getDetalleHeladoAnterior(iceCreamManId, iceCreamId);
+        DetalleHelado dh = dao.getDetalleHeladoAnterior(iceCreamManId, iceCreamId);
         if (dh == null) {
-            LOG.warn("Ice cream detail not found");
+            LOG.warn("Don't have pending ice cream to sell");
             return 0;
         } else {
-            LOG.debug("A la fecha {} sobro {}", AppUtil.calcularFechaAnterior(), dh.getCantDevuelta());
+            LOG.debug("Pending ice cream to sell {}", dh.getCantDevuelta());
             return dh.getCantDevuelta();
         }
     }
 
     public static boolean validarListaDeEntrega(List<DetalleHelado> listaDetalleHelados) {
         for (DetalleHelado dh : listaDetalleHelados) {
-            int cd = AppUtil.aInteger(dh.getStrCantDevuelta());
+            int cd = dh.getCantDevuelta();
             int ce = dh.getCantEntregada();
             if (cd > ce || cd == AppUtil.ERROR) {
                 return false;
@@ -70,6 +72,6 @@ public final class DetalleHeladoService {
             detalleHelado.setPagoHelado(ph);
         }
         factura.setPago(pago);
-        new DetalleHeladoDAO().updateManyDetalleHelado(listaDetalleHelados);
+        dao.updateManyDetalleHelado(listaDetalleHelados);
     }
 }

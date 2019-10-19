@@ -1,9 +1,6 @@
 package pe.lamborgini;
 
-import pe.lamborgini.domain.mapping.Concesionario;
-import pe.lamborgini.domain.mapping.Helado;
-import pe.lamborgini.domain.mapping.RoleType;
-import pe.lamborgini.domain.mapping.Usuario;
+import pe.lamborgini.domain.mapping.*;
 
 import java.time.LocalDate;
 import java.time.ZoneOffset;
@@ -44,5 +41,13 @@ public final class DomainStubs {
         helado.getStockHelado().setCantidad(1000);
         helado.getStockHelado().setFechaCaducidad(
                 Date.from(LocalDate.now().plusMonths(3).atStartOfDay().toInstant(ZoneOffset.UTC)));
+    }
+
+    public static DetalleHelado iceCreamDetail(int id, int deliveredQuantity) {
+        DetalleHelado e = new DetalleHelado();
+        e.setHelado(new Helado());
+        e.getHelado().setIdHelado(id);
+        e.setCantEntregada(deliveredQuantity);
+        return e;
     }
 }

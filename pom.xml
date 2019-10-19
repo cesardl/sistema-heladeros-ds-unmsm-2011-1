@@ -19,7 +19,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <hibernate.version>3.3.1.GA</hibernate.version>
-        <javassist.version>3.9.0.GA</javassist.version>
+        <javassist.version>3.18.2-GA</javassist.version>
 
         <slf4j.version>1.7.5</slf4j.version>
 
@@ -100,7 +100,7 @@
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
+            <artifactId>hibernate-c3p0</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
         <dependency>
@@ -115,7 +115,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>javassist</groupId>
+            <groupId>org.javassist</groupId>
             <artifactId>javassist</artifactId>
             <version>${javassist.version}</version>
         </dependency>
@@ -201,9 +201,12 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <configuration>
                     <path>/SIGEVH</path>
-                    <port>8080</port>
+                    <httpsPort>8443</httpsPort>
                     <jarScanAllDirectories>true</jarScanAllDirectories>
                     <tomcatLoggingFile>${project.basedir}/tomcat/conf/logging.properties</tomcatLoggingFile>
+                    <keystoreFile>${project.basedir}/tomcat/keystore/ice-creams-providers.p12</keystoreFile>
+                    <keystorePass>1234567890</keystorePass>
+                    <keystoreType>PKCS12</keystoreType>
                 </configuration>
             </plugin>
             <plugin>

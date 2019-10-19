@@ -10,19 +10,19 @@
 <%@taglib prefix="a4j" uri="http://richfaces.org/a4j" %>
 
 <f:subview id="pagar_heladero">
-    <rich:modalPanel id="mp_pagar_heladero" width="400" autosized="true">
+    <rich:modalPanel id="mp_pagar_heladero" width="550" autosized="true">
         <f:facet name="header">
             <h:outputText value="Pago de los heladeros"/>
         </f:facet>
         <f:facet name="controls">
             <h:graphicImage value="../images/close.png" style="cursor: pointer;"
-                            onclick="#{rich:component('mp_pagar_heladero')}.hide()"/>
+                            onclick="Richfaces.hideModalPanel('mp_pagar_heladero');"/>
         </f:facet>
         <a4j:form id="formPago">
             <table style="width: 100%;">
                 <tr style="text-align: right;">
                     <td colspan="2">
-                        <a4j:commandButton value="Guardar"
+                        <a4j:commandButton image="images/save.png"
                                            actionListener="#{managerPago.realizarPago}"
                                            oncomplete="#{managerPago.oncomplete}"
                                            reRender="formHeladeros"/>
@@ -35,11 +35,11 @@
                 </tr>
                 <tr>
                     <td class="td-label">Consecionario</td>
-                    <td><h:outputText value="#{managerPago.nombre_consecionario}"/></td>
+                    <td><h:outputText value="#{managerPago.concessionaireName}"/></td>
                 </tr>
                 <tr>
                     <td class="td-label">Heladero</td>
-                    <td><h:outputText value="#{managerPago.nombres_heladero}"/></td>
+                    <td><h:outputText value="#{managerPago.iceCreamManName}"/></td>
                 </tr>
                 <tr class="tr-separator">
                     <td colspan="2">
@@ -54,7 +54,7 @@
                         <rich:dataTable id="tableHelados" width="90%" rows="10"
                                         onRowMouseOver="this.style.backgroundColor='#F1F1F1'"
                                         onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'"
-                                        var="dh" value="#{managerPago.listaDetalleHelados}">
+                                        var="dh" value="#{managerPago.iceCreamDetailsList}">
 
                             <rich:column>
                                 <f:facet name="header">
@@ -81,7 +81,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="Devueltos"/>
                                 </f:facet>
-                                <h:inputText value="#{dh.strCantDevuelta}" style="width: 20px;"/>
+                                <h:inputText value="#{dh.cantDevuelta}" style="width: 20px;"/>
                             </rich:column>
                         </rich:dataTable>
                     </td>

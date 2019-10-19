@@ -16,7 +16,7 @@ public class Heladero implements java.io.Serializable {
     private Integer idHeladero;
     private Concesionario concesionario;
     private String nombres;
-    private String apellidos;
+    private String lastName;
     private Set<ContratoHeladero> contratoHeladeros = new HashSet<>(0);
     private Set<HeladosEntregadoRecibido> heladosEntregadoRecibidos = new HashSet<>(0);
 
@@ -27,16 +27,16 @@ public class Heladero implements java.io.Serializable {
         this.idHeladero = idHeladero;
     }
 
-    public Heladero(Concesionario concesionario, String nombres, String apellidos) {
+    public Heladero(Concesionario concesionario, String nombres, String lastName) {
         this.concesionario = concesionario;
         this.nombres = nombres;
-        this.apellidos = apellidos;
+        this.lastName = lastName;
     }
 
-    public Heladero(Concesionario concesionario, String nombres, String apellidos, Set<ContratoHeladero> contratoHeladeros, Set<HeladosEntregadoRecibido> heladosEntregadoRecibidos) {
+    public Heladero(Concesionario concesionario, String nombres, String lastName, Set<ContratoHeladero> contratoHeladeros, Set<HeladosEntregadoRecibido> heladosEntregadoRecibidos) {
         this.concesionario = concesionario;
         this.nombres = nombres;
-        this.apellidos = apellidos;
+        this.lastName = lastName;
         this.contratoHeladeros = contratoHeladeros;
         this.heladosEntregadoRecibidos = heladosEntregadoRecibidos;
     }
@@ -65,12 +65,12 @@ public class Heladero implements java.io.Serializable {
         this.nombres = nombres;
     }
 
-    public String getApellidos() {
-        return this.apellidos;
+    public String getLastName() {
+        return this.lastName;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setLastName(String apellidos) {
+        this.lastName = apellidos;
     }
 
     public Set<ContratoHeladero> getContratoHeladeros() {
@@ -91,6 +91,6 @@ public class Heladero implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return apellidos + " " + nombres;
+        return lastName + " " + nombres;
     }
 }

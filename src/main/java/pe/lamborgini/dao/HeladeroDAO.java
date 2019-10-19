@@ -5,6 +5,7 @@
 package pe.lamborgini.dao;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
@@ -31,7 +32,8 @@ public class HeladeroDAO {
         Session session = AppUtil.getSessionFactory().openSession();
         List<Heladero> heladeros = new ArrayList<>();
         try {
-            Criteria c = session.createCriteria(Heladero.class);
+            Criteria c = session.createCriteria(Heladero.class)
+                    .setFetchMode("heladosEntregadoRecibidos", FetchMode.JOIN);
 
             if (concessionaireId != 0) {
                 c.add(Restrictions.eq("concesionario.idConcesionario", concessionaireId));
@@ -40,10 +42,10 @@ public class HeladeroDAO {
                 c.add(Restrictions.like("nombres", "%" + name + "%"));
             }
             if (lastName.trim().length() != 0) {
-                c.add(Restrictions.like("apellidos", "%" + lastName + "%"));
+                c.add(Restrictions.like("lastName", "%" + lastName + "%"));
             }
 
-            c.addOrder(Order.asc("apellidos"));
+            c.addOrder(Order.asc("lastName"));
 
             heladeros = c.list();
             LOG.debug("Getting {} rows from DB", heladeros.size());

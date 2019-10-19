@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
  * @author Cesardl
  */
 public final class SessionUtils {
+
     private static SessionUtils ourInstance = new SessionUtils();
 
     private SessionUtils() {

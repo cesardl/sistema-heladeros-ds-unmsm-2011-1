@@ -11,7 +11,6 @@ import pe.lamborgini.service.HeladeroService;
 
 import javax.faces.event.ActionEvent;
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -93,11 +92,5 @@ public class ManagerHeladero extends BaseManager implements Serializable {
 
     public void saveOrUpdate(final ActionEvent event) {
         LOG.debug("Guardando edicion de heladero [{}]", event.getPhaseId());
-    }
-
-    public void cleanFormularioPrincipal() {
-        this.nombre = "";
-        this.apellido = "";
-        this.listaHeladeros = Collections.emptyList();
     }
 }

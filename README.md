@@ -8,15 +8,44 @@ En este proyecto se present&oacute; las funcionalidades de administraci&oacute;n
 
 - JSF & RichFaces
 - Hibernate
+- C3P0
 - MySQL
+- PowerMock
 
-### Richfaces documentation
+## Resources
+
+### Creating docker container for db
+I use version 5.6.33 because is the version of MySQL on Travis-CI.
+```
+docker run --name mysql-ice-creams-providers -p 3306:3306 -e MYSQL_DATABASE=heladeros -e MYSQL_ROOT_PASSWORD=rootroot -e TZ='America/Lima' -d mysql:5.6.33
+```
+
+#### Updating timezone on db
+Get into the container 
+```
+docker exec -it mysql-ice-creams-providers /bin/bash
+```
+Edit MySQL file config and set our time zone
+```
+echo default-time-zone='America/Lima' >> /etc/mysql/my.cnf
+```
+Restart container
+```
+docker restart mysql-ice-creams-providers
+```
+
+### Generating keystore for HTTPS connections
+```
+keytool -genkeypair -keystore ice-creams-providers.p12 -storetype PKCS12 -storepass 1234567890 -alias sigevh -keyalg RSA -keysize 2048 -validity 99999 -dname "CN=Cesardl, OU=UNMSM, O=Cesardl, L=Chorrillos, ST=Lima, C=PE"
+```
+
+## Documentation
 
 [RichFaces Showcase](http://showcase.richfaces.org/richfaces/component-sample.jsf?demo=dataTable&sample=dataTableEdit&skin=blueSky)
 
 [RichFaces Dev Guide](https://docs.jboss.org/richfaces/latest_3_3_X/en/devguide/html/RichFacesComponentsLibrary.html)
 
-[![Scanned on](https://sonarcloud.io/images/project_badges/sonarcloud-black.svg)](https://sonarcloud.io/dashboard?id=pe.edu.unmsm.fisi.sigevh-webapp)
+[Hibernate connection pool with Tomcat](https://developer.jboss.org/wiki/UsingHibernateWithTomcat)
 
 ## [10 Retos que Debes Realizar para ser Buen Programador](http://solutions-site40.blogspot.pe/2015/05/10-retos-que-debes-realizar-para-ser.html#/?)
 
@@ -26,3 +55,5 @@ Por l&oacute;gica general sabemos que las golosinas tienen fecha de caducidad as
 hacer un programa que registre la fecha, el nombre, la cantidad y el tipo de producto que ingresa en existencia de 
 una tienda, luego cuando se quiera vender un producto de la tienda el sistema se encarga de sacar primero 
 al producto que tenga la fecha m&aacute;s antigua para no tener p&eacute;rdidas.
+
+[![Scanned on](https://sonarcloud.io/images/project_badges/sonarcloud-black.svg)](https://sonarcloud.io/dashboard?id=pe.edu.unmsm.fisi.sigevh-webapp)

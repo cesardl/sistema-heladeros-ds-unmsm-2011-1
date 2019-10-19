@@ -16,6 +16,7 @@ public class StockHelado implements java.io.Serializable {
     private Integer cantidad;
     private Date fechaCaducidad;
     private Date createdAt;
+    private Date lastModified;
 
     public StockHelado() {
     }
@@ -54,6 +55,14 @@ public class StockHelado implements java.io.Serializable {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Date getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(Date lastModified) {
+        this.lastModified = lastModified;
     }
 }
 

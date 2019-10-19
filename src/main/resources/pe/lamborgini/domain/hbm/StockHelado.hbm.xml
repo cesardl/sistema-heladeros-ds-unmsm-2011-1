@@ -3,7 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 29/06/2011 07:47:22 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-    <class catalog="heladeros" name="pe.lamborgini.domain.mapping.StockHelado" table="stock_helado">
+    <class name="pe.lamborgini.domain.mapping.StockHelado" table="stock_helado">
         <meta attribute="sync-DAO">false</meta>
         <id name="idStockHelado" type="java.lang.Integer">
             <column name="id_stock_helado"/>
@@ -16,7 +16,10 @@
             <column name="fecha_caducidad" not-null="true"/>
         </property>
         <property name="createdAt" type="java.util.Date">
-            <column name="fecha_registro" not-null="true"/>
+            <column name="created_at" not-null="true"/>
+        </property>
+        <property name="lastModified" type="java.util.Date">
+            <column name="last_modified"/>
         </property>
     </class>
 </hibernate-mapping>

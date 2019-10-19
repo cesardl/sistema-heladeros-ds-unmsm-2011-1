@@ -6,6 +6,7 @@ package pe.lamborgini.dao;
 
 import org.hibernate.*;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pe.lamborgini.domain.mapping.Helado;
@@ -13,6 +14,7 @@ import pe.lamborgini.util.AppUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -23,16 +25,20 @@ public class HeladoDAO {
     private static final Logger LOG = LoggerFactory.getLogger(HeladoDAO.class);
 
     @SuppressWarnings("unchecked")
-    public List<Helado> getAll() {
+    public List<Helado> getAll(final Integer... ids) {
         LOG.debug("DB query: iceCreamName");
         Session session = AppUtil.getSessionFactory().getCurrentSession();
         Transaction tx = session.beginTransaction();
-        List<Helado> iceCreams;
 
-        iceCreams = session.createCriteria(Helado.class)
+        Criteria criteria = session.createCriteria(Helado.class)
                 .setFetchMode("stockHelado", FetchMode.JOIN)
-                .addOrder(Order.asc("nombreHelado"))
-                .list();
+                .addOrder(Order.asc("nombreHelado"));
+
+        if (ids.length > 0) {
+            criteria.add(Restrictions.in("idHelado", Arrays.asList(ids)));
+        }
+
+        List<Helado> iceCreams = criteria.list();
 
         LOG.debug("Getting {} rows from DB", iceCreams.size());
         tx.commit();

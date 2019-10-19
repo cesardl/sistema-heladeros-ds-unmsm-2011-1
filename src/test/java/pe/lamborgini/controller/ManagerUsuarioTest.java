@@ -21,8 +21,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Mockito.*;
 
@@ -34,7 +33,7 @@ import static org.mockito.Mockito.*;
  * @see <a href='https://github.com/powermock/powermock/issues/478'>Add jacoco package to the default packages to be deferred #478</a>
  */
 @RunWith(PowerMockRunner.class)
-@PowerMockIgnore({"org.jacoco.agent.rt.*", "org.apache.log4j.*"})
+@PowerMockIgnore({"javax.management.*", "org.jacoco.agent.rt.*", "org.apache.log4j.*"})
 @PrepareForTest(FacesContext.class)
 public class ManagerUsuarioTest {
 
@@ -60,6 +59,7 @@ public class ManagerUsuarioTest {
     public void setDown() {
         manager.setOncomplete(null);
         manager.setListaUsuarios(null);
+        manager.setConcessionaires(null);
     }
 
     @Test
@@ -105,6 +105,10 @@ public class ManagerUsuarioTest {
 
         assertEquals(6, result.length);
         assertEquals(0, AppUtil.aInteger(result[0].getValue().toString()));
+
+        // reload
+        SelectItem[] resultReload = manager.getConcessionaires();
+        assertArrayEquals(result, resultReload);
     }
 
     @Test

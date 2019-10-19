@@ -18,7 +18,7 @@ public class BaseManager {
     private static final Logger LOG = LoggerFactory.getLogger(BaseManager.class);
 
     protected int concessionaireId;
-    protected SelectItem[] concessionaires;
+    private SelectItem[] concessionaires;
 
     public int getConcessionaireId() {
         return concessionaireId;
@@ -29,7 +29,7 @@ public class BaseManager {
     }
 
     public SelectItem[] getConcessionaires() {
-        LOG.debug("Obteniendo lista de concessionaires");
+        LOG.debug("Getting concessionaires");
         if (concessionaires == null) {
             Collection<Concesionario> c = ConcesionarioService.obtenerConcesionario();
 
