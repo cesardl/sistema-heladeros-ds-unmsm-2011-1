@@ -36,7 +36,7 @@ public class HeladeroDAO {
                     .setFetchMode("heladosEntregadoRecibidos", FetchMode.JOIN);
 
             if (concessionaireId != 0) {
-                c.add(Restrictions.eq("concesionario.idConcesionario", concessionaireId));
+                c.add(Restrictions.eq("concessionaire.idConcesionario", concessionaireId));
             }
             if (name.trim().length() != 0) {
                 c.add(Restrictions.like("name", "%" + name + "%"));

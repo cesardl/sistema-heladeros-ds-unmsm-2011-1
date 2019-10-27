@@ -18,7 +18,6 @@
     <html>
     <head>
         <title>Usuarios</title>
-        <link type="text/css" href="../style/default.css" rel="stylesheet" media="screen">
     </head>
     <body>
     <jsp:include page="../menu.jsp"/>
