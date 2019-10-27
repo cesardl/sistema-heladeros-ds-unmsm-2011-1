@@ -96,7 +96,7 @@
 
                             <f:param id="p_id_heladero" value="#{heladero.idHeladero}"/>
                             <f:param id="p_nombres_heladero" value="#{heladero.lastName} #{heladero.name}"/>
-                            <f:param id="p_nombre_consecionario" value="#{heladero.concesionario.nombreConces}"/>
+                            <f:param id="p_nombre_consecionario" value="#{heladero.concessionaire.nombreConces}"/>
                             <rich:column style="text-align: center;">
                                 <f:facet name="header">
                                     <h:outputText value="Nro"/>
@@ -118,7 +118,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="Concesionario"/>
                                 </f:facet>
-                                <h:outputText value="#{heladero.concesionario.nombreConces}"/>
+                                <h:outputText value="#{heladero.concessionaire.nombreConces}"/>
                             </rich:column>
                             <%
                                 }

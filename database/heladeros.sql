@@ -69,13 +69,13 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`heladero`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `heladeros`.`contrato_heladero`
 (
-    `idcontrato_heladero` INT(11)     NOT NULL AUTO_INCREMENT,
-    `id_heladero`         INT(11)     NOT NULL,
-    `numero_contrato`     INT(11)     NOT NULL,
-    `tipo`                VARCHAR(45) NOT NULL,
-    `contenido`           VARCHAR(45) NOT NULL,
-    `fecha_inicio`        DATE        NOT NULL,
-    `fecha_fin`           DATE        NOT NULL,
+    `idcontrato_heladero` INT(11)                        NOT NULL AUTO_INCREMENT,
+    `id_heladero`         INT(11)                        NOT NULL,
+    `numero_contrato`     VARCHAR(11)                    NOT NULL,
+    `tipo`                ENUM ('TEMPORAL', 'PERMANENT') NOT NULL,
+    `contenido`           TEXT                           NOT NULL,
+    `fecha_inicio`        DATE                           NOT NULL,
+    `fecha_fin`           DATE                           NOT NULL,
     PRIMARY KEY (`idcontrato_heladero`),
     INDEX `fk_contrato_heladero_heladero1` (`id_heladero` ASC),
     CONSTRAINT `fk_contrato_heladero_heladero1`
@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`helados_entregado_recibido`
 (
     `id_helados_entregado_recibido` INT(11)   NOT NULL AUTO_INCREMENT,
     `id_heladero`                   INT(11)   NOT NULL,
-    `fecha`                         DATE      NULL,
+    `fecha`                         DATE      NOT NULL,
     `created_at`                    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id_helados_entregado_recibido`),
     INDEX `fk_helado_entregado_recibido_heladero1` (`id_heladero` ASC),
@@ -251,6 +251,16 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`usuario`
 USE `heladeros`;
 
 DELIMITER $$
+USE `heladeros`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `heladeros`.`contrato_heladero_BEFORE_INSERT`
+    BEFORE INSERT
+    ON `contrato_heladero`
+    FOR EACH ROW
+BEGIN
+    SET NEW.fecha_inicio = DATE_SUB(CURRENT_DATE, INTERVAL 6 MONTH);
+    SET NEW.fecha_fin = DATE_ADD(CURRENT_DATE, INTERVAL 6 MONTH);
+END$$
+
 USE `heladeros`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `heladeros`.`stock_helado_BEFORE_INSERT`
     BEFORE INSERT
@@ -880,6 +890,858 @@ COMMIT;
 
 
 -- -----------------------------------------------------
+-- Data for table `heladeros`.`contrato_heladero`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `heladeros`;
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (1, 1, '0000813134', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (2, 2, '0000273243', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (3, 3, '0000926813', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (4, 4, '0000814336', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (5, 5, '0000291242', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (6, 6, '0000013200', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (7, 7, '0000192278', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (8, 8, '0000921790', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (9, 9, '0000032117', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (10, 10, '0000395215', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (11, 11, '0000879724', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (12, 12, '0000212975', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (13, 13, '0000425703', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (14, 14, '0000489591', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (15, 15, '0000170846', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (16, 16, '0000385458', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (17, 17, '0000414752', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (18, 18, '0000917386', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (19, 19, '0000342676', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (20, 20, '0000961223', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (21, 21, '0000778085', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (22, 22, '0000006760', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (23, 23, '0000699544', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (24, 24, '0000477439', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (25, 25, '0000288566', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (26, 26, '0000010511', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (27, 27, '0000186859', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (28, 28, '0000902764', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (29, 29, '0000953242', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (30, 30, '0000057918', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (31, 31, '0000429867', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (32, 32, '0000975580', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (33, 33, '0000588300', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (34, 34, '0000014759', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (35, 35, '0000308898', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (36, 36, '0000500213', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (37, 37, '0000574373', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (38, 38, '0000371226', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (39, 39, '0000133011', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (40, 40, '0000551379', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (41, 41, '0000357862', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (42, 42, '0000135174', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (43, 43, '0000602284', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (44, 44, '0000605900', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (45, 45, '0000222648', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (46, 46, '0000295540', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (47, 47, '0000809755', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (48, 48, '0000162155', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (49, 49, '0000381511', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (50, 50, '0000421091', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (51, 51, '0000960921', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (52, 52, '0000541335', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (53, 53, '0000823912', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (54, 54, '0000495554', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (55, 55, '0000006037', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (56, 56, '0000543522', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (57, 57, '0000699499', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (58, 58, '0000866929', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (59, 59, '0000236149', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (60, 60, '0000579957', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (61, 61, '0000191338', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (62, 62, '0000216821', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (63, 63, '0000510093', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (64, 64, '0000900003', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (65, 65, '0000969736', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (66, 66, '0000148670', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (67, 67, '0000834145', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (68, 68, '0000724713', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (69, 69, '0000121130', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (70, 70, '0000431515', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (71, 71, '0000794182', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (72, 72, '0000676366', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (73, 73, '0000999286', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (74, 74, '0000967330', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (75, 75, '0000838794', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (76, 76, '0000291979', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (77, 77, '0000943515', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (78, 78, '0000841638', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (79, 79, '0000377644', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (80, 80, '0000363310', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (81, 81, '0000683616', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (82, 82, '0000328151', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (83, 83, '0000589908', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (84, 84, '0000965086', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (85, 85, '0000055707', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (86, 86, '0000383277', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (87, 87, '0000749265', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (88, 88, '0000596493', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (89, 89, '0000734671', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (90, 90, '0000883879', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (91, 91, '0000215382', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (92, 92, '0000425272', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (93, 93, '0000480213', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (94, 94, '0000125252', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (95, 95, '0000185622', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (96, 96, '0000552354', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (97, 97, '0000204905', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (98, 98, '0000367463', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (99, 99, '0000222599', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (100, 100, '0000010606', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (101, 101, '0000385234', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (102, 102, '0000894355', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (103, 103, '0000316070', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (104, 104, '0000897288', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (105, 105, '0000538230', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (106, 106, '0000999288', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (107, 107, '0000381751', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (108, 108, '0000910890', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (109, 109, '0000409196', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (110, 110, '0000313313', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (111, 111, '0000338979', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (112, 112, '0000754953', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (113, 113, '0000757831', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (114, 114, '0000524298', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (115, 115, '0000347995', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (116, 116, '0000167083', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (117, 117, '0000791428', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (118, 118, '0000455893', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (119, 119, '0000905183', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (120, 120, '0000158236', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (121, 121, '0000075629', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (122, 122, '0000903440', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (123, 123, '0000290313', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (124, 124, '0000741245', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (125, 125, '0000835286', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (126, 126, '0000952694', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (127, 127, '0000257615', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (128, 128, '0000429992', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (129, 129, '0000377115', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (130, 130, '0000595602', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (131, 131, '0000846664', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (132, 132, '0000446516', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (133, 133, '0000692586', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (134, 134, '0000123382', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (135, 135, '0000539155', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (136, 136, '0000325630', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (137, 137, '0000010683', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (138, 138, '0000076525', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (139, 139, '0000350579', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (140, 140, '0000523322', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (141, 141, '0000564870', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (142, 142, '0000254385', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (143, 143, '0000577318', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (144, 144, '0000123435', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (145, 145, '0000885219', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (146, 146, '0000055793', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (147, 147, '0000623307', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (148, 148, '0000949159', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (149, 149, '0000875871', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (150, 150, '0000531882', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (151, 151, '0000031796', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (152, 152, '0000563333', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (153, 153, '0000721279', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (154, 154, '0000916394', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (155, 155, '0000418136', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (156, 156, '0000341500', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (157, 157, '0000453090', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (158, 158, '0000240952', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (159, 159, '0000845492', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (160, 160, '0000504601', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (161, 161, '0000986532', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (162, 162, '0000418855', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (163, 163, '0000134680', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (164, 164, '0000416836', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (165, 165, '0000680140', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (166, 166, '0000150193', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (167, 167, '0000710548', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (168, 168, '0000102158', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (169, 169, '0000379149', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (170, 170, '0000589271', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (171, 171, '0000808907', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (172, 172, '0000276725', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (173, 173, '0000956901', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (174, 174, '0000954334', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (175, 175, '0000900968', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (176, 176, '0000641837', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (177, 177, '0000506283', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (178, 178, '0000605903', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (179, 179, '0000510668', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (180, 180, '0000735630', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (181, 181, '0000146146', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (182, 182, '0000523842', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (183, 183, '0000180774', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (184, 184, '0000332342', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (185, 185, '0000119389', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (186, 186, '0000599919', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (187, 187, '0000641427', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (188, 188, '0000407381', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (189, 189, '0000112622', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (190, 190, '0000340970', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (191, 191, '0000366985', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (192, 192, '0000812014', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (193, 193, '0000959116', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (194, 194, '0000359538', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (195, 195, '0000920342', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (196, 196, '0000523096', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (197, 197, '0000854453', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (198, 198, '0000702981', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (199, 199, '0000951546', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (200, 200, '0000648788', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (201, 201, '0000389304', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (202, 202, '0000000155', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (203, 203, '0000832862', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (204, 204, '0000163849', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (205, 205, '0000320656', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (206, 206, '0000111737', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (207, 207, '0000596714', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (208, 208, '0000648361', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (209, 209, '0000451665', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (210, 210, '0000313243', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (211, 211, '0000211219', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (212, 212, '0000116368', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (213, 213, '0000948181', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (214, 214, '0000391803', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (215, 215, '0000114474', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (216, 216, '0000396961', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (217, 217, '0000641385', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (218, 218, '0000016039', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (219, 219, '0000156043', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (220, 220, '0000732100', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (221, 221, '0000192369', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (222, 222, '0000765547', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (223, 223, '0000250630', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (224, 224, '0000956508', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (225, 225, '0000030651', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (226, 226, '0000283733', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (227, 227, '0000326709', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (228, 228, '0000782350', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (229, 229, '0000931621', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (230, 230, '0000311056', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (231, 231, '0000760416', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (232, 232, '0000868913', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (233, 233, '0000063318', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (234, 234, '0000709853', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (235, 235, '0000359313', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (236, 236, '0000667003', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (237, 237, '0000257078', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (238, 238, '0000284380', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (239, 239, '0000650666', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (240, 240, '0000400191', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (241, 241, '0000048958', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (242, 242, '0000044215', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (243, 243, '0000074205', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (244, 244, '0000238380', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (245, 245, '0000969284', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (246, 246, '0000131280', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (247, 247, '0000748550', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (248, 248, '0000348911', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (249, 249, '0000498906', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (250, 250, '0000447797', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (251, 251, '0000742266', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (252, 252, '0000367942', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (253, 253, '0000612911', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (254, 254, '0000960732', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (255, 255, '0000964925', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (256, 256, '0000942431', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (257, 257, '0000817379', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (258, 258, '0000259603', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (259, 259, '0000845880', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (260, 260, '0000450592', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (261, 261, '0000715319', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (262, 262, '0000224820', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (263, 263, '0000978144', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (264, 264, '0000216262', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (265, 265, '0000146877', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (266, 266, '0000085600', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (267, 267, '0000987368', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (268, 268, '0000680042', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (269, 269, '0000438106', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (270, 270, '0000150403', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (271, 271, '0000437697', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (272, 272, '0000737278', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (273, 273, '0000373299', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (274, 274, '0000654661', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (275, 275, '0000153408', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (276, 276, '0000803056', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (277, 277, '0000555059', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (278, 278, '0000366129', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (279, 279, '0000165466', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (280, 280, '0000728943', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+INSERT INTO `heladeros`.`contrato_heladero` (`idcontrato_heladero`, `id_heladero`, `numero_contrato`, `tipo`,
+                                             `contenido`, `fecha_inicio`, `fecha_fin`)
+VALUES (281, 281, '0000148317', 'TEMPORAL', 'Sample Independent Contractor Agreement', '2019-04-27', '2020-04-27');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
 -- Data for table `heladeros`.`stock_helado`
 -- -----------------------------------------------------
 START TRANSACTION;
@@ -1011,19 +1873,19 @@ COMMIT;
 START TRANSACTION;
 USE `heladeros`;
 INSERT INTO `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`, `id_heladero`, `fecha`, `created_at`)
-VALUES (1, 37, NULL, DEFAULT);
+VALUES (1, 37, '2019-04-27', DEFAULT);
 INSERT INTO `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`, `id_heladero`, `fecha`, `created_at`)
-VALUES (2, 143, NULL, DEFAULT);
+VALUES (2, 143, '2019-04-27', DEFAULT);
 INSERT INTO `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`, `id_heladero`, `fecha`, `created_at`)
-VALUES (3, 193, NULL, DEFAULT);
+VALUES (3, 193, '2019-04-27', DEFAULT);
 INSERT INTO `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`, `id_heladero`, `fecha`, `created_at`)
-VALUES (4, 214, NULL, DEFAULT);
+VALUES (4, 214, '2019-04-27', DEFAULT);
 INSERT INTO `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`, `id_heladero`, `fecha`, `created_at`)
-VALUES (5, 276, NULL, DEFAULT);
+VALUES (5, 276, '2019-04-27', DEFAULT);
 INSERT INTO `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`, `id_heladero`, `fecha`, `created_at`)
-VALUES (6, 76, NULL, DEFAULT);
+VALUES (6, 76, '2019-04-27', DEFAULT);
 INSERT INTO `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`, `id_heladero`, `fecha`, `created_at`)
-VALUES (7, 80, NULL, DEFAULT);
+VALUES (7, 80, '2019-04-27', DEFAULT);
 
 COMMIT;
 
@@ -1120,7 +1982,6 @@ COMMIT;
 -- begin attached script 'script'
 DROP TRIGGER `heladeros`.`stock_helado_BEFORE_INSERT`;
 DROP TRIGGER `heladeros`.`helados_entregado_recibido_BEFORE_INSERT`;
-ALTER TABLE helados_entregado_recibido
-    MODIFY fecha DATE NOT NULL;
+DROP TRIGGER `heladeros`.`contrato_heladero_BEFORE_INSERT`;
 
 -- end attached script 'script'

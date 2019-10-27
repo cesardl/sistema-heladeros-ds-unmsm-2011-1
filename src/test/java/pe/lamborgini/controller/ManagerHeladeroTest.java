@@ -73,7 +73,7 @@ public class ManagerHeladeroTest {
             assertNotNull(icm.getIdHeladero());
             assertNotNull(icm.getLastName());
             assertNotNull(icm.getName());
-            assertNotNull(icm.getConcesionario().getNombreConces());
+            assertNotNull(icm.getConcessionaire().getNombreConces());
             assertNotNull(icm.getHeladosEntregadoRecibidos());
         });
         assertTrue(manager.getNombre().isEmpty());

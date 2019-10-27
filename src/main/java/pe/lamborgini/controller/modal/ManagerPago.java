@@ -75,7 +75,7 @@ public class ManagerPago {
                 this.setOncomplete("javascript:alert('Ya se ejecuto el proceso de pago.');");
             } else {
                 iceCreamManName = her.getHeladero().toString();
-                concessionaireName = her.getHeladero().getConcesionario().getNombreConces();
+                concessionaireName = her.getHeladero().getConcessionaire().getNombreConces();
                 iceCreamDetailsList = new ArrayList<>(her.getDetalleHelados());
                 this.setOncomplete("Richfaces.showModalPanel('mp_pagar_heladero');");
             }
