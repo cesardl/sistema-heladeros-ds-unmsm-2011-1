@@ -39,7 +39,7 @@ public class HeladeroDAO {
                 c.add(Restrictions.eq("concesionario.idConcesionario", concessionaireId));
             }
             if (name.trim().length() != 0) {
-                c.add(Restrictions.like("nombres", "%" + name + "%"));
+                c.add(Restrictions.like("name", "%" + name + "%"));
             }
             if (lastName.trim().length() != 0) {
                 c.add(Restrictions.like("lastName", "%" + lastName + "%"));

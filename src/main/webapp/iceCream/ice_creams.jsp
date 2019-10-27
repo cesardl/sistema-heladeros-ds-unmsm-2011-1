@@ -20,7 +20,6 @@
     <html>
     <head>
         <title>Ice Creams</title>
-        <link type="text/css" href="../style/default.css" rel="stylesheet" media="screen">
     </head>
     <body>
     <jsp:include page="../menu.jsp"/>
@@ -56,10 +55,8 @@
                         <rich:datascroller id="scrollerIceCream" align="right" for="tableIceCreams"
                                            style="width : 90%;"/>
                         <rich:spacer height="3px"/>
-                        <rich:dataTable id="tableIceCreams" value="#{managerIceCream.iceCreamsList}" var="iceCream"
-                                        rows="20" style="width : 90%;"
-                                        onRowMouseOver="this.style.backgroundColor='#F1F1F1'"
-                                        onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'">
+                        <rich:dataTable id="tableIceCreams" width="90%" rows="20" rowClasses="odd-row, even-row"
+                                        value="#{managerIceCream.iceCreamsList}" var="iceCream">
 
                             <rich:column style="text-align: center;">
                                 <f:facet name="header">

@@ -72,7 +72,7 @@ public class ManagerHeladeroTest {
         result.forEach(icm -> {
             assertNotNull(icm.getIdHeladero());
             assertNotNull(icm.getLastName());
-            assertNotNull(icm.getNombres());
+            assertNotNull(icm.getName());
             assertNotNull(icm.getConcesionario().getNombreConces());
             assertNotNull(icm.getHeladosEntregadoRecibidos());
         });

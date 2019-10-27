@@ -91,13 +91,11 @@
                         <rich:datascroller id="scrollerHeladeros" align="right" for="tableHeladeros"
                                            maxPages="10" style="width : 90%;"/>
                         <rich:spacer height="3px"/>
-                        <rich:dataTable id="tableHeladeros" width="90%" rows="10"
-                                        onRowMouseOver="this.style.backgroundColor='#F1F1F1'"
-                                        onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'"
+                        <rich:dataTable id="tableHeladeros" width="90%" rows="10" rowClasses="odd-row, even-row"
                                         value="#{managerHeladero.listaHeladeros}" var="heladero">
 
                             <f:param id="p_id_heladero" value="#{heladero.idHeladero}"/>
-                            <f:param id="p_nombres_heladero" value="#{heladero.lastName} #{heladero.nombres}"/>
+                            <f:param id="p_nombres_heladero" value="#{heladero.lastName} #{heladero.name}"/>
                             <f:param id="p_nombre_consecionario" value="#{heladero.concesionario.nombreConces}"/>
                             <rich:column style="text-align: center;">
                                 <f:facet name="header">
@@ -110,7 +108,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="Apellido y nombre"/>
                                 </f:facet>
-                                <h:outputText value="#{heladero.lastName} #{heladero.nombres}"/>
+                                <h:outputText value="#{heladero.lastName} #{heladero.name}"/>
                             </rich:column>
 
                             <%

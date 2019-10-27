@@ -51,10 +51,8 @@
                         <rich:datascroller id="scrollerHelados" align="right" for="tableHelados"
                                            maxPages="10" style="width : 90%;"/>
                         <rich:spacer height="3px"/>
-                        <rich:dataTable id="tableHelados" width="90%" rows="10"
-                                        onRowMouseOver="this.style.backgroundColor='#F1F1F1'"
-                                        onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'"
-                                        var="dh" value="#{managerPago.iceCreamDetailsList}">
+                        <rich:dataTable id="tableHelados" width="90%" rows="10" rowClasses="odd-row, even-row"
+                                        value="#{managerPago.iceCreamDetailsList}" var="dh">
 
                             <rich:column>
                                 <f:facet name="header">

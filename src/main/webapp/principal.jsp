@@ -14,7 +14,6 @@
         <title>Heladeros Lamborgini</title>
         <link rel="shortcut icon" href="images/favicon.ico">
         <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-        <link type="text/css" href="style/default.css" rel="stylesheet" media="screen">
     </head>
     <body>
     <jsp:include page="menu.jsp"/>

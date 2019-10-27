@@ -36,7 +36,7 @@
                 </tr>
                 <tr>
                     <td class="td-label">Nombre</td>
-                    <td><h:inputText value="#{managerHeladero.editedIceCreamMan.nombres}"/></td>
+                    <td><h:inputText value="#{managerHeladero.editedIceCreamMan.name}"/></td>
                 </tr>
                 <tr>
                     <td class="td-label">Apellido</td>
