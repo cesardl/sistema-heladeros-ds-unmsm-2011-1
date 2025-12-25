@@ -14,7 +14,7 @@ import static org.junit.Assert.assertNotNull;
  */
 public class UsuarioDAOTest {
 
-    private UsuarioDAO dao = new UsuarioDAO();
+    private final UsuarioDAO dao = new UsuarioDAO();
 
     @Test
     public void getUserAdminTest() {

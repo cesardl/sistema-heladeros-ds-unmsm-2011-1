@@ -125,6 +125,16 @@
 
                             <rich:column style="text-align: center;">
                                 <f:facet name="header">
+                                    <h:outputText value="Contrato"/>
+                                </f:facet>
+                                <a4j:commandButton image="images/contract.png"
+                                                   reRender="mp_contract"
+                                                   actionListener="#{managerHeladero.loadContract}"
+                                                   oncomplete="Richfaces.showModalPanel('mp_contract');"/>
+                            </rich:column>
+
+                            <rich:column style="text-align: center;">
+                                <f:facet name="header">
                                     <h:outputText value="Editar"/>
                                 </f:facet>
                                 <a4j:commandButton image="images/edit.gif"
@@ -169,6 +179,7 @@
     </rich:panel>
     </body>
     </html>
+    <jsp:include page="modal_contract.jsp"/>
     <jsp:include page="model_ice_cream_man.jsp"/>
     <jsp:include page="asignar_helados.jsp"/>
     <jsp:include page="pagar_heladero.jsp"/>

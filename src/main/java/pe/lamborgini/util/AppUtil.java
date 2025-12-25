@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
@@ -67,5 +68,15 @@ public final class AppUtil {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) - 1);
         return calendar.getTime();
+    }
+
+    public static boolean isCurrentDateBetween(Date startDate, Date endDate) {
+        LocalDate today = LocalDate.now();
+
+        LocalDate contractStart = new java.sql.Date(startDate.getTime()).toLocalDate();
+        LocalDate contractEnd = new java.sql.Date(endDate.getTime()).toLocalDate();
+
+        return !today.isBefore(contractStart)
+                && !today.isAfter(contractEnd);
     }
 }

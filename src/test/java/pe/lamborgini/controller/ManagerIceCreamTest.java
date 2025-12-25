@@ -4,11 +4,14 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import pe.lamborgini.DomainStubs;
 import pe.lamborgini.domain.mapping.Helado;
 import pe.lamborgini.domain.mapping.StockHelado;
 
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import java.util.List;
 
@@ -20,9 +23,11 @@ import static org.junit.Assert.*;
  * @author Cesardl
  */
 @RunWith(PowerMockRunner.class)
+@PowerMockIgnore({"javax.management.*", "org.jacoco.agent.rt.*", "org.apache.log4j.*"})
+@PrepareForTest(FacesContext.class)
 public class ManagerIceCreamTest {
 
-    private ManagerIceCream manager = new ManagerIceCream();
+    private final ManagerIceCream manager = new ManagerIceCream();
     @Mock
     private ActionEvent actionEvent;
 

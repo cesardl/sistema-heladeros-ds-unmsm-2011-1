@@ -6,9 +6,13 @@ package pe.lamborgini.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pe.lamborgini.domain.dto.ContratoHeladeroDTO;
+import pe.lamborgini.domain.mapping.ContratoHeladero;
 import pe.lamborgini.domain.mapping.Heladero;
 import pe.lamborgini.service.HeladeroService;
+import pe.lamborgini.util.AppUtil;
 
+import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
 import java.io.Serializable;
 import java.util.List;
@@ -27,6 +31,7 @@ public class ManagerHeladero extends BaseManager implements Serializable {
 
     private List<Heladero> listaHeladeros;
     private Heladero editedIceCreamMan;
+    private ContratoHeladeroDTO contract;
 
     private String oncomplete;
 
@@ -70,6 +75,14 @@ public class ManagerHeladero extends BaseManager implements Serializable {
         this.editedIceCreamMan = editedIceCreamMan;
     }
 
+    public ContratoHeladeroDTO getContract() {
+        return contract;
+    }
+
+    public void setContract(ContratoHeladeroDTO contract) {
+        this.contract = contract;
+    }
+
     public String getOncomplete() {
         return oncomplete;
     }
@@ -92,5 +105,14 @@ public class ManagerHeladero extends BaseManager implements Serializable {
 
     public void saveOrUpdate(final ActionEvent event) {
         LOG.debug("Guardando edicion de heladero [{}]", event.getPhaseId());
+    }
+
+    public void loadContract(final ActionEvent event) {
+        LOG.debug("Loading contract [{}]", event.getPhaseId());
+        String strIceCreamManId = ((UIParameter) event.getComponent().findComponent("p_id_heladero")).getValue().toString();
+        int paramIceCreamManId = AppUtil.aInteger(strIceCreamManId);
+        LOG.debug("Validating contract of IceCreamMan '{}'", paramIceCreamManId);
+
+        contract = HeladeroService.loadcontract(paramIceCreamManId);
     }
 }
