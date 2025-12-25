@@ -16,7 +16,7 @@ root {
 body {
     padding: 10px;
     font-size: 13px;
-    font-family: Arial,Verdana,sans-serif;
+    font-family: Arial, Verdana, sans-serif;
 }
 
 .title-label {
@@ -45,4 +45,17 @@ body {
 .text-error {
     color: #FFFFFF;
     font-weight: bold;
+}
+
+.even-row {
+    background-color: #FCFFFE;
+}
+
+.odd-row {
+    background-color: #F8F1F1;
+}
+
+.even-row:hover,
+.odd-row:hover {
+    background-color: #FFEBDA;
 }

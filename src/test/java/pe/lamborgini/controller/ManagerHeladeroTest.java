@@ -12,6 +12,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import pe.lamborgini.DomainStubs;
 import pe.lamborgini.domain.mapping.Heladero;
 
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIParameter;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -20,6 +22,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
@@ -33,7 +36,7 @@ import static org.mockito.Mockito.when;
 @PrepareForTest(FacesContext.class)
 public class ManagerHeladeroTest {
 
-    private ManagerHeladero manager = new ManagerHeladero();
+    private final ManagerHeladero manager = new ManagerHeladero();
     @Mock
     private ActionEvent actionEvent;
     @Mock
@@ -72,8 +75,8 @@ public class ManagerHeladeroTest {
         result.forEach(icm -> {
             assertNotNull(icm.getIdHeladero());
             assertNotNull(icm.getLastName());
-            assertNotNull(icm.getNombres());
-            assertNotNull(icm.getConcesionario().getNombreConces());
+            assertNotNull(icm.getName());
+            assertNotNull(icm.getConcessionaire().getNombreConces());
             assertNotNull(icm.getHeladosEntregadoRecibidos());
         });
         assertTrue(manager.getNombre().isEmpty());
@@ -127,5 +130,48 @@ public class ManagerHeladeroTest {
         assertFalse(manager.getNombre().isEmpty());
         assertFalse(manager.getApellido().isEmpty());
         assertEquals(0, manager.getConcessionaireId());
+    }
+
+    @Test
+    public void loadContractOfIceCreamManTest() {
+        int id = 80;
+        UIComponent uiComponent = mock(UIComponent.class);
+        UIParameter uipPIdIceCreamMan = mock(UIParameter.class);
+
+        when(actionEvent.getComponent()).thenReturn(uiComponent);
+        when(uiComponent.findComponent("p_id_heladero")).thenReturn(uipPIdIceCreamMan);
+        when(uipPIdIceCreamMan.getValue()).thenReturn(id);
+
+        manager.loadContract(actionEvent);
+
+        assertNotNull(manager.getContract());
+        assertTrue(manager.getContract().isActive());
+
+        // ------------------------------------------------------------------
+        id = 214;
+        when(uipPIdIceCreamMan.getValue()).thenReturn(id);
+
+        manager.loadContract(actionEvent);
+
+        assertNotNull(manager.getContract());
+        assertFalse(manager.getContract().isActive());
+
+        // ------------------------------------------------------------------
+        id = 215;
+        when(uipPIdIceCreamMan.getValue()).thenReturn(id);
+
+        manager.loadContract(actionEvent);
+
+        assertNotNull(manager.getContract());
+        assertFalse(manager.getContract().isActive());
+
+        // ------------------------------------------------------------------
+        id = 216;
+        when(uipPIdIceCreamMan.getValue()).thenReturn(id);
+
+        manager.loadContract(actionEvent);
+
+        assertNotNull(manager.getContract());
+        assertTrue(manager.getContract().isActive());
     }
 }

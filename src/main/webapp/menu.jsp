@@ -10,6 +10,7 @@
 <%@taglib prefix="a4j" uri="http://richfaces.org/a4j" %>
 
 <f:subview id="menu">
+    <a4j:loadStyle src="resource:///style/default.css"/>
     <div style="font-weight: bold; font-size: 13px;">
         <%@ page import="pe.lamborgini.domain.mapping.Usuario" %>
         <%
@@ -28,18 +29,6 @@
             <rich:dropDownMenu>
                 <f:facet name="label">
                     <h:panelGroup>
-                        <h:outputText value="Reportes"/>
-                    </h:panelGroup>
-                </f:facet>
-
-                <rich:menuItem submitMode="ajax" value="Reporte de ventas por fecha"/>
-
-                <rich:menuItem submitMode="ajax" value="Reporte de ventas por heladero"/>
-            </rich:dropDownMenu>
-
-            <rich:dropDownMenu>
-                <f:facet name="label">
-                    <h:panelGroup>
                         <h:outputText value="Sistema"/>
                     </h:panelGroup>
                 </f:facet>
@@ -55,6 +44,18 @@
                 <%
                     }
                 %>
+            </rich:dropDownMenu>
+
+            <rich:dropDownMenu>
+                <f:facet name="label">
+                    <h:panelGroup>
+                        <h:outputText value="Reportes"/>
+                    </h:panelGroup>
+                </f:facet>
+
+                <rich:menuItem submitMode="ajax" value="Reporte de ventas por fecha"/>
+
+                <rich:menuItem submitMode="ajax" value="Reporte de ventas por heladero"/>
             </rich:dropDownMenu>
 
             <rich:dropDownMenu>

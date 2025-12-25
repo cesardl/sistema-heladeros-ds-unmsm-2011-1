@@ -12,11 +12,14 @@
         <many-to-one class="pe.lamborgini.domain.mapping.Heladero" fetch="select" name="heladero">
             <column name="id_heladero" not-null="true"/>
         </many-to-one>
-        <property name="numeroContrato" type="int">
+        <property name="numeroContrato" type="string">
             <column name="numero_contrato" not-null="true"/>
         </property>
-        <property name="tipo" type="string">
-            <column length="45" name="tipo" not-null="true"/>
+        <property name="contractType">
+            <column name="tipo" not-null="true"/>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">pe.lamborgini.domain.mapping.ContractType</param>
+            </type>
         </property>
         <property name="contenido" type="string">
             <column length="45" name="contenido" not-null="true"/>

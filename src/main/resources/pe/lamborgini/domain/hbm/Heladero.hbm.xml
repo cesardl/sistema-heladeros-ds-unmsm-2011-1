@@ -9,10 +9,10 @@
             <column name="id_heladero"/>
             <generator class="identity"/>
         </id>
-        <many-to-one class="pe.lamborgini.domain.mapping.Concesionario" fetch="join" lazy="false" name="concesionario">
+        <many-to-one class="pe.lamborgini.domain.mapping.Concesionario" fetch="join" lazy="false" name="concessionaire">
             <column name="id_concesionario" not-null="true"/>
         </many-to-one>
-        <property name="nombres" type="string">
+        <property name="name" type="string">
             <column length="45" name="nombres" not-null="true"/>
         </property>
         <property name="lastName" type="string">

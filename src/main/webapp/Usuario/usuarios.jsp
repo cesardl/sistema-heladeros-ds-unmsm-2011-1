@@ -18,7 +18,6 @@
     <html>
     <head>
         <title>Usuarios</title>
-        <link type="text/css" href="../style/default.css" rel="stylesheet" media="screen">
     </head>
     <body>
     <jsp:include page="../menu.jsp"/>
@@ -61,9 +60,7 @@
                 <tr>
                     <td colspan="3" align="center">
                         <rich:spacer height="3px"/>
-                        <rich:dataTable id="tableUsuarios" width="90%" rows="10"
-                                        onRowMouseOver="this.style.backgroundColor='#F1F1F1'"
-                                        onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'"
+                        <rich:dataTable id="tableUsuarios" width="90%" rows="10" rowClasses="odd-row, even-row"
                                         value="#{managerUsuario.listaUsuarios}" var="user">
 
                             <rich:column style="text-align: center;">

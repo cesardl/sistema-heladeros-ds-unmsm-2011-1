@@ -14,7 +14,7 @@
         <title>Heladeros Lamborgini</title>
         <link rel="shortcut icon" href="images/favicon.ico">
         <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-        <link type="text/css" href="style/default.css" rel="stylesheet" media="screen"/>
+        <a4j:loadStyle src="resource:///style/default.css"/>
     </head>
     <body>
     <%@ page import="pe.lamborgini.domain.mapping.Usuario" %>

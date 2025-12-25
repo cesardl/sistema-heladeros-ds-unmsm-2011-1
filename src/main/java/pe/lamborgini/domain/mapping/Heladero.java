@@ -14,8 +14,8 @@ public class Heladero implements java.io.Serializable {
     private static final long serialVersionUID = 5272503182365777160L;
 
     private Integer idHeladero;
-    private Concesionario concesionario;
-    private String nombres;
+    private Concesionario concessionaire;
+    private String name;
     private String lastName;
     private Set<ContratoHeladero> contratoHeladeros = new HashSet<>(0);
     private Set<HeladosEntregadoRecibido> heladosEntregadoRecibidos = new HashSet<>(0);
@@ -27,15 +27,15 @@ public class Heladero implements java.io.Serializable {
         this.idHeladero = idHeladero;
     }
 
-    public Heladero(Concesionario concesionario, String nombres, String lastName) {
-        this.concesionario = concesionario;
-        this.nombres = nombres;
+    public Heladero(Concesionario concessionaire, String name, String lastName) {
+        this.concessionaire = concessionaire;
+        this.name = name;
         this.lastName = lastName;
     }
 
-    public Heladero(Concesionario concesionario, String nombres, String lastName, Set<ContratoHeladero> contratoHeladeros, Set<HeladosEntregadoRecibido> heladosEntregadoRecibidos) {
-        this.concesionario = concesionario;
-        this.nombres = nombres;
+    public Heladero(Concesionario concessionaire, String name, String lastName, Set<ContratoHeladero> contratoHeladeros, Set<HeladosEntregadoRecibido> heladosEntregadoRecibidos) {
+        this.concessionaire = concessionaire;
+        this.name = name;
         this.lastName = lastName;
         this.contratoHeladeros = contratoHeladeros;
         this.heladosEntregadoRecibidos = heladosEntregadoRecibidos;
@@ -49,20 +49,20 @@ public class Heladero implements java.io.Serializable {
         this.idHeladero = idHeladero;
     }
 
-    public Concesionario getConcesionario() {
-        return this.concesionario;
+    public Concesionario getConcessionaire() {
+        return this.concessionaire;
     }
 
-    public void setConcesionario(Concesionario concesionario) {
-        this.concesionario = concesionario;
+    public void setConcessionaire(Concesionario concesionario) {
+        this.concessionaire = concesionario;
     }
 
-    public String getNombres() {
-        return this.nombres;
+    public String getName() {
+        return this.name;
     }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
+    public void setName(String nombres) {
+        this.name = nombres;
     }
 
     public String getLastName() {
@@ -91,6 +91,6 @@ public class Heladero implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return lastName + " " + nombres;
+        return lastName + " " + name;
     }
 }

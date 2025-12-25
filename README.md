@@ -17,7 +17,7 @@ En este proyecto se present&oacute; las funcionalidades de administraci&oacute;n
 ### Creating docker container for db
 I use version 5.6.33 because is the version of MySQL on Travis-CI.
 ```
-docker run --name mysql-ice-creams-providers -p 3306:3306 -e MYSQL_DATABASE=heladeros -e MYSQL_ROOT_PASSWORD=rootroot -e TZ='America/Lima' -d mysql:5.6.33
+docker run --name mysql-ice-creams-providers -p 3306:3306 -e MYSQL_DATABASE=heladeros -e MYSQL_ROOT_PASSWORD=rootroot -e TZ='America/Lima' -d mysql:5.7.44
 ```
 
 #### Updating timezone on db

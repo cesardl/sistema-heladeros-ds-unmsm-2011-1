@@ -86,10 +86,8 @@
                         <rich:datascroller id="scrollerHelados" align="right" for="tableHelados"
                                            maxPages="10" style="width : 75%;"/>
                         <rich:spacer height="3px"/>
-                        <rich:dataTable id="tableHelados" width="75%" rows="10"
-                                        onRowMouseOver="this.style.backgroundColor='#F1F1F1'"
-                                        onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'"
-                                        var="dh" value="#{managerAsignacion.iceCreamDetailsList}">
+                        <rich:dataTable id="tableHelados" width="75%" rows="10" rowClasses="odd-row, even-row"
+                                        value="#{managerAsignacion.iceCreamDetailsList}" var="dh">
 
                             <f:param id="dh_pos" value="#{dh.position}"/>
                             <rich:column>

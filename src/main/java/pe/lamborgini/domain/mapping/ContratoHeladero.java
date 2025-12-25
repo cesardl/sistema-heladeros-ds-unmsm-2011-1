@@ -15,8 +15,8 @@ public class ContratoHeladero implements java.io.Serializable {
 
     private Integer idcontratoHeladero;
     private Heladero heladero;
-    private int numeroContrato;
-    private String tipo;
+    private String numeroContrato;
+    private ContractType contractType;
     private String contenido;
     private Date fechaInicio;
     private Date fechaFin;
@@ -24,10 +24,10 @@ public class ContratoHeladero implements java.io.Serializable {
     public ContratoHeladero() {
     }
 
-    public ContratoHeladero(Heladero heladero, int numeroContrato, String tipo, String contenido, Date fechaInicio, Date fechaFin) {
+    public ContratoHeladero(Heladero heladero, String numeroContrato, ContractType contractType, String contenido, Date fechaInicio, Date fechaFin) {
         this.heladero = heladero;
         this.numeroContrato = numeroContrato;
-        this.tipo = tipo;
+        this.contractType = contractType;
         this.contenido = contenido;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -49,20 +49,20 @@ public class ContratoHeladero implements java.io.Serializable {
         this.heladero = heladero;
     }
 
-    public int getNumeroContrato() {
+    public String getNumeroContrato() {
         return this.numeroContrato;
     }
 
-    public void setNumeroContrato(int numeroContrato) {
+    public void setNumeroContrato(String numeroContrato) {
         this.numeroContrato = numeroContrato;
     }
 
-    public String getTipo() {
-        return this.tipo;
+    public ContractType getContractType() {
+        return this.contractType;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setContractType(ContractType contractType) {
+        this.contractType = contractType;
     }
 
     public String getContenido() {
