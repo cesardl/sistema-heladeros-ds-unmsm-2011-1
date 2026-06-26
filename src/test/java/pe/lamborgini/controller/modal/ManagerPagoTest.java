@@ -5,14 +5,17 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
+import pe.lamborgini.DomainStubs;
+import pe.lamborgini.service.HeladosEntregadoRecibidoService;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
+import java.util.Collections;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 /**
@@ -49,6 +52,8 @@ public class ManagerPagoTest {
     @Test
     public void openModalForIceCreamsPaymentTest() {
         when(uiParameter.getValue()).thenReturn("214");
+        HeladosEntregadoRecibidoService.guardarHeladosEntregadoRecibido(
+                Collections.singletonList(DomainStubs.iceCreamDetail(1, 1)), "214");
 
         manager.pagarHeladero(actionEvent);
 

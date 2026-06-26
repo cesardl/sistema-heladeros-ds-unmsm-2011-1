@@ -4,16 +4,16 @@
  */
 package pe.lamborgini.dao;
 
-import org.hibernate.*;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
+import jakarta.persistence.PersistenceException;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pe.lamborgini.domain.mapping.Helado;
 import pe.lamborgini.util.AppUtil;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,51 +24,45 @@ public class HeladoDAO {
 
     private static final Logger LOG = LoggerFactory.getLogger(HeladoDAO.class);
 
-    @SuppressWarnings("unchecked")
     public List<Helado> getAll(final Integer... ids) {
         LOG.debug("DB query: iceCreamName");
-        Session session = AppUtil.getSessionFactory().getCurrentSession();
-        Transaction tx = session.beginTransaction();
+        Session session = AppUtil.getSessionFactory().openSession();
+        try {
+            String hql = "select h from Helado h left join fetch h.stockHelado ";
+            if (ids.length > 0) {
+                hql += "where h.idHelado in :ids ";
+            }
+            hql += "order by h.nombreHelado";
 
-        Criteria criteria = session.createCriteria(Helado.class)
-                .setFetchMode("stockHelado", FetchMode.JOIN)
-                .addOrder(Order.asc("nombreHelado"));
+            Query<Helado> query = session.createQuery(hql, Helado.class);
+            if (ids.length > 0) {
+                query.setParameterList("ids", Arrays.asList(ids));
+            }
 
-        if (ids.length > 0) {
-            criteria.add(Restrictions.in("idHelado", Arrays.asList(ids)));
+            List<Helado> iceCreams = query.list();
+
+            LOG.debug("Getting {} rows from DB", iceCreams.size());
+            return iceCreams;
+        } finally {
+            session.close();
         }
-
-        List<Helado> iceCreams = criteria.list();
-
-        LOG.debug("Getting {} rows from DB", iceCreams.size());
-        tx.commit();
-        return iceCreams;
     }
 
     public List<Helado> getListaHelados(final String iceCreamName) {
         LOG.debug("DB query: iceCreamName: '{}'", iceCreamName);
-        Session session = AppUtil.getSessionFactory().getCurrentSession();
-        Transaction tx = session.beginTransaction();
-        List<Helado> iceCreams = new ArrayList<>();
+        Session session = AppUtil.getSessionFactory().openSession();
+        try {
+            Query<Helado> query = session.createQuery(
+                    "from Helado where nombreHelado like :iceCreamName order by nombreHelado",
+                    Helado.class);
+            query.setParameter("iceCreamName", "%" + iceCreamName + "%");
 
-        Query query = session.createSQLQuery("SELECT id_helado, nombre_helado FROM helado "
-                + "WHERE nombre_helado LIKE :n_helado").
-                addScalar("id_helado", Hibernate.INTEGER).
-                addScalar("nombre_helado", Hibernate.STRING).
-                setString("n_helado", "%" + iceCreamName + "%");
-
-        List list = query.list();
-        LOG.debug("Getting {} rows from DB", list.size());
-        for (Object obj : list) {
-            Object[] objs = (Object[]) obj;
-
-            Helado h = new Helado();
-            h.setIdHelado(AppUtil.aInteger(objs[0].toString()));
-            h.setNombreHelado(objs[1].toString());
-            iceCreams.add(h);
+            List<Helado> iceCreams = query.list();
+            LOG.debug("Getting {} rows from DB", iceCreams.size());
+            return iceCreams;
+        } finally {
+            session.close();
         }
-        tx.commit();
-        return iceCreams;
     }
 
     public boolean save(final Helado iceCream) {
@@ -77,11 +71,17 @@ public class HeladoDAO {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Serializable saved = session.save(iceCream);
+            session.persist(iceCream);
             tx.commit();
-            LOG.info("DB saved entity '{}'", saved);
+            LOG.info("DB saved entity '{}'", iceCream.getIdHelado());
             return true;
         } catch (final HibernateException e) {
+            LOG.error(e.getMessage(), e);
+            if (tx != null) {
+                tx.rollback();
+            }
+            return false;
+        } catch (final PersistenceException e) {
             LOG.error(e.getMessage(), e);
             if (tx != null) {
                 tx.rollback();
@@ -98,11 +98,18 @@ public class HeladoDAO {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            session.update(iceCream);
+            session.merge(iceCream.getStockHelado());
+            session.merge(iceCream);
             tx.commit();
             LOG.info("DB updated entity");
             return true;
         } catch (final HibernateException e) {
+            LOG.error(e.getMessage(), e);
+            if (tx != null) {
+                tx.rollback();
+            }
+            return false;
+        } catch (final PersistenceException e) {
             LOG.error(e.getMessage(), e);
             if (tx != null) {
                 tx.rollback();
@@ -119,11 +126,17 @@ public class HeladoDAO {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            session.delete(iceCream);
+            session.remove(session.contains(iceCream) ? iceCream : session.merge(iceCream));
             tx.commit();
             LOG.info("DB deleted entity");
             return true;
         } catch (final HibernateException e) {
+            LOG.error(e.getMessage(), e);
+            if (tx != null) {
+                tx.rollback();
+            }
+            return false;
+        } catch (final PersistenceException e) {
             LOG.error(e.getMessage(), e);
             if (tx != null) {
                 tx.rollback();

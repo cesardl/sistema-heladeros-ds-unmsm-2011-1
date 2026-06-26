@@ -109,7 +109,7 @@ public class ManagerAsignacion {
         this.oncomplete = oncomplete;
     }
 
-    public void asignarHelado(ActionEvent event) {
+    public void loadAssignation(ActionEvent event) {
         LOG.debug("Iniciando proceso de asignacion de helados [{}]", event.getPhaseId());
 
         oncomplete = "";
@@ -118,8 +118,8 @@ public class ManagerAsignacion {
         paramIceCreamManNames = ((UIParameter) event.getComponent().findComponent("p_nombres_heladero")).getValue().toString();
         paramConcessionaireName = ((UIParameter) event.getComponent().findComponent("p_nombre_consecionario")).getValue().toString();
 
-        HeladosEntregadoRecibido her = HeladosEntregadoRecibidoService.existeAsignacionParaHeladero(paramIceCreamManId);
-        if (her == null) {
+        List<HeladosEntregadoRecibido> her = HeladosEntregadoRecibidoService.existeAsignacionParaHeladero(paramIceCreamManId);
+        if (her == null || her.isEmpty()) {
             iceCreamDetailsList = new ArrayList<>(0);
             oncomplete = "Richfaces.showModalPanel('mp_asignar_helados');";
         } else {

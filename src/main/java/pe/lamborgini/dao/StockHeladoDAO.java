@@ -26,7 +26,7 @@ public class StockHeladoDAO {
         try {
             tx = session.beginTransaction();
             for (StockHelado stock : stocks) {
-                session.update(stock);
+                session.merge(stock);
             }
             tx.commit();
             LOG.info("DB updated entity");

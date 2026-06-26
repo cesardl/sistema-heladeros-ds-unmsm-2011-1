@@ -1,9 +1,8 @@
 package pe.lamborgini.dao;
 
-import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pe.lamborgini.domain.mapping.ContratoHeladero;
@@ -17,10 +16,12 @@ public class ContratoHeladeroDAO {
         LOG.debug("DB query: contract");
         Session session = AppUtil.getSessionFactory().openSession();
         try {
-            Criteria c = session.createCriteria(ContratoHeladero.class)
-                    .add(Restrictions.eq("heladero.idHeladero", iceCreamManId));
+            Query<ContratoHeladero> query = session.createQuery(
+                    "from ContratoHeladero where heladero.idHeladero = :iceCreamManId",
+                    ContratoHeladero.class);
+            query.setParameter("iceCreamManId", iceCreamManId);
 
-            return (ContratoHeladero) c.uniqueResult();
+            return query.uniqueResult();
         } catch (HibernateException e) {
             LOG.error("ContratoHeladeroDAO.findByIceCreamMan", e);
             return null;

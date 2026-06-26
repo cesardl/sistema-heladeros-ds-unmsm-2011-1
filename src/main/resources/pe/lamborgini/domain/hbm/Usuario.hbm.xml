@@ -26,6 +26,7 @@
             <column name="role" not-null="true"/>
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">pe.lamborgini.domain.mapping.RoleType</param>
+                <param name="useNamed">true</param>
             </type>
         </property>
     </class>

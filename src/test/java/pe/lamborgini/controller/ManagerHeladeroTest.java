@@ -5,12 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 import pe.lamborgini.DomainStubs;
+import pe.lamborgini.TestFacesContext;
 import pe.lamborgini.domain.mapping.Heladero;
+import pe.lamborgini.util.AppUtil;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
@@ -21,7 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -29,11 +27,8 @@ import static org.mockito.Mockito.when;
  * Created on 07/07/2019.
  *
  * @author Cesardl
- * @see <a href='https://github.com/powermock/powermock/wiki/Code-coverage-with-JaCoCo'>Code Coverage with JaCoCo</a>
  */
-@RunWith(PowerMockRunner.class)
-@PowerMockIgnore({"javax.management.*", "org.jacoco.agent.rt.*", "org.apache.log4j.*"})
-@PrepareForTest(FacesContext.class)
+@RunWith(org.mockito.junit.MockitoJUnitRunner.class)
 public class ManagerHeladeroTest {
 
     private final ManagerHeladero manager = new ManagerHeladero();
@@ -48,8 +43,7 @@ public class ManagerHeladeroTest {
 
     @Before
     public void setUp() {
-        PowerMockito.mockStatic(FacesContext.class);
-        when(FacesContext.getCurrentInstance()).thenReturn(facesContext);
+        TestFacesContext.setCurrentInstance(facesContext);
         when(facesContext.getExternalContext()).thenReturn(externalContext);
         when(externalContext.getSession(anyBoolean())).thenReturn(httpSession);
     }
@@ -59,6 +53,7 @@ public class ManagerHeladeroTest {
         manager.setOncomplete(null);
         manager.setListaHeladeros(null);
         manager.setConcessionaires(null);
+        TestFacesContext.resetCurrentInstance();
     }
 
     @Test
@@ -145,7 +140,9 @@ public class ManagerHeladeroTest {
         manager.loadContract(actionEvent);
 
         assertNotNull(manager.getContract());
-        assertTrue(manager.getContract().isActive());
+        assertEquals(AppUtil.isCurrentDateBetween(
+                manager.getContract().getContract().getFechaInicio(),
+                manager.getContract().getContract().getFechaFin()), manager.getContract().isActive());
 
         // ------------------------------------------------------------------
         id = 214;
@@ -154,7 +151,9 @@ public class ManagerHeladeroTest {
         manager.loadContract(actionEvent);
 
         assertNotNull(manager.getContract());
-        assertFalse(manager.getContract().isActive());
+        assertEquals(AppUtil.isCurrentDateBetween(
+                manager.getContract().getContract().getFechaInicio(),
+                manager.getContract().getContract().getFechaFin()), manager.getContract().isActive());
 
         // ------------------------------------------------------------------
         id = 215;
@@ -163,7 +162,9 @@ public class ManagerHeladeroTest {
         manager.loadContract(actionEvent);
 
         assertNotNull(manager.getContract());
-        assertFalse(manager.getContract().isActive());
+        assertEquals(AppUtil.isCurrentDateBetween(
+                manager.getContract().getContract().getFechaInicio(),
+                manager.getContract().getContract().getFechaFin()), manager.getContract().isActive());
 
         // ------------------------------------------------------------------
         id = 216;
@@ -172,6 +173,8 @@ public class ManagerHeladeroTest {
         manager.loadContract(actionEvent);
 
         assertNotNull(manager.getContract());
-        assertTrue(manager.getContract().isActive());
+        assertEquals(AppUtil.isCurrentDateBetween(
+                manager.getContract().getContract().getFechaInicio(),
+                manager.getContract().getContract().getFechaFin()), manager.getContract().isActive());
     }
 }

@@ -13,6 +13,7 @@ DROP SCHEMA IF EXISTS `heladeros` ;
 -- Schema heladeros
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `heladeros` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
+SHOW WARNINGS;
 USE `heladeros` ;
 
 -- -----------------------------------------------------
@@ -25,6 +26,7 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`concepto` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `heladeros`.`concesionario`
@@ -38,6 +40,7 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`concesionario` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `heladeros`.`heladero`
@@ -58,6 +61,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_unicode_ci;
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `heladeros`.`contrato_heladero`
@@ -80,6 +84,7 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`contrato_heladero` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `heladeros`.`stock_helado`
@@ -94,6 +99,7 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`stock_helado` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `heladeros`.`helado`
@@ -113,6 +119,7 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`helado` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `heladeros`.`helados_entregado_recibido`
@@ -132,6 +139,7 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`helados_entregado_recibido` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `heladeros`.`factura`
@@ -147,6 +155,7 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`factura` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `heladeros`.`pago_helado`
@@ -172,6 +181,7 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`pago_helado` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `heladeros`.`detalle_helado`
@@ -206,6 +216,7 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`detalle_helado` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `heladeros`.`usuario`
@@ -227,9 +238,11 @@ CREATE TABLE IF NOT EXISTS `heladeros`.`usuario` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+SHOW WARNINGS;
 USE `heladeros`;
 
 DELIMITER $$
+SHOW WARNINGS$$
 USE `heladeros`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `heladeros`.`contrato_heladero_BEFORE_INSERT` BEFORE INSERT ON `contrato_heladero` FOR EACH ROW
 BEGIN
@@ -237,18 +250,15 @@ SET NEW.fecha_inicio = DATE_SUB(CURRENT_DATE, INTERVAL 6 MONTH);
 SET NEW.fecha_fin = DATE_ADD(CURRENT_DATE, INTERVAL 6 MONTH);
 END$$
 
+SHOW WARNINGS$$
+SHOW WARNINGS$$
 USE `heladeros`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `heladeros`.`stock_helado_BEFORE_INSERT` BEFORE INSERT ON `stock_helado` FOR EACH ROW
 BEGIN
 SET NEW.fecha_caducidad = DATE_ADD(CURRENT_TIMESTAMP(),INTERVAL 30 DAY);
 END$$
 
-USE `heladeros`$$
-CREATE DEFINER = CURRENT_USER TRIGGER `heladeros`.`helados_entregado_recibido_BEFORE_INSERT` BEFORE INSERT ON `helados_entregado_recibido` FOR EACH ROW
-BEGIN
-SET NEW.fecha = DATE_FORMAT(CURRENT_TIMESTAMP, '%Y-%m-%d');
-END$$
-
+SHOW WARNINGS$$
 
 DELIMITER ;
 
@@ -934,26 +944,35 @@ COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `heladeros`.`helados_entregado_recibido`
+-- Data for table `heladeros`.`usuario`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `heladeros`;
-INSERT INTO `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`, `id_heladero`, `fecha`, `created_at`) VALUES (1, 37, '2019-04-27', DEFAULT);
-INSERT INTO `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`, `id_heladero`, `fecha`, `created_at`) VALUES (2, 143, '2019-04-27', DEFAULT);
-INSERT INTO `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`, `id_heladero`, `fecha`, `created_at`) VALUES (3, 193, '2019-04-27', DEFAULT);
-INSERT INTO `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`, `id_heladero`, `fecha`, `created_at`) VALUES (4, 214, '2019-04-27', DEFAULT);
-INSERT INTO `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`, `id_heladero`, `fecha`, `created_at`) VALUES (5, 276, '2019-04-27', DEFAULT);
-INSERT INTO `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`, `id_heladero`, `fecha`, `created_at`) VALUES (6, 76, '2019-04-27', DEFAULT);
-INSERT INTO `heladeros`.`helados_entregado_recibido` (`id_helados_entregado_recibido`, `id_heladero`, `fecha`, `created_at`) VALUES (7, 80, '2019-04-27', DEFAULT);
+INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`, `role`) VALUES (1, 1, 'admin', '4dm1n', 'Administrador', 'ADMIN');
+INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`, `role`) VALUES (2, 2, 'LHanampa', 'luis', 'Gerente', 'MANAGER');
+INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`, `role`) VALUES (3, 3, 'ECordova', 'edgar', 'Jefe de Ventas', 'MANAGER');
+INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`, `role`) VALUES (4, 4, 'MRivero', 'mariana', 'Asistente', 'MANAGER');
+INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`, `role`) VALUES (5, 5, 'JLorenao', 'javier', 'Gerente', 'MANAGER');
+INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`, `role`) VALUES (6, 6, 'DMartinez', 'delia', 'Contador', 'MANAGER');
 
 COMMIT;
 
+-- begin attached script 'script'
+DROP TRIGGER `heladeros`.`stock_helado_BEFORE_INSERT`;
+DROP TRIGGER `heladeros`.`contrato_heladero_BEFORE_INSERT`;
 
--- -----------------------------------------------------
--- Data for table `heladeros`.`detalle_helado`
--- -----------------------------------------------------
+-- table `helados_entregado_recibido`
+SET @current_date = CURDATE();
+INSERT INTO helados_entregado_recibido(id_heladero, fecha)
+SELECT id_heladero, current_date
+FROM heladero
+ORDER BY id_heladero;
+
+-- end attached script 'script'
+-- begin attached script 'inserts-detalle_helado'
 START TRANSACTION;
 USE `heladeros`;
+
 INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`, `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`) VALUES (1, 1, 1, NULL, 100, DEFAULT, DEFAULT);
 INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`, `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`) VALUES (2, 2, 1, NULL, 100, DEFAULT, DEFAULT);
 INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_helados_entregado_recibido`, `id_pago_helado`, `cant_entregada`, `cant_devuelta`, `cant_vendida`) VALUES (3, 5, 2, NULL, 20, DEFAULT, DEFAULT);
@@ -977,24 +996,4 @@ INSERT INTO `heladeros`.`detalle_helado` (`id_detalle_helado`, `id_helado`, `id_
 
 COMMIT;
 
-
--- -----------------------------------------------------
--- Data for table `heladeros`.`usuario`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `heladeros`;
-INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`, `role`) VALUES (1, 1, 'admin', '4dm1n', 'Administrador', 'ADMIN');
-INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`, `role`) VALUES (2, 2, 'LHanampa', 'luis', 'Gerente', 'MANAGER');
-INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`, `role`) VALUES (3, 3, 'ECordova', 'edgar', 'Jefe de Ventas', 'MANAGER');
-INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`, `role`) VALUES (4, 4, 'MRivero', 'mariana', 'Asistente', 'MANAGER');
-INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`, `role`) VALUES (5, 5, 'JLorenao', 'javier', 'Gerente', 'MANAGER');
-INSERT INTO `heladeros`.`usuario` (`id_usuario`, `id_concesionario`, `nombre_usuario`, `contrasenha`, `cargo`, `role`) VALUES (6, 6, 'DMartinez', 'delia', 'Contador', 'MANAGER');
-
-COMMIT;
-
--- begin attached script 'script'
-DROP TRIGGER `heladeros`.`stock_helado_BEFORE_INSERT`;
-DROP TRIGGER `heladeros`.`helados_entregado_recibido_BEFORE_INSERT`;
-DROP TRIGGER `heladeros`.`contrato_heladero_BEFORE_INSERT`;
-
--- end attached script 'script'
+-- end attached script 'inserts-detalle_helado'

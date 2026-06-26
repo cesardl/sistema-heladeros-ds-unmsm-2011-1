@@ -4,14 +4,9 @@
  */
 package pe.lamborgini.dao;
 
-import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.criterion.CriteriaSpecification;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pe.lamborgini.domain.mapping.Heladero;
@@ -27,30 +22,39 @@ public class HeladeroDAO {
 
     private static final Logger LOG = LoggerFactory.getLogger(HeladeroDAO.class);
 
-    @SuppressWarnings("unchecked")
     public List<Heladero> getListaHeladeros(final String name, final String lastName, final int concessionaireId) {
         LOG.debug("DB query: name: '{}' | lastName: '{}' | concessionaireId: '{}'", name, lastName, concessionaireId);
 
         Session session = AppUtil.getSessionFactory().openSession();
         List<Heladero> heladeros = new ArrayList<>();
         try {
-            Criteria c = session.createCriteria(Heladero.class)
-                    .setFetchMode("heladosEntregadoRecibidos", FetchMode.JOIN);
+            StringBuilder hql = new StringBuilder("select distinct h from Heladero h ")
+                    .append("left join fetch h.heladosEntregadoRecibidos ")
+                    .append("where 1 = 1 ");
 
             if (concessionaireId != 0) {
-                c.add(Restrictions.eq("concessionaire.idConcesionario", concessionaireId));
+                hql.append("and h.concessionaire.idConcesionario = :concessionaireId ");
             }
             if (name.trim().length() != 0) {
-                c.add(Restrictions.like("name", name, MatchMode.ANYWHERE));
+                hql.append("and h.name like :name ");
             }
             if (lastName.trim().length() != 0) {
-                c.add(Restrictions.like("lastName", lastName, MatchMode.ANYWHERE));
+                hql.append("and h.lastName like :lastName ");
+            }
+            hql.append("order by h.lastName");
+
+            Query<Heladero> query = session.createQuery(hql.toString(), Heladero.class);
+            if (concessionaireId != 0) {
+                query.setParameter("concessionaireId", concessionaireId);
+            }
+            if (name.trim().length() != 0) {
+                query.setParameter("name", "%" + name + "%");
+            }
+            if (lastName.trim().length() != 0) {
+                query.setParameter("lastName", "%" + lastName + "%");
             }
 
-            c.addOrder(Order.asc("lastName"))
-                    .setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-
-            heladeros = c.list();
+            heladeros = query.list();
             LOG.debug("Getting {} rows from DB", heladeros.size());
         } catch (HibernateException e) {
             LOG.error(e.getMessage(), e);

@@ -5,11 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 import pe.lamborgini.DomainStubs;
+import pe.lamborgini.TestFacesContext;
 import pe.lamborgini.domain.mapping.Usuario;
 import pe.lamborgini.util.AppUtil;
 
@@ -22,19 +19,15 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.*;
 
 /**
  * Created on 14/07/2019.
  *
  * @author Cesardl
- * @see <a href='https://github.com/powermock/powermock/wiki/Code-coverage-with-JaCoCo'>Code Coverage with JaCoCo</a>
- * @see <a href='https://github.com/powermock/powermock/issues/478'>Add jacoco package to the default packages to be deferred #478</a>
  */
-@RunWith(PowerMockRunner.class)
-@PowerMockIgnore({"javax.management.*", "org.jacoco.agent.rt.*", "org.apache.log4j.*"})
-@PrepareForTest(FacesContext.class)
+@RunWith(org.mockito.junit.MockitoJUnitRunner.class)
 public class ManagerUsuarioTest {
 
     private ManagerUsuario manager = new ManagerUsuario();
@@ -49,8 +42,7 @@ public class ManagerUsuarioTest {
 
     @Before
     public void setUp() {
-        PowerMockito.mockStatic(FacesContext.class);
-        when(FacesContext.getCurrentInstance()).thenReturn(facesContext);
+        TestFacesContext.setCurrentInstance(facesContext);
         when(facesContext.getExternalContext()).thenReturn(externalContext);
         when(externalContext.getSession(anyBoolean())).thenReturn(httpSession);
     }
@@ -60,6 +52,7 @@ public class ManagerUsuarioTest {
         manager.setOncomplete(null);
         manager.setListaUsuarios(null);
         manager.setConcessionaires(null);
+        TestFacesContext.resetCurrentInstance();
     }
 
     @Test

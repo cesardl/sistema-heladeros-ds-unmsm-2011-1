@@ -51,7 +51,7 @@ public final class HeladeroService {
 
     public static ContratoHeladeroDTO loadcontract(final int paramIceCreamManId) {
         ContratoHeladero ch = contratoHeladeroDAO.findByIceCreamMan(paramIceCreamManId);
-        boolean active=AppUtil.isCurrentDateBetween(ch.getFechaInicio(), ch.getFechaFin());
+        boolean active = AppUtil.isCurrentDateBetween(ch.getFechaInicio(), ch.getFechaFin());
 
         ContratoHeladeroDTO dto = new ContratoHeladeroDTO();
         dto.setContract(ch);

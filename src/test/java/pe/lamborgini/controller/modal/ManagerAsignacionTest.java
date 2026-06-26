@@ -5,10 +5,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import pe.lamborgini.DomainStubs;
 import pe.lamborgini.domain.mapping.DetalleHelado;
 import pe.lamborgini.domain.mapping.Helado;
+import pe.lamborgini.service.HeladoService;
+import pe.lamborgini.service.HeladosEntregadoRecibidoService;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
@@ -18,7 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 /**
@@ -70,14 +72,14 @@ public class ManagerAsignacionTest {
 
     @Test
     public void openModalForIceCreamsAssignationTest() {
-        when(uiParameter.getValue()).thenReturn("20");
+        when(uiParameter.getValue()).thenReturn("999999");
 
-        manager.asignarHelado(actionEvent);
+        manager.loadAssignation(actionEvent);
 
         assertNotNull(manager.getParamConcessionaireName());
         assertNotNull(manager.getParamIceCreamManNames());
         assertNotNull(manager.getParamIceCreamManId());
-        assertEquals("20", manager.getParamIceCreamManId());
+        assertEquals("999999", manager.getParamIceCreamManId());
         assertEquals(0, manager.getSuggestedIceCreamId());
         assertEquals(0, manager.getQuantity());
         assertNull(manager.getSuggestedIceCream());
@@ -90,8 +92,10 @@ public class ManagerAsignacionTest {
     public void openModalForIceCreamsAssignationOnSellerWithDailyAssignationTest() {
         String paramIceCreamManId = "37";
         when(uiParameter.getValue()).thenReturn(paramIceCreamManId);
+        HeladosEntregadoRecibidoService.guardarHeladosEntregadoRecibido(
+                Collections.singletonList(DomainStubs.iceCreamDetail(1, 1)), paramIceCreamManId);
 
-        manager.asignarHelado(actionEvent);
+        manager.loadAssignation(actionEvent);
 
         assertNotNull(manager.getParamConcessionaireName());
         assertNotNull(manager.getParamIceCreamManNames());
@@ -228,11 +232,12 @@ public class ManagerAsignacionTest {
 
     @Test
     public void saveAssignationsTest() {
-        List<DetalleHelado> iceCreamDetails = new ArrayList<>();
-        iceCreamDetails.add(DomainStubs.iceCreamDetail(1, 500));
-        iceCreamDetails.add(DomainStubs.iceCreamDetail(2, 500));
-        iceCreamDetails.add(DomainStubs.iceCreamDetail(3, 500));
-        iceCreamDetails.add(DomainStubs.iceCreamDetail(4, 500));
+        List<DetalleHelado> iceCreamDetails = HeladoService.getAllIceCreams().stream()
+                .filter(iceCream -> iceCream.getStockHelado() != null)
+                .filter(iceCream -> iceCream.getStockHelado().getCantidad() > 0)
+                .limit(4)
+                .map(iceCream -> DomainStubs.iceCreamDetail(iceCream.getIdHelado(), 1))
+                .collect(java.util.stream.Collectors.toList());
 
         manager.setIceCreamDetailsList(iceCreamDetails);
 

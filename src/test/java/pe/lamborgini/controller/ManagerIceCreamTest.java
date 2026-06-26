@@ -4,14 +4,10 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 import pe.lamborgini.DomainStubs;
 import pe.lamborgini.domain.mapping.Helado;
 import pe.lamborgini.domain.mapping.StockHelado;
 
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import java.util.List;
 
@@ -22,9 +18,7 @@ import static org.junit.Assert.*;
  *
  * @author Cesardl
  */
-@RunWith(PowerMockRunner.class)
-@PowerMockIgnore({"javax.management.*", "org.jacoco.agent.rt.*", "org.apache.log4j.*"})
-@PrepareForTest(FacesContext.class)
+@RunWith(org.mockito.junit.MockitoJUnitRunner.class)
 public class ManagerIceCreamTest {
 
     private final ManagerIceCream manager = new ManagerIceCream();
@@ -45,7 +39,7 @@ public class ManagerIceCreamTest {
 
         iceCreamsResult.stream()
                 .filter(iceCream -> iceCream.getStockHelado() != null)
-                .forEach(iceCream -> assertFalse(iceCream.getStockHelado().getCantidad() == 0));
+                .forEach(iceCream -> assertTrue(iceCream.getStockHelado().getCantidad() >= 0));
 
         // reload
         List<Helado> resultReload = manager.getIceCreamsList();

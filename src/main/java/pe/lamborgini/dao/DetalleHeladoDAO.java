@@ -4,11 +4,10 @@
  */
 package pe.lamborgini.dao;
 
-import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.classic.Session;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pe.lamborgini.domain.mapping.DetalleHelado;
@@ -29,7 +28,7 @@ public class DetalleHeladoDAO {
         try {
             tx = session.beginTransaction();
             for (DetalleHelado dh : listaDetalleHelados) {
-                session.update(dh);
+                session.merge(dh);
             }
             tx.commit();
         } catch (HibernateException e) {
@@ -47,13 +46,18 @@ public class DetalleHeladoDAO {
         Session session = AppUtil.getSessionFactory().openSession();
         DetalleHelado dh;
         try {
-            Criteria c = session.createCriteria(DetalleHelado.class, "dh").
-                    createCriteria("dh.heladosEntregadoRecibido", "her").
-                    add(Restrictions.eq("her.heladero.idHeladero", AppUtil.aInteger(iceCreamManId))).
-                    add(Restrictions.eq("her.fecha", AppUtil.calcularFechaAnterior())).
-                    add(Restrictions.eq("dh.helado.idHelado", iceCreamId));
+            Query<DetalleHelado> query = session.createQuery(
+                    "select dh from DetalleHelado dh " +
+                            "join dh.heladosEntregadoRecibido her " +
+                            "where her.heladero.idHeladero = :iceCreamManId " +
+                            "and her.fecha = :previousDate " +
+                            "and dh.helado.idHelado = :iceCreamId",
+                    DetalleHelado.class);
+            query.setParameter("iceCreamManId", AppUtil.aInteger(iceCreamManId));
+            query.setParameter("previousDate", AppUtil.calcularFechaAnterior());
+            query.setParameter("iceCreamId", iceCreamId);
 
-            dh = (DetalleHelado) c.uniqueResult();
+            dh = query.uniqueResult();
         } catch (HibernateException e) {
             LOG.error("DetalleHeladoDAO.getDetalleHeladoAnterior", e);
             dh = null;

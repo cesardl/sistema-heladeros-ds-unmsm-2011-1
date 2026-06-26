@@ -67,10 +67,11 @@ public class ManagerPago {
         paramIceCreamManId = ((UIParameter) event.getComponent().findComponent("p_id_heladero")).getValue().toString();
         iceCreamDetailsList = null;
 
-        HeladosEntregadoRecibido her = HeladosEntregadoRecibidoService.existeAsignacionParaHeladero(paramIceCreamManId);
-        if (her == null) {
+        List<HeladosEntregadoRecibido> assignations = HeladosEntregadoRecibidoService.existeAsignacionParaHeladero(paramIceCreamManId);
+        if (assignations == null || assignations.isEmpty()) {
             this.setOncomplete("javascript:alert('Debe realizar una asignacion de helados antes de pagar.');");
         } else {
+            HeladosEntregadoRecibido her = assignations.get(0);
             if (HeladosEntregadoRecibidoService.existePagoParaHeladero(her)) {
                 this.setOncomplete("javascript:alert('Ya se ejecuto el proceso de pago.');");
             } else {

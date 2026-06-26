@@ -7,7 +7,6 @@ package pe.lamborgini.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pe.lamborgini.domain.dto.ContratoHeladeroDTO;
-import pe.lamborgini.domain.mapping.ContratoHeladero;
 import pe.lamborgini.domain.mapping.Heladero;
 import pe.lamborgini.service.HeladeroService;
 import pe.lamborgini.util.AppUtil;

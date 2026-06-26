@@ -4,8 +4,7 @@
 <hibernate-configuration>
     <session-factory>
         <!-- Settings for a MySQL database. -->
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
-        <property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3310/heladeros?useSSL=false&amp;allowPublicKeyRetrieval=true</property>
         <property name="hibernate.connection.username">travis</property>
@@ -18,14 +17,11 @@
         <property name="hibernate.c3p0.max_statements">50</property>
         <property name="hibernate.c3p0.idle_test_period">3000</property>
 
-        <!-- Disable second-level cache. -->
-        <property name="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
         <property name="hibernate.cache.use_query_cache">false</property>
-        <property name="hibernate.cache.use_minimal_puts">false</property>
         <property name="hibernate.max_fetch_depth">3</property>
 
         <!-- Print SQL to stdout. -->
-        <property name="show_sql">true</property>
+        <property name="hibernate.show_sql">true</property>
         <!--<property name="format_sql">true</property>-->
 
         <!-- Bind the getCurrentSession() method to the thread. -->

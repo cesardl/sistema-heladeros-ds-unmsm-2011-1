@@ -4,9 +4,8 @@
  */
 package pe.lamborgini.dao;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pe.lamborgini.domain.mapping.Usuario;
@@ -25,30 +24,35 @@ public class UsuarioDAO {
         LOG.debug("DB query: userName: '{}' | password: '{}'", userName, password);
         Session session = AppUtil.getSessionFactory().openSession();
         try {
-            Criteria c = session.createCriteria(Usuario.class)
-                    .add(Restrictions.and(
-                            Restrictions.eq("nombreUsuario", userName),
-                            Restrictions.eq("contrasenha", password)));
+            Query<Usuario> query = session.createQuery(
+                    "from Usuario where nombreUsuario = :userName and contrasenha = :password",
+                    Usuario.class);
+            query.setParameter("userName", userName);
+            query.setParameter("password", password);
 
-            return (Usuario) c.uniqueResult();
+            return query.uniqueResult();
         } finally {
             session.close();
         }
     }
 
-    @SuppressWarnings("unchecked")
     public List<Usuario> findByConcessionaire(final int userId, final int concessionaireId) {
         LOG.debug("DB query: userId:{} | concessionaireId: '{}'", userId, concessionaireId);
         Session session = AppUtil.getSessionFactory().openSession();
         try {
-            Criteria c = session.createCriteria(Usuario.class)
-                    .add(Restrictions.ne("idUsuario", userId));
+            StringBuilder hql = new StringBuilder("from Usuario where idUsuario <> :userId ");
 
             if (concessionaireId != 0) {
-                c.add(Restrictions.eq("concesionario.idConcesionario", concessionaireId));
+                hql.append("and concesionario.idConcesionario = :concessionaireId ");
             }
 
-            return c.list();
+            Query<Usuario> query = session.createQuery(hql.toString(), Usuario.class);
+            query.setParameter("userId", userId);
+            if (concessionaireId != 0) {
+                query.setParameter("concessionaireId", concessionaireId);
+            }
+
+            return query.list();
         } finally {
             session.close();
         }

@@ -37,6 +37,8 @@
 
                 <rich:menuItem submitMode="ajax" value="Heladeros" action="TO_HELADEROS"/>
 
+                <rich:menuItem submitMode="ajax" value="Ordenes" action="TO_ORDERS"/>
+
                 <%
                     if (pe.lamborgini.domain.mapping.RoleType.ADMIN.equals(u.getRoleType())) {
                 %>

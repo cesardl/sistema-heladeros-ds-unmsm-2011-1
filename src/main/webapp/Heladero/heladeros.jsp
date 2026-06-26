@@ -150,9 +150,9 @@
                                     <h:outputText value="Asignar"/>
                                 </f:facet>
                                 <a4j:commandButton
-                                        image="#{heladero.heladosEntregadoRecibidos.size() == 0 ? 'images/assignation.png' : 'images/assignation_gray.png'}"
+                                        image="images/assignation.png"
                                         reRender="mp_asignar_helados"
-                                        actionListener="#{managerAsignacion.asignarHelado}"
+                                        actionListener="#{managerAsignacion.loadAssignation}"
                                         oncomplete="#{managerAsignacion.oncomplete}"/>
                             </rich:column>
 

@@ -30,7 +30,7 @@ public final class HeladosEntregadoRecibidoService {
      * @param iceCreamManId seller
      * @return an instance of <i>helados_entregado_recibido</i>
      */
-    public static HeladosEntregadoRecibido existeAsignacionParaHeladero(final String iceCreamManId) {
+    public static List<HeladosEntregadoRecibido> existeAsignacionParaHeladero(final String iceCreamManId) {
         return dao.getHeladosEntregadoRecibido(AppUtil.aInteger(iceCreamManId));
     }
 
