@@ -15,9 +15,14 @@ En este proyecto se present&oacute; las funcionalidades de administraci&oacute;n
 ## Resources
 
 ### Creating docker container for db
-I use version 5.6.33 because is the version of MySQL on Travis-CI.
 ```
-docker run --name mysql-ice-creams-providers -p 3306:3306 -e MYSQL_DATABASE=heladeros -e MYSQL_ROOT_PASSWORD=rootroot -e TZ='America/Lima' -d mysql:5.7.44
+docker run --name mysql-ice-creams-providers -p 3306:3306 -e MYSQL_DATABASE=heladeros -e MYSQL_ROOT_PASSWORD=rootroot -e TZ='America/Lima' -d mysql:8.0
+```
+
+Then load the schema and seed data, and create the passwordless `travis` user that `hibernate.cfg.xml` connects as:
+```
+docker exec -i mysql-ice-creams-providers mysql -uroot -prootroot < database/heladeros.sql
+docker exec mysql-ice-creams-providers mysql -uroot -prootroot -e "CREATE USER IF NOT EXISTS 'travis'@'%'; GRANT ALL PRIVILEGES ON *.* TO 'travis'@'%'; FLUSH PRIVILEGES;"
 ```
 
 #### Updating timezone on db
@@ -38,6 +43,15 @@ docker restart mysql-ice-creams-providers
 ```
 keytool -genkeypair -keystore ice-creams-providers.p12 -storetype PKCS12 -storepass 1234567890 -alias sigevh -keyalg RSA -keysize 2048 -validity 99999 -dname "CN=Cesardl, OU=UNMSM, O=Cesardl, L=Chorrillos, ST=Lima, C=PE"
 ```
+
+### Running the app
+
+```
+docker build -t sigevh-webapp .
+docker run -d --name sigevh-webapp --network cesardl-bridge-network -p 8443:8443 sigevh-webapp
+```
+
+Then browse to `https://localhost:8443/SIGEVH/` (self-signed certificate). The build bakes the WAR into a Tomcat 9 image — Tomcat 9 is the last line still speaking `javax.servlet`/`javax.faces`, which this JSF 1.2 app needs. The container expects the database reachable as `mysql-v8` over the `cesardl-bridge-network` Docker network; adjust `--network`/the `sed` in the `Dockerfile` if your database container has a different name or network.
 
 ## Documentation
 

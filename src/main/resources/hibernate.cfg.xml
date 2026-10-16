@@ -6,7 +6,7 @@
         <!-- Settings for a MySQL database. -->
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3310/heladeros?useSSL=false&amp;allowPublicKeyRetrieval=true</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/heladeros?useSSL=false&amp;allowPublicKeyRetrieval=true</property>
         <property name="hibernate.connection.username">travis</property>
         <property name="hibernate.connection.password"/>
 
@@ -27,17 +27,17 @@
         <!-- Bind the getCurrentSession() method to the thread. -->
         <property name="hibernate.current_session_context_class">thread</property>
 
-        <!-- Hibernate XML mapping files -->
-        <mapping resource="pe/lamborgini/domain/hbm/HeladosEntregadoRecibido.hbm.xml"/>
-        <mapping resource="pe/lamborgini/domain/hbm/StockHelado.hbm.xml"/>
-        <mapping resource="pe/lamborgini/domain/hbm/Factura.hbm.xml"/>
-        <mapping resource="pe/lamborgini/domain/hbm/Usuario.hbm.xml"/>
-        <mapping resource="pe/lamborgini/domain/hbm/Helado.hbm.xml"/>
-        <mapping resource="pe/lamborgini/domain/hbm/Concepto.hbm.xml"/>
-        <mapping resource="pe/lamborgini/domain/hbm/ContratoHeladero.hbm.xml"/>
-        <mapping resource="pe/lamborgini/domain/hbm/Concesionario.hbm.xml"/>
-        <mapping resource="pe/lamborgini/domain/hbm/Heladero.hbm.xml"/>
-        <mapping resource="pe/lamborgini/domain/hbm/PagoHelado.hbm.xml"/>
-        <mapping resource="pe/lamborgini/domain/hbm/DetalleHelado.hbm.xml"/>
+        <!-- JPA-annotated entity classes -->
+        <mapping class="pe.lamborgini.domain.mapping.HeladosEntregadoRecibido"/>
+        <mapping class="pe.lamborgini.domain.mapping.StockHelado"/>
+        <mapping class="pe.lamborgini.domain.mapping.Factura"/>
+        <mapping class="pe.lamborgini.domain.mapping.Usuario"/>
+        <mapping class="pe.lamborgini.domain.mapping.Helado"/>
+        <mapping class="pe.lamborgini.domain.mapping.Concepto"/>
+        <mapping class="pe.lamborgini.domain.mapping.ContratoHeladero"/>
+        <mapping class="pe.lamborgini.domain.mapping.Concesionario"/>
+        <mapping class="pe.lamborgini.domain.mapping.Heladero"/>
+        <mapping class="pe.lamborgini.domain.mapping.PagoHelado"/>
+        <mapping class="pe.lamborgini.domain.mapping.DetalleHelado"/>
     </session-factory>
 </hibernate-configuration>

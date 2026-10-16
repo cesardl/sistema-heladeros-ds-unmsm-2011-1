@@ -108,6 +108,11 @@
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
 
         <dependency>
             <groupId>org.mockito</groupId>
@@ -164,11 +169,6 @@
                     <version>3.1.2</version>
                 </plugin>
                 <plugin>
-                    <groupId>org.apache.tomcat.maven</groupId>
-                    <artifactId>tomcat7-maven-plugin</artifactId>
-                    <version>2.2</version>
-                </plugin>
-                <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>${jacoco.version}</version>
@@ -181,19 +181,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <compilerArgument>-Xlint:unchecked</compilerArgument>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <configuration>
-                    <path>/SIGEVH</path>
-                    <httpsPort>8443</httpsPort>
-                    <jarScanAllDirectories>true</jarScanAllDirectories>
-                    <tomcatLoggingFile>${project.basedir}/tomcat/conf/logging.properties</tomcatLoggingFile>
-                    <keystoreFile>${project.basedir}/tomcat/keystore/ice-creams-providers.p12</keystoreFile>
-                    <keystorePass>1234567890</keystorePass>
-                    <keystoreType>PKCS12</keystoreType>
                 </configuration>
             </plugin>
             <plugin>
