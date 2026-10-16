@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 SIGEVH (Sistema de Gestión de Venta de Helados) — a 2011 UNMSM "Diseño de Sistemas" course project, now kept alive as a legacy-modernization training ground. Domain: managing ice cream sellers (`heladeros`) who get a daily inventory assignment from a concessionaire (`concesionario`), sell through the day, return what's unsold, and get paid for what sold.
 
-Stack: JSF 1.2 + RichFaces 3.3 (JSP views), Hibernate 6.6 (JPA annotations on the entity classes, no `.hbm.xml` — migrated off XML mappings) over MySQL 8, static service/DAO layers, Maven WAR packaging, Tomcat 7 (via `tomcat7-maven-plugin`).
+Stack: JSF 1.2 + RichFaces 3.3 (JSP views), Hibernate 6.6 (JPA annotations on the entity classes, no `.hbm.xml` — migrated off XML mappings) over MySQL 8, static service/DAO layers, Maven WAR packaging, deployed to a standalone Tomcat 9 container (`Dockerfile`) — Tomcat 9 is the newest line still speaking `javax.servlet`/`javax.faces`; Tomcat 10+ moved to `jakarta.servlet` and would break this app. `tomcat7-maven-plugin` (an embedded-Tomcat dev tool from before Docker was the norm) has been removed: its bundled Jasper can't compile JSPs under JDK 9+'s classloader changes.
 
 Modernization principle for this repo: favor small, reversible improvements over rewrites; protect the daily assignment/payment lifecycle with tests before changing its behavior; reduce static/global coupling gradually.
 
@@ -17,7 +17,8 @@ mvn clean verify              # full build: compile, test, jacoco coverage repor
 mvn test                      # run all tests
 mvn test -Dtest=HeladoServiceTest                       # single test class
 mvn test -Dtest=HeladoServiceTest#obtenerHeladoPorNombreWithFilterTest  # single test method
-mvn org.apache.tomcat.maven:tomcat7-maven-plugin:run    # run the app locally (deploys at /SIGEVH, HTTPS on 8443 via tomcat/keystore)
+docker build -t sigevh-webapp .                          # build the WAR and bake it into a Tomcat 9 image
+docker run -d --name sigevh-webapp --network cesardl-bridge-network -p 8443:8443 sigevh-webapp  # run it (deploys at /SIGEVH, HTTPS on 8443)
 ```
 
 Database (required for the app and for several tests that hit a real DB instead of mocking — see Testing below):
@@ -29,6 +30,8 @@ docker exec mysql-ice-creams-providers mysql -uroot -prootroot -e "CREATE USER I
 ```
 
 `src/main/resources/hibernate.cfg.xml` points at `jdbc:mysql://localhost:3306/heladeros` with user `travis` and no password — this is CI-era config checked into source (see Known legacy issues). The schema/data dump (`database/heladeros.sql`) is a MySQL Workbench export that runs cleanly on MySQL 8 (only harmless deprecation warnings: `ZEROFILL`, integer display widths, `utf8`-as-alias-for-`utf8mb3`) — don't assume it needs fixing before loading it.
+
+The `Dockerfile` build patches that connection URL from `localhost` to `mysql-v8` (a container name resolved via Docker DNS) since the containerized app can't reach the database via `localhost` — it needs the DB container on the same Docker network (`cesardl-bridge-network` in this setup). The checked-in `hibernate.cfg.xml` stays untouched for local Maven runs against `mysql-ice-creams-providers` on `localhost`.
 
 CI (`.travis.yml`) runs `mvn clean verify` against JDK 8 and provisions the DB from `database/heladeros.sql` via Travis's own hosted MySQL service (not Docker) — that service's MySQL version is independent of the local Docker setup above.
 
@@ -70,7 +73,7 @@ Two different styles coexist, don't assume one:
 
 ## Known legacy issues (don't "fix" silently — these are tracked modernization targets)
 
-- `src/main/resources/hibernate.cfg.xml` has hardcoded DB connection info and `hibernate.show_sql=true` committed to source; the keystore password in `pom.xml`'s tomcat plugin config is likewise hardcoded.
+- `src/main/resources/hibernate.cfg.xml` has hardcoded DB connection info and `hibernate.show_sql=true` committed to source; the keystore password in `tomcat/server.xml` is likewise hardcoded.
 - `ManagerHeladero`'s contract save/update is a stub that only logs — contract lifecycle (create/edit) is intentionally incomplete.
 - Assignment/payment session beans are session-scoped and hold mutable workflow state, which can leak across tabs/stale sessions.
 - CI (`.travis.yml`) still targets JDK 8; locally the project needs JDK 14+ (the compiler is pinned to `--release 14` in `pom.xml`) — JDK 11 fails the build with "release version 14 not supported." Hibernate is already on 6.6 and PowerMock has been removed, so the Java-21-incompatibility concerns from early modernization notes (Hibernate 3/Javassist reflection, PowerMock) no longer apply; JDK 14 or 21 both build and test cleanly against MySQL 8.

@@ -44,6 +44,15 @@ docker restart mysql-ice-creams-providers
 keytool -genkeypair -keystore ice-creams-providers.p12 -storetype PKCS12 -storepass 1234567890 -alias sigevh -keyalg RSA -keysize 2048 -validity 99999 -dname "CN=Cesardl, OU=UNMSM, O=Cesardl, L=Chorrillos, ST=Lima, C=PE"
 ```
 
+### Running the app
+
+```
+docker build -t sigevh-webapp .
+docker run -d --name sigevh-webapp --network cesardl-bridge-network -p 8443:8443 sigevh-webapp
+```
+
+Then browse to `https://localhost:8443/SIGEVH/` (self-signed certificate). The build bakes the WAR into a Tomcat 9 image — Tomcat 9 is the last line still speaking `javax.servlet`/`javax.faces`, which this JSF 1.2 app needs. The container expects the database reachable as `mysql-v8` over the `cesardl-bridge-network` Docker network; adjust `--network`/the `sed` in the `Dockerfile` if your database container has a different name or network.
+
 ## Documentation
 
 [RichFaces Showcase](http://showcase.richfaces.org/richfaces/component-sample.jsf?demo=dataTable&sample=dataTableEdit&skin=blueSky)
